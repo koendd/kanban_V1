@@ -1,0 +1,13 @@
+@import '~bootstrap/scss/bootstrap';
+
+body {
+    background-color: rgba(189, 183, 107, .7);
+}
+
+main {
+    padding-top: 4.2rem;
+}
+
+#kanbanBoard {
+    height: calc(100% - 2rem);
+}
