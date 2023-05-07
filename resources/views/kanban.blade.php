@@ -11,7 +11,7 @@
             <div class="card-body overflow-auto" style="background-color: rgba({{$status->redColorValue()}}, {{$status->greenColorValue()}}, {{$status->blueColorValue()}}, 0.5)" ondrop="drop(event)" ondragover="allowDrop(event)" id="status{{$status->id}}">
                 @foreach($status->Tasks as $task)
                 <div class="card mb-2" style="opacity: .9" draggable="true" ondragstart="drag(event)" id="task{{$task->id}}">
-                    <div class="card-header text-center" style="background-color: rgba({{$task->priority->redColorValue()}}, {{$task->priority->greenColorValue()}}, {{$task->priority->blueColorValue()}}, 0.7 )">
+                    <div class="card-header text-center cursor-pointer" style="background-color: rgba({{$task->priority->redColorValue()}}, {{$task->priority->greenColorValue()}}, {{$task->priority->blueColorValue()}}, 0.7 )">
                         {{$task->name}}
                     </div>
                     <div class="card-body">
@@ -69,8 +69,8 @@
                     <div class="mb-3 row">
                         <label for="modalUsers" class="col-sm-2 col-form-label">Users</label>
                         <div class="col-sm-4"><input class="form-control" id="modalUsers" disabled /></div>
-                        <label for="modalDeadline" class="col-sm-2 col-form-label">Deadline</label>
-                        <div class="col-sm-4"><input class="form-control" id="modalDeadline" disabled /></div>
+                        <label for="modalApplicant" class="col-sm-2 col-form-label">Applicant</label>
+                        <div class="col-sm-4"><input class="form-control" id="modalApplicant" disabled /></div>
                     </div>
                     <div class="mb-3 row">
                         <label for="modalSystem" class="col-sm-2 col-form-label">System</label>
@@ -84,8 +84,16 @@
                         <label for="modalStatus" class="col-sm-2 col-form-label">Status</label>
                         <div class="col-sm-4"><input class="form-control" id="modalStatus" disabled /></div>
                     </div>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <div class="mb-3 row">
+                        <label for="modalDeadline" class="col-sm-2 col-form-label">Deadline</label>
+                        <div class="col-sm-4"><input class="form-control" id="modalDeadline" disabled /></div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-6 offset-md-2">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-warning">Edit</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="border-top">
                     <div class="mb-3 mt-2 row">
@@ -148,7 +156,7 @@
         let token = document.querySelector("#token").value;
         axios.get("/api/task/" + taskId, {params: { "api_token": token}})
             .then((response) => {
-                console.log(response.data.task_logs);
+                //console.log(response.data);
 
                 calledTaskId = response.data.id;
 
@@ -156,6 +164,7 @@
                 document.querySelector("#modalDescription").value = "";
                 document.querySelector("#modalDeadline").value = "";
                 document.querySelector("#modalUsers").value = "";
+                document.querySelector("#modalApplicant").value = "";
                 document.querySelector("#modalSystem").value = "";
                 document.querySelector("#modalSubSystem").value = "";
                 document.querySelector("#modalPriority").value = "";
@@ -167,6 +176,9 @@
                         usersString += ", ";
                     usersString += user.name;
                 });
+                let applicantString = "";
+                if(response.data.applicant != null)
+                    applicantString = response.data.applicant.name;
                 let systemString = response.data.system.name_short;
                 if(response.data.system.name_full != "")
                     systemString += " - " + response.data.system.name_full;
@@ -181,10 +193,13 @@
                 document.querySelector("#modalDescription").value = response.data.description;
                 document.querySelector("#modalDeadline").value = response.data.deadline;
                 document.querySelector("#modalUsers").value = usersString;
+                document.querySelector("#modalApplicant").value = applicantString;
                 document.querySelector("#modalSystem").value = systemString;
                 document.querySelector("#modalSubSystem").value = subSystemString;
                 document.querySelector("#modalPriority").value = response.data.priority.name;
+                document.querySelector("#modalPriority").style.color = "#" + response.data.priority.color.toString(16);
                 document.querySelector("#modalStatus").value = response.data.status.name;
+                document.querySelector("#modalStatus").style.color = "#" + response.data.status.color.toString(16);
 
                 let modalLogEntries = document.querySelector("#modalLogEntries");
                 modalLogEntries.innerHTML = null;

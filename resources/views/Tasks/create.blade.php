@@ -131,8 +131,11 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Create task</button>
+                        <div class="row mb-3">
+                            <div class="col-md-6 offset-md-2">
+                                <button type="submit" class="btn btn-success">Create task</button>
+                                <button type="submit" class="btn btn-danger">Cancel</button>
+                            </div>
                         </div>
                     </form>
                 </div>

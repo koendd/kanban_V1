@@ -21,7 +21,7 @@ class TaskController extends Controller
 
     public function getTask($id)
     {
-        $task = Task::with(['Users', 'System', 'SubSystem', 'Priority', 'Status', 'TaskLogs.User'])->findOrFail($id);
+        $task = Task::with(['Users', 'System', 'SubSystem', 'Priority', 'Status', 'Applicant', 'TaskLogs.User'])->findOrFail($id);
         return $task;
     }
 

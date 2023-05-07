@@ -23,6 +23,7 @@ class StatusSeeder extends Seeder
         $requested->active = false;
         $requested->finishing = false;
         $requested->color = 0x3333FF;
+        $requested->kanban_board_id = 1;
         $requested->save();
 
         $approved = new Status();
@@ -33,6 +34,7 @@ class StatusSeeder extends Seeder
         $approved->active = false;
         $approved->finishing = false;
         $approved->color = 0x33FF33;
+        $approved->kanban_board_id = 1;
         $approved->save();
 
         $startup = new Status();
@@ -43,6 +45,7 @@ class StatusSeeder extends Seeder
         $startup->active = true;
         $startup->finishing = false;
         $startup->color = 0x33FF33;
+        $startup->kanban_board_id = 1;
         $startup->save();
 
         $preparing = new Status();
@@ -53,6 +56,7 @@ class StatusSeeder extends Seeder
         $preparing->active = true;
         $preparing->finishing = false;
         $preparing->color = 0x33FF33;
+        $preparing->kanban_board_id = 1;
         $preparing->save();
 
         $busy = new Status();
@@ -63,6 +67,7 @@ class StatusSeeder extends Seeder
         $busy->active = true;
         $busy->finishing = false;
         $busy->color = 0xFFFF11;
+        $busy->kanban_board_id = 1;
         $busy->save();
 
         $waitingForMaterials = new Status();
@@ -73,6 +78,7 @@ class StatusSeeder extends Seeder
         $waitingForMaterials->active = true;
         $waitingForMaterials->finishing = false;
         $waitingForMaterials->color = 0xFF11FF;
+        $waitingForMaterials->kanban_board_id = 1;
         $waitingForMaterials->save();
 
         $executable = new Status();
@@ -83,6 +89,7 @@ class StatusSeeder extends Seeder
         $executable->active = true;
         $executable->finishing = false;
         $executable->color = 0xFF0000;
+        $executable->kanban_board_id = 1;
         $executable->save();
 
         $followUp = new Status();
@@ -93,6 +100,7 @@ class StatusSeeder extends Seeder
         $followUp->active = true;
         $followUp->finishing = true;
         $followUp->color = 0x333333;
+        $followUp->kanban_board_id = 1;
         $followUp->save();
 
         $handled = new Status();
@@ -103,6 +111,7 @@ class StatusSeeder extends Seeder
         $handled->active = false;
         $handled->finishing = true;
         $handled->color = 0xDDDDDD;
+        $handled->kanban_board_id = 1;
         $handled->save();
     }
 }

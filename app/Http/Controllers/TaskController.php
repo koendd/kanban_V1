@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Task;
 use App\Models\System;
@@ -55,6 +56,7 @@ class TaskController extends Controller
             'status_id' => ['required', 'exists:statuses,id'],
         ]);
         $task = new Task($validatedData);
+        $task->creator_id = Auth::id();
         $task->save();
         return redirect()->route('home');
     }
