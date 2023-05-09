@@ -7,8 +7,9 @@
         <div class="card h-100 bg-transparent">
             <div class="card-header text-center" style="background-color: rgba({{$status->redColorValue()}}, {{$status->greenColorValue()}}, {{$status->blueColorValue()}}, 0.7 );">
                 {{$status->name}}
+                <span id="status{{$status->id}}Count">&#35;{{$status->Tasks->count()}}</span>
             </div>
-            <div class="card-body overflow-auto" style="background-color: rgba({{$status->redColorValue()}}, {{$status->greenColorValue()}}, {{$status->blueColorValue()}}, 0.5)" ondrop="drop(event)" ondragover="allowDrop(event)" id="status{{$status->id}}">
+            <div class="card-body overflow-auto drop-class" style="background-color: rgba({{$status->redColorValue()}}, {{$status->greenColorValue()}}, {{$status->blueColorValue()}}, 0.5)" ondrop="drop(event)" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" id="status{{$status->id}}">
                 @foreach($status->Tasks as $task)
                 <div class="card mb-2" style="opacity: .9" draggable="true" ondragstart="drag(event)" id="task{{$task->id}}">
                     <div class="card-header text-center cursor-pointer" style="background-color: rgba({{$task->priority->redColorValue()}}, {{$task->priority->greenColorValue()}}, {{$task->priority->blueColorValue()}}, 0.7 )">
@@ -129,23 +130,46 @@
         ev.preventDefault();
     }
 
+    function dragEnter(ev) {
+        ev.preventDefault();
+        if (ev.target.id.includes("status")) {
+            ev.target.classList.add("drop-space");
+        }
+    }
+
+    function dragLeave(ev) {
+        ev.preventDefault();
+        if (ev.target.id.includes("status")) {
+            ev.target.classList.remove("drop-space");
+        }
+    }
+
     function drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
+        ev.dataTransfer.setData("task", ev.target.id);
+        ev.dataTransfer.setData("prevStatusId", document.querySelector("#" + ev.target.id).parentNode.id);
     }
 
     function drop(ev) {
         let token = document.querySelector("#token").value;
         if(ev.target.id.includes("status")) {
             ev.preventDefault();
-            var data = ev.dataTransfer.getData("text");
+            var data = ev.dataTransfer.getData("task");
             ev.target.appendChild(document.getElementById(data));
 
             let newStatusId = ev.target.id.replace(/.*status/g,"");
             let taskId = data.replace(/.*task/g,"");
 
             axios.post("{{route('updateTaskStatusApi')}}", {api_token: token, task_id: taskId, status_id: newStatusId})
-                .then(() => {
-                    console.log("update success");
+                .then((response) => {
+                    ev.target.classList.remove("drop-space");
+                    document.querySelector("#status" + newStatusId + "Count").innerHTML = "#" + response.data.length;
+
+                    if("#status" + newStatusId != "#" + ev.dataTransfer.getData("prevStatusId")){
+                        let prevStatusCount = document.querySelector("#" + ev.dataTransfer.getData("prevStatusId") + "Count").innerHTML;
+                        prevStatusCount = parseInt(prevStatusCount.replace("#", ""));
+                        prevStatusCount -= 1;
+                        document.querySelector("#" + ev.dataTransfer.getData("prevStatusId") + "Count").innerHTML = "#" + prevStatusCount;
+                    }
                 }).catch((err) => {
                     console.error("update error");
                 });

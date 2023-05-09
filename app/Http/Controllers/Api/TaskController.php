@@ -16,7 +16,7 @@ class TaskController extends Controller
         $task = Task::findOrFail($request->task_id);
         $task->status_id = $request->status_id;
         $task->save();
-        return response('', 200);
+        return Task::where("status_id", "=", $request->status_id)->get();
     }
 
     public function getTask($id)
