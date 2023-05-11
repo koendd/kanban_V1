@@ -15,7 +15,7 @@
                         <div class="row mb-3">
                             <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="inputName" name="name" required/>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="inputName" name="name" maxlength="255" required value="{{old('name')}}"/>
 
                                 @error('name')
                                 <div class="invalid-feedback">
@@ -27,7 +27,7 @@
                         <div class="row mb-3">
                             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description"></textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" value="{{old('description')}}"></textarea>
 
                                 @error('description')
                                 <div class="invalid-feedback">
@@ -37,9 +37,25 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label for="inputUsers" class="col-sm-2 col-form-label">Users</label>
+                            <div class="col-sm-10">
+                                <select id="user_ids" class="form-select" name="user_ids[]" multiple>
+                                    @foreach ($users as $user)
+                                    <option value="{{$user->id}}" {{$user->id == Auth::id() ? "selected" : ""}}>{{$user->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('user_ids')
+                                <div class="invalid-feedback">
+                                    Please provide one or many users handling this task.
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label for="inputDeadline" class="col-sm-2 col-form-label">Deadline</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control @error('deadline') is-invalid @enderror" id="inputDeadline" name="deadline" />
+                                <input type="date" class="form-control @error('deadline') is-invalid @enderror" id="inputDeadline" name="deadline" value="{{old('deadline')}}" />
 
                                 @error('deadline')
                                 <div class="invalid-feedback">
@@ -126,6 +142,23 @@
                                 @error('status_id')
                                 <div class="invalid-feedback">
                                     Please select a status.
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputType" class="col-sm-2 col-form-label">Type</label>
+                            <div class="col-sm-10">
+                                <select class="form-select @error('task_type_id') is-invalid @enderror" id="inputType" name="task_type_id" required>
+                                    <option disabled selected>Choose a type</option>
+                                    @foreach($types as $type)
+                                    <option value="{{$type->id}}">{{$type->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('task_type_id')
+                                <div class="invalid-feedback">
+                                    Please select a type.
                                 </div>
                                 @enderror
                             </div>

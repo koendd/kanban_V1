@@ -10,6 +10,8 @@ use App\Models\System;
 use App\Models\Applicant;
 use App\Models\Priority;
 use App\Models\Status;
+use App\Models\TaskType;
+use App\Models\User;
 
 class TaskController extends Controller
 {
@@ -31,10 +33,12 @@ class TaskController extends Controller
     public function create()
     {
         $systems = System::orderBy('name_short', 'asc')->get();
-        $applicants = Applicant::get();
-        $priorities = Priority::get();
-        $statuses = Status::get();
-        return view('Tasks.create', compact(['systems', 'applicants', 'priorities', 'statuses']));
+        $applicants = Applicant::orderBy('name', 'asc')->get();
+        $priorities = Priority::orderBy('order_number', 'asc')->get();
+        $statuses = Status::orderBy('order_number', 'asc')->get();
+        $types = TaskType::orderBy('name', 'asc')->get();
+        $users = User::orderBy('name', 'asc')->get();
+        return view('Tasks.create', compact(['systems', 'applicants', 'priorities', 'statuses', 'types', 'users']));
     }
 
     /**
@@ -54,10 +58,20 @@ class TaskController extends Controller
             'applicant_id' => ['nullable', 'exists:applicants,id'],
             'priority_id' => ['required', 'exists:priorities,id'],
             'status_id' => ['required', 'exists:statuses,id'],
+            'task_type_id' => ['required', 'exists:task_types,id'],
+            'user_ids' => ['array', 'exists:users,id'],
         ]);
         $task = new Task($validatedData);
         $task->creator_id = Auth::id();
         $task->save();
+
+        // add new users if they not already exists
+        foreach($validatedData['user_ids'] as $user_id) {
+            if(!$task->Users->contains($user_id)) {
+                $task->Users()->attach($user_id);
+            }
+        }
+
         return redirect()->route('home');
     }
 

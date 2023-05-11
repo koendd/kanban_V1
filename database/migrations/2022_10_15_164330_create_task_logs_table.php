@@ -15,7 +15,7 @@ class CreateTaskLogsTable extends Migration
     {
         Schema::create('task_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->string('description', 1000);
             $table->unsignedBigInteger('task_id');
             $table->foreign('task_id')->references('id')->on('tasks');
             $table->unsignedBigInteger('user_id');

@@ -16,22 +16,33 @@
                         {{$task->name}}
                     </div>
                     <div class="card-body">
+                        @if($task->system)
+                        <div>
+                            <p class="m-0 fw-bold">System:</p>
+                            <p class="m-0 ps-3">
+                                {{$task->system->name_short}}
+                                @if($task->subSystem)
+                                 &#45; {{$task->subSystem->name_short}}
+                                @endif
+                            </p>
+                        </div>
+                        @endif
                         @if($task->description)
                         <div>
                             <p class="m-0 fw-bold">Description:</p>
-                            <p class="m-0">{{$task->description}}</p>
+                            <p class="m-0 ps-3">{{$task->description}}</p>
                         </div>
                         @endif
                         @if($task->deadline)
                         <div>
                             <p class="m-0 fw-bold">Deadline:</p>
-                            <p class="m-0">{{$task->deadline}}</p>
+                            <p class="m-0 ps-3">{{$task->deadline}}</p>
                         </div>
                         @endif
                         @if($task->Users->count())
                         <div>
                             <p class="m-0 fw-bold">Users:</p>
-                            <p class="m-0">
+                            <p class="m-0 ps-3">
                                 @foreach($task->Users as $user)
                                 {{$user->name}}<br>
                                 @endforeach
@@ -88,6 +99,8 @@
                     <div class="mb-3 row">
                         <label for="modalDeadline" class="col-sm-2 col-form-label">Deadline</label>
                         <div class="col-sm-4"><input class="form-control" id="modalDeadline" disabled /></div>
+                        <label for="modalType" class="col-sm-2 col-form-label">Type</label>
+                        <div class="col-sm-4"><input class="form-control" id="modalType" disabled /></div>
                     </div>
                     <div class="mb-3 row">
                         <div class="col-md-6 offset-md-2">
@@ -99,7 +112,7 @@
                 <div class="border-top">
                     <div class="mb-3 mt-2 row">
                         <label for="modalnewLogEntry" class="col-sm-2 col-form-label">New log entry</label>
-                        <div class="col-sm-8"><textarea class="form-control" id="modalNewLogEntry"></textarea></div>
+                        <div class="col-sm-8"><textarea class="form-control" id="modalNewLogEntry" maxlength="1000"></textarea></div>
                         <div class="col-sm-2"><button type="button" class="btn btn-primary" onclick="addNewLogEntry()">Add log</button></div>
                     </div>
                     <table class="table table-hover">
@@ -193,6 +206,7 @@
                 document.querySelector("#modalSubSystem").value = "";
                 document.querySelector("#modalPriority").value = "";
                 document.querySelector("#modalStatus").value = "";
+                document.querySelector("#modalType").value = "";
 
                 let usersString = "";
                 response.data.users.forEach((user, index) => {
@@ -224,6 +238,7 @@
                 document.querySelector("#modalPriority").style.color = "#" + response.data.priority.color.toString(16);
                 document.querySelector("#modalStatus").value = response.data.status.name;
                 document.querySelector("#modalStatus").style.color = "#" + response.data.status.color.toString(16);
+                document.querySelector("#modalType").value = response.data.task_type.name;
 
                 let modalLogEntries = document.querySelector("#modalLogEntries");
                 modalLogEntries.innerHTML = null;

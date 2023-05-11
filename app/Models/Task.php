@@ -29,7 +29,8 @@ class Task extends Model
         'sub_system_id',
         'applicant_id',
         'priority_id',
-        'status_id'
+        'status_id',
+        'task_type_id'
     ];
 
     // relationship functions
@@ -71,5 +72,10 @@ class Task extends Model
     public function TaskLogs()
     {
         return $this->hasMany(TaskLog::class);
+    }
+
+    public function TaskType()
+    {
+        return $this->belongsTo(TaskType::class);
     }
 }
