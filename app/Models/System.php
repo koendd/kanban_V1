@@ -21,6 +21,7 @@ class System extends Model
         'name_short',
         'name_full',
         'description',
+        'kanban_board_id'
     ];
 
     public function SubSystems()

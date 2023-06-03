@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\SystemController;
+use App\Http\Controllers\SubSystemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +32,11 @@ Route::middleware('auth')->group(function() {
     Route::post('/task/create', [TaskController::class, 'store']);
     Route::get('/task/edit/{task}', [TaskController::class, 'edit'])->name('editTask');
     Route::post('/task/edit/{task}', [TaskController::class, 'update']);
+
+    Route::get('/system', [SystemController::class, 'index'])->name('systems');
+    Route::get('/system/create', [SystemController::class, 'create'])->name('createSystem');
+    Route::post('/system/create', [SystemController::class, 'store']);
+
+    Route::get('/subsystem/create', [SubSystemController::class, 'create'])->name('createSubSystem');
+    Route::post('/subsystem/create', [SubSystemController::class, 'store']);
 });
