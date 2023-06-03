@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Create a new task
+                    Edit task: <span class="text-primary">{{$task->name}}</span>
                 </div>
                 <div class="card-body">
                     <form action="{{route('createTask')}}" method="post">
@@ -15,7 +15,7 @@
                         <div class="row mb-3">
                             <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="inputName" name="name" maxlength="255" required value="{{old('name')}}"/>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="inputName" name="name" maxlength="255" required value="{{$task->name}}"/>
 
                                 @error('name')
                                 <div class="invalid-feedback">
@@ -27,7 +27,7 @@
                         <div class="row mb-3">
                             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" value="{{old('description')}}"></textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" value="{{$task->description}}"></textarea>
 
                                 @error('description')
                                 <div class="invalid-feedback">
@@ -41,7 +41,7 @@
                             <div class="col-sm-10">
                                 <select id="user_ids" class="form-select" name="user_ids[]" multiple>
                                     @foreach ($users as $user)
-                                    <option value="{{$user->id}}" {{$user->id == Auth::id() ? "selected" : ""}}>{{$user->name}}</option>
+                                    <option value="{{$user->id}}" {{$task->Users->contains($user->id) ? "selected" : ""}}>{{$user->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -55,7 +55,7 @@
                         <div class="row mb-3">
                             <label for="inputDeadline" class="col-sm-2 col-form-label">Deadline</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control @error('deadline') is-invalid @enderror" id="inputDeadline" name="deadline" value="{{old('deadline')}}" />
+                                <input type="date" class="form-control @error('deadline') is-invalid @enderror" id="inputDeadline" name="deadline" value="{{$task->deadline}}" />
 
                                 @error('deadline')
                                 <div class="invalid-feedback">
@@ -68,9 +68,9 @@
                             <label for="inputSystem" class="col-sm-2 col-form-label">System</label>
                             <div class="col-sm-10">
                                 <select class="form-select @error('system_id') is-invalid @enderror" id="inputSystem" name="system_id" onchange="getSubSystems(this.value)" required>
-                                    <option disabled selected>Choose a system</option>
+                                    <option disabled>Choose a system</option>
                                     @foreach($systems as $system)
-                                    <option value="{{$system->id}}">{{$system->name_short}}{{$system->name_full ? ' - ' . $system->name_full : ''}}</option>
+                                    <option value="{{$system->id}}" @if($system->id == $task->system_id) selected @endif>{{$system->name_short}}{{$system->name_full ? ' - ' . $system->name_full : ''}}</option>
                                     @endforeach
                                 </select>
 
@@ -85,7 +85,10 @@
                             <label for="inputSubSystem" class="col-sm-2 col-form-label">Sub-system</label>
                             <div class="col-sm-10">
                                 <select class="form-select @error('sub_system_id') is-invalid @enderror" id="inputSubSystem" name="sub_system_id">
-                                    <option disabled selected>Choose a system first</option>
+                                    <option disabled>Choose a system first</option>
+                                    @foreach($subSystems as $subSystem)
+                                    <option value="{{$subSystem->id}}" @if($subSystem->id == $task->sub_system_id) selected @endif>{{$subSystem->name_short}}{{$subSystem->name_full ? ' - ' . $subSystem->name_full : ''}}</option>
+                                    @endforeach
                                 </select>
 
                                 @error('sub_system_id')
@@ -99,9 +102,9 @@
                             <label for="inputApplicant" class="col-sm-2 col-form-label">Applicant</label>
                             <div class="col-sm-10">
                                 <select class="form-select @error('applicant_id') is-invalid @enderror" id="inputApplicant" name="applicant_id">
-                                    <option disabled selected>Choose a applicant</option>
+                                    <option disabled>Choose a applicant</option>
                                     @foreach($applicants as $applicant)
-                                    <option value="{{$applicant->id}}">{{$applicant->name}}</option>
+                                    <option value="{{$applicant->id}}" @if($applicant->id == $task->applicant_id) selected @endif>{{$applicant->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -116,9 +119,9 @@
                             <label for="inputPriority" class="col-sm-2 col-form-label">Priority</label>
                             <div class="col-sm-10">
                                 <select class="form-select @error('priority_id') is-invalid @enderror" id="inputPriority" name="priority_id" required>
-                                    <option disabled selected>Choose a priority</option>
+                                    <option disabled>Choose a priority</option>
                                     @foreach($priorities as $priority)
-                                    <option value="{{$priority->id}}">{{$priority->name}}</option>
+                                    <option value="{{$priority->id}}" @if($priority->id == $task->priority_id) selected @endif>{{$priority->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -133,9 +136,9 @@
                             <label for="inputStatus" class="col-sm-2 col-form-label">Status</label>
                             <div class="col-sm-10">
                                 <select class="form-select @error('status_id') is-invalid @enderror" id="inputStatus" name="status_id" required>
-                                    <option disabled selected>Choose a status</option>
+                                    <option disabled>Choose a status</option>
                                     @foreach($statuses as $status)
-                                    <option value="{{$status->id}}">{{$status->name}}</option>
+                                    <option value="{{$status->id}}" @if($status->id == $task->status_id) selected @endif>{{$status->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -150,9 +153,9 @@
                             <label for="inputType" class="col-sm-2 col-form-label">Type</label>
                             <div class="col-sm-10">
                                 <select class="form-select @error('task_type_id') is-invalid @enderror" id="inputType" name="task_type_id" required>
-                                    <option disabled selected>Choose a type</option>
+                                    <option disabled>Choose a type</option>
                                     @foreach($types as $type)
-                                    <option value="{{$type->id}}">{{$type->name}}</option>
+                                    <option value="{{$type->id}}" @if($type->id == $task->task_type_id) selected @endif>{{$type->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -167,7 +170,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-2">
                                 <button type="submit" class="btn btn-success">Create task</button>
-                                <button type="Button" class="btn btn-danger">Cancel</button>
+                                <button type="button" class="btn btn-danger">Cancel</button>
                             </div>
                         </div>
                     </form>

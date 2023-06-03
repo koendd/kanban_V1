@@ -105,7 +105,7 @@
                     <div class="mb-3 row">
                         <div class="col-md-6 offset-md-2">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-warning">Edit</button>
+                            <a href="#" class="btn btn-warning" id="modalEditBtn">Edit</a>
                         </div>
                     </div>
                 </div>
@@ -207,6 +207,7 @@
                 document.querySelector("#modalPriority").value = "";
                 document.querySelector("#modalStatus").value = "";
                 document.querySelector("#modalType").value = "";
+                document.querySelector("#modalEditBtn").setAttribute('href', '/task/edit/' + calledTaskId);
 
                 let usersString = "";
                 response.data.users.forEach((user, index) => {

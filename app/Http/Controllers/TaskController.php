@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Task;
 use App\Models\System;
+use App\Models\SubSystem;
 use App\Models\Applicant;
 use App\Models\Priority;
 use App\Models\Status;
@@ -81,7 +82,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Task $task)
     {
         //
     }
@@ -92,9 +93,16 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Task $task)
     {
-        //
+        $systems = System::orderBy('name_short', 'asc')->get();
+        $subSystems = SubSystem::where('system_id', $task->system_id)->get();
+        $applicants = Applicant::orderBy('name', 'asc')->get();
+        $priorities = Priority::orderBy('order_number', 'asc')->get();
+        $statuses = Status::orderBy('order_number', 'asc')->get();
+        $types = TaskType::orderBy('name', 'asc')->get();
+        $users = User::orderBy('name', 'asc')->get();
+        return view('Tasks.edit', compact(['task', 'systems', 'subSystems', 'applicants', 'priorities', 'statuses', 'types', 'users']));
     }
 
     /**
@@ -104,9 +112,53 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => ['required', 'string'],
+            'description' => ['string', 'nullable'],
+            'deadline' => ['date', 'nullable'],
+            'system_id' => ['required', 'exists:systems,id'],
+            'sub_system_id' => ['nullable', 'exists:sub_systems,id'],
+            'applicant_id' => ['nullable', 'exists:applicants,id'],
+            'priority_id' => ['required', 'exists:priorities,id'],
+            'status_id' => ['required', 'exists:statuses,id'],
+            'task_type_id' => ['required', 'exists:task_types,id'],
+            'user_ids' => ['array', 'exists:users,id'],
+        ]);
+
+        $task->name = $request->name;
+        $task->description = $request->description;
+        $task->deadline = $request->deadline;
+        $task->system_id = $request->system_id;
+        $task->sub_system_id = $request->sub_system_id;
+        $task->applicant_id = $request->applicant_id ?? null;
+        $task->priority_id = $request->priority_id;
+        $task->status_id = $request->status_id;
+        $task->task_type_id = $request->task_type_id;
+        $task->save();
+
+        if(array_key_exists('user_ids', $validatedData)) {
+            // add new user if they not already exists
+            foreach($validatedData['user_ids'] as $user_id) {
+                if(!$task->Users->contains($user_id)) {
+                    $task->Users()->attach($user_id);
+                }
+            }
+
+            // remove an existing user
+            foreach($task->Users as $user) {
+                if(!in_array($user->id, $validatedData['user_ids'])) {
+                    $task->Users()->detach($user->id);
+                }
+            }
+        } else {
+            foreach($task->Users as $user) {
+                $task->Users()->detach($user_id);
+            }
+        }
+
+        return redirect()->route('home');
     }
 
     /**
