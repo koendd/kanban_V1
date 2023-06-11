@@ -53,6 +53,6 @@ class SystemController extends Controller
         $subSystem = new System($validatedData);
         $subSystem->save();
 
-        return redirect()->route('home');
+        return redirect()->route('system');
     }
 }
