@@ -73,7 +73,7 @@ class TaskController extends Controller
             }
         }
 
-        return redirect()->route('home');
+        return redirect()->route('home', Auth::user()->default_kanban_board_id);
     }
 
     /**
@@ -158,7 +158,7 @@ class TaskController extends Controller
             }
         }
 
-        return redirect()->route('home');
+        return redirect()->route('home', Auth::user()->default_kanban_board_id);
     }
 
     /**

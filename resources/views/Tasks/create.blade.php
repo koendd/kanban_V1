@@ -15,7 +15,7 @@
                         <div class="row mb-3">
                             <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="inputName" name="name" maxlength="255" required value="{{old('name')}}"/>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="inputName" name="name" maxlength="255" required value="{{old('name')}}" autocomplete="off"/>
 
                                 @error('name')
                                 <div class="invalid-feedback">
@@ -27,7 +27,7 @@
                         <div class="row mb-3">
                             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" value="{{old('description')}}"></textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" value="{{old('description')}}" autocomplete="off"></textarea>
 
                                 @error('description')
                                 <div class="invalid-feedback">
