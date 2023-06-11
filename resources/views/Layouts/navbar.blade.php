@@ -4,13 +4,13 @@
 			<!-- left nav section -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-pills">
             <li class="nav-item">
-                    <a class="nav-link {{Route::currentRouteName() == 'prepKanban' ? 'active' : ''}}" aria-current="page" href="{{route('prepKanban')}}">Preparetion</a>
+                    <a class="nav-link {{Route::currentRouteName() == 'prepKanban' ? 'active' : ''}}" aria-current="page" href="{{route('prepKanban', Auth::User()->default_kanban_board_id)}}">Preparetion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{Route::currentRouteName() == 'home' ? 'active' : ''}}" aria-current="page" href="{{route('home')}}">Active</a>
+                    <a class="nav-link {{Route::currentRouteName() == 'home' ? 'active' : ''}}" aria-current="page" href="{{route('home', Auth::User()->default_kanban_board_id)}}">Active</a>
                 </li> 
                 <li class="nav-item">
-                    <a class="nav-link {{Route::currentRouteName() == 'FinishKanban' ? 'active' : ''}}" aria-current="page" href="{{route('FinishKanban')}}">Finishing</a>
+                    <a class="nav-link {{Route::currentRouteName() == 'FinishKanban' ? 'active' : ''}}" aria-current="page" href="{{route('FinishKanban', Auth::User()->default_kanban_board_id)}}">Finishing</a>
                 </li>
             </ul>
 			

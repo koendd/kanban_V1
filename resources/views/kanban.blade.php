@@ -3,7 +3,7 @@
 @section('content')
 <div class="row my-1" id="kanbanBoard">
     @foreach($statuses as $status)
-    <div class="col w-auto h-100">        
+    <div class="col w-auto h-100">
         <div class="card h-100 bg-transparent">
             <div class="card-header text-center" style="background-color: rgba({{$status->redColorValue()}}, {{$status->greenColorValue()}}, {{$status->blueColorValue()}}, 0.7 );">
                 {{$status->name}}

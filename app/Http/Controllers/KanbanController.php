@@ -4,25 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Status;
+use App\Models\KanbanBoard;
 
 class KanbanController extends Controller
 {
-    public function PreparetionKanban()
+    public function PreparetionKanban(KanbanBoard $kanbanBoard)
     {
-        $statuses = Status::where('preparetion', true)->orderBy('order_number', 'asc')->get();
-        return view('kanban', compact('statuses'));
+        $statuses = $kanbanBoard->Statuses->where('preparetion', true)->sortBy('order_number');
+        return view('kanban', compact(['kanbanBoard', 'statuses']));
     }
 
-    public function ActiveKanban()
+    public function ActiveKanban(KanbanBoard $kanbanBoard)
     {
-        $statuses = Status::where('active', true)->orderBy('order_number', 'asc')->get();
-        return view('kanban', compact('statuses'));
+        $statuses = $kanbanBoard->Statuses->where('active', true)->sortBy('order_number');
+        return view('kanban', compact(['kanbanBoard', 'statuses']));
     }
 
-    public function FinishingKanban()
+    public function FinishingKanban(KanbanBoard $kanbanBoard)
     {
-        $statuses = Status::where('finishing', true)->orderBy('order_number', 'asc')->get();
-        return view('kanban', compact('statuses'));
+        $statuses = $kanbanBoard->Statuses->where('finishing', true)->sortBy('order_number');
+        return view('kanban', compact(['kanbanBoard', 'statuses']));
     }
 }

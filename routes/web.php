@@ -24,9 +24,9 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function() {
-    Route::get('/prepKanban', [KanbanController::class, 'PreparetionKanban'])->name('prepKanban');
-    Route::get('/', [KanbanController::class, 'ActiveKanban'])->name('home');
-    Route::get('/FinishKanban', [KanbanController::class, 'FinishingKanban'])->name('FinishKanban');
+    Route::get('/{kanbanBoard}/prepKanban', [KanbanController::class, 'PreparetionKanban'])->name('prepKanban');
+    Route::get('/{kanbanBoard}', [KanbanController::class, 'ActiveKanban'])->name('home');
+    Route::get('/{kanbanBoard}/FinishKanban', [KanbanController::class, 'FinishingKanban'])->name('FinishKanban');
 
     Route::get('/task/create', [TaskController::class, 'create'])->name('createTask');
     Route::post('/task/create', [TaskController::class, 'store']);

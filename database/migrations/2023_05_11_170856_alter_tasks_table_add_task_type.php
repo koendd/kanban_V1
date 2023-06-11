@@ -26,6 +26,9 @@ class AlterTasksTableAddTaskType extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->dropForeign('tasks_task_type_id_foreign');
+            $table->dropColumn('task_type_id');
+        });
     }
 }

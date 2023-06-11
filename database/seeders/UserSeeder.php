@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
         $root->email = "root@koendd.be";
         $root->password = Hash::make("password");
         $root->api_token = Str::random(80);
+        $root->default_kanban_board_id = 1;
         $root->save();
     }
 }
