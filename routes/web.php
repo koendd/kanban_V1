@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\SystemController;
@@ -24,6 +25,8 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function() {
+    Route::get('/', [HomeController::class, 'Welcome'])->name('welcome');
+    
     Route::get('/kanban/{kanbanBoard}/preparation', [KanbanController::class, 'PreparetionKanban'])->name('prepKanban');
     Route::get('/kanban/{kanbanBoard}', [KanbanController::class, 'ActiveKanban'])->name('home');
     Route::get('/kanban/{kanbanBoard}/Finishing', [KanbanController::class, 'FinishingKanban'])->name('FinishKanban');

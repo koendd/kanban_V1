@@ -28,7 +28,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
  
-            return redirect()->route('home');
+            return redirect()->route('home', Auth::User()->default_kanban_board_id);
         }
  
         return back()->withErrors([

@@ -1,5 +1,7 @@
 @extends('Layouts.app')
 
+@section('title', $kanbanBoard->name)
+
 @section('content')
 <div class="row my-1" id="kanbanBoard">
     @foreach($statuses as $status)

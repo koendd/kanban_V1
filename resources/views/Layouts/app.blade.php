@@ -6,7 +6,7 @@
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>kanban test</title>
+        <title>@if(env('APP_ENV') != 'production' || env('APP_DEBUG')) Debugging @else {{ config('app.name') }} @endif &verbar; @yield('title')</title>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>

@@ -3,7 +3,7 @@
         <div class="collapse navbar-collapse" id="navbarToggler">		
 			<!-- left nav section -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-pills">
-            <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link {{Route::currentRouteName() == 'prepKanban' ? 'active' : ''}}" aria-current="page" href="{{route('prepKanban', Auth::User()->default_kanban_board_id)}}">Preparetion</a>
                 </li>
                 <li class="nav-item">

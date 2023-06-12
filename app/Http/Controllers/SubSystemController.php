@@ -47,6 +47,6 @@ class SubSystemController extends Controller
         $subSystem = new SubSystem($validatedData);
         $subSystem->save();
 
-        return redirect()->route('home');
+        return redirect()->route('system');
     }
 }
