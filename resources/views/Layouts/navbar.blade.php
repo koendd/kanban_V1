@@ -3,22 +3,26 @@
         <div class="collapse navbar-collapse" id="navbarToggler">		
 			<!-- left nav section -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-pills">
+                @isset($kanbanBoard)
                 <li class="nav-item">
-                    <a class="nav-link {{Route::currentRouteName() == 'prepKanban' ? 'active' : ''}}" aria-current="page" href="{{route('prepKanban', Auth::User()->default_kanban_board_id)}}">Preparetion</a>
+                    <a class="nav-link {{Route::currentRouteName() == 'prepKanban' ? 'active' : ''}}" aria-current="page" href="{{route('prepKanban', $kanbanBoard->id)}}">Preparetion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{Route::currentRouteName() == 'home' ? 'active' : ''}}" aria-current="page" href="{{route('home', Auth::User()->default_kanban_board_id)}}">Active</a>
+                    <a class="nav-link {{Route::currentRouteName() == 'home' ? 'active' : ''}}" aria-current="page" href="{{route('home', $kanbanBoard->id)}}">Active</a>
                 </li> 
                 <li class="nav-item">
-                    <a class="nav-link {{Route::currentRouteName() == 'FinishKanban' ? 'active' : ''}}" aria-current="page" href="{{route('FinishKanban', Auth::User()->default_kanban_board_id)}}">Finishing</a>
+                    <a class="nav-link {{Route::currentRouteName() == 'FinishKanban' ? 'active' : ''}}" aria-current="page" href="{{route('FinishKanban', $kanbanBoard->id)}}">Finishing</a>
                 </li>
+                @endisset
             </ul>
 			
 			<!-- right nav section -->
             <ul class="navbar-nav">
+                @isset($kanbanBoard)
                 <li class="nav-item me-5">
-                    <a class="btn btn-outline-warning {{Route::currentRouteName() == 'createTask' ? 'active' : ''}}" role="button" aria-current="page" href="{{route('createTask')}}">New task</a>
+                    <a class="btn btn-outline-warning {{Route::currentRouteName() == 'createTask' ? 'active' : ''}}" role="button" aria-current="page" href="{{route('createTask', $kanbanBoard->id)}}">New task</a>
                 </li>
+                @endisset
 
                 @if(env('APP_ENV') != 'production' || env('APP_DEBUG'))
                     <li class="nav-item"><span class="nav-link text-warning fw-bold">TEST environment</span></li>
@@ -29,14 +33,16 @@
                         {{ Auth::user()->name }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end overflow-auto" style="max-height: 90vh;" aria-labelledby="navbarDarkDropdownMenuLink">
+                        @isset($kanbanBoard)    
                         <li>
-                            <a class="dropdown-item" href="{{ route('systems') }}">
+                            <a class="dropdown-item" href="{{ route('systems', $kanbanBoard->id) }}">
                                 Systems and sub&#45;systems
                             </a>
                         </li>
                         <li>
                             <div class="dropdown-divider"></div>
                         </li>
+                        @endisset
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}

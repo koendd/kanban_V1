@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\KanbanBoard;
 use App\Models\Task;
 use App\Models\System;
 use App\Models\SubSystem;
@@ -31,15 +32,15 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(KanbanBoard $kanbanBoard)
     {
-        $systems = System::orderBy('name_short', 'asc')->get();
-        $applicants = Applicant::orderBy('name', 'asc')->get();
-        $priorities = Priority::orderBy('order_number', 'asc')->get();
-        $statuses = Status::orderBy('order_number', 'asc')->get();
+        $systems = System::where('kanban_board_id', $kanbanBoard->id)->orderBy('name_short', 'asc')->get();
+        $applicants = Applicant::where('kanban_board_id', $kanbanBoard->id)->orderBy('name', 'asc')->get();
+        $priorities = Priority::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
+        $statuses = Status::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
         $types = TaskType::orderBy('name', 'asc')->get();
         $users = User::orderBy('name', 'asc')->get();
-        return view('Tasks.create', compact(['systems', 'applicants', 'priorities', 'statuses', 'types', 'users']));
+        return view('Tasks.create', compact(['kanbanBoard', 'systems', 'applicants', 'priorities', 'statuses', 'types', 'users']));
     }
 
     /**

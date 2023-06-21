@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\KanbanBoard;
 use App\Models\SubSystem;
 use App\Models\System;
 
@@ -24,10 +25,10 @@ class SubSystemController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-   public function create()
+   public function create(KanbanBoard $kanbanBoard)
    {
-       $systems = System::orderBy('name_short', 'asc')->get();
-       return view('SubSystems.create', compact('systems'));
+       $systems = System::where('kanban_board_id', $kanbanBoard->id)->orderBy('name_short', 'asc')->get();
+       return view('SubSystems.create', compact(['kanbanBoard', 'systems']));
    }
 
    /**
@@ -36,7 +37,7 @@ class SubSystemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(KanbanBoard $kanbanBoard, Request $request)
     {
         $validatedData = $request->validate([
             'name_short' => ['required', 'string', 'max:50'],
@@ -47,6 +48,6 @@ class SubSystemController extends Controller
         $subSystem = new SubSystem($validatedData);
         $subSystem->save();
 
-        return redirect()->route('system');
+        return redirect()->route('systems', compact('kanbanBoard'));
     }
 }

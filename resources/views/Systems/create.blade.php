@@ -1,5 +1,7 @@
 @extends('Layouts.app')
 
+@section('title', 'Create system')
+
 @section('content')
 <div class="mt-5">
     <div class="row justify-content-center">
@@ -9,7 +11,7 @@
                     Create a new system
                 </div>
                 <div class="card-body">
-                    <form action="{{route('createSystem')}}" method="post">
+                    <form action="{{route('createSystem', $kanbanBoard->id)}}" method="post">
                         @csrf
                         
                         <div class="row mb-3">
@@ -19,7 +21,7 @@
 
                                 @error('name_short')
                                 <div class="invalid-feedback">
-                                    Please give the subsystem a short name.
+                                    Please give the system a short name.
                                 </div>
                                 @enderror
                             </div>
@@ -31,7 +33,7 @@
 
                                 @error('name_full')
                                 <div class="invalid-feedback">
-                                    Please give the subsystem a full name.
+                                    Please give the system a full name.
                                 </div>
                                 @enderror
                             </div>
@@ -51,16 +53,12 @@
                         <div class="row mb-3">
                             <label for="inputKanbanBoard" class="col-sm-2 col-form-label">Kanban Board</label>
                             <div class="col-sm-10">
-                                <select class="form-select @error('kanban_board_id') is-invalid @enderror" id="inputKanbanBoard" name="kanban_board_id" required>
-                                    <option disabled selected>Choose a kanban board</option>
-                                    @foreach($kanbanBoards as $kanbanBoard)
-                                    <option value="{{$kanbanBoard->id}}">{{$kanbanBoard->name}}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control @error('kanban_board_id') is-invalid @enderror" id="inputKanbanBoard" value="{{$kanbanBoard->name}}" readonly/>
+                                <input type="hidden" name="kanban_board_id" value="{{$kanbanBoard->id}}" />
 
                                 @error('kanban_board_id')
                                 <div class="invalid-feedback">
-                                    Please select a kanban board.
+                                    The kanban board is not correct.
                                 </div>
                                 @enderror
                             </div>
@@ -69,7 +67,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-2">
                                 <button type="submit" class="btn btn-success">Create sub system</button>
-                                <button type="Button" class="btn btn-danger">Cancel</button>
+                                <a href="{{ url()->previous() }}" class="btn btn-danger">{{ __('Cancel') }}</a>
                             </div>
                         </div>
                     </form>

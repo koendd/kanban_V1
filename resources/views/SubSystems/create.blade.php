@@ -1,5 +1,7 @@
 @extends('Layouts.app')
 
+@section('title', 'Create subsystem')
+
 @section('content')
 <div class="mt-5">
     <div class="row justify-content-center">
@@ -9,7 +11,7 @@
                     Create a new subsystem
                 </div>
                 <div class="card-body">
-                    <form action="{{route('createSubSystem')}}" method="post">
+                    <form action="{{route('createSubSystem', $kanbanBoard->id)}}" method="post">
                         @csrf
                         
                         <div class="row mb-3">
@@ -69,7 +71,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-2">
                                 <button type="submit" class="btn btn-success">Create sub system</button>
-                                <button type="Button" class="btn btn-danger">Cancel</button>
+                                <a href="{{ url()->previous() }}" class="btn btn-danger">{{ __('Cancel') }}</a>
                             </div>
                         </div>
                     </form>

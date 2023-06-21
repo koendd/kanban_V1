@@ -1,5 +1,7 @@
 @extends('Layouts.app')
 
+@section('title', 'Systems and Subsystems')
+
 @section('content')
 <div class="d-flex justify-content-between">
     <div class="p-2">
@@ -10,8 +12,8 @@
             <div class="input-group mb-2">
                 <div class="btn-group" role="group">
                     <div class="input-group-text" id="btnGroupAddon">Create</div>
-                    <a href="{{route('createSystem')}}" type="button" class="btn btn-primary">System</a>
-                    <a href="{{route('createSubSystem')}}" type="button" class="btn btn-primary">Sub-system</a>
+                    <a href="{{route('createSystem', $kanbanBoard->id)}}" type="button" class="btn btn-primary">System</a>
+                    <a href="{{route('createSubSystem', $kanbanBoard->id)}}" type="button" class="btn btn-primary">Sub-system</a>
                 </div>
             </div>
         </div>

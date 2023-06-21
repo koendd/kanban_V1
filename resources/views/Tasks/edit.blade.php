@@ -1,5 +1,7 @@
 @extends('Layouts.app')
 
+@section('title', 'Edit task')
+
 @section('content')
 <div class="mt-5">
     <div class="row justify-content-center">
@@ -170,7 +172,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-2">
                                 <button type="submit" class="btn btn-success">Save task</button>
-                                <button type="button" class="btn btn-danger">Cancel</button>
+                                <a href="{{ url()->previous() }}" class="btn btn-danger">{{ __('Cancel') }}</a>
                             </div>
                         </div>
                     </form>

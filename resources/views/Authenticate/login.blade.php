@@ -1,5 +1,7 @@
 @extends('Layouts.app')
 
+@section('title', 'Login')
+
 @section('content')
 <div class="mt-5">
     <div class="row justify-content-center">
