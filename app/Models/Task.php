@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 use App\Models\User;
 use App\Models\System;
@@ -77,5 +78,11 @@ class Task extends Model
     public function TaskType()
     {
         return $this->belongsTo(TaskType::class);
+    }
+
+    // model functions
+    function deadlinePast() : bool {
+        $dt = new Carbon($this->deadline);
+        return $dt->isPast();
     }
 }

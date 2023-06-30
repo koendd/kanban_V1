@@ -38,7 +38,7 @@
                         @if($task->deadline)
                         <div>
                             <p class="m-0 fw-bold">Deadline:</p>
-                            <p class="m-0 ps-3">{{$task->deadline}}</p>
+                            <p class="m-0 ps-3 @if($task->deadlinePast()) text-danger @endif">{{$task->deadline}}</p>
                         </div>
                         @endif
                         @if($task->Users->count())
@@ -242,6 +242,17 @@
                 document.querySelector("#modalStatus").value = response.data.status.name;
                 document.querySelector("#modalStatus").style.color = "#" + response.data.status.color.toString(16);
                 document.querySelector("#modalType").value = response.data.task_type.name;
+
+                if(response.data.deadline != null){
+                    let diff = new Date().getTime() - new Date(response.data.deadline);
+                    if (diff > 0) {
+                        document.querySelector("#modalDeadline").classList.add("bg-danger");
+                        document.querySelector("#modalDeadline").classList.add("text-light");
+                    } else {
+                        document.querySelector("#modalDeadline").classList.remove("bg-danger");
+                        document.querySelector("#modalDeadline").classList.remove("text-light");
+                    }
+                }
 
                 let modalLogEntries = document.querySelector("#modalLogEntries");
                 modalLogEntries.innerHTML = null;
