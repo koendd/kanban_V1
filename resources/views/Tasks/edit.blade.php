@@ -11,7 +11,7 @@
                     Edit task: <span class="text-primary">{{$task->name}}</span>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('editTask', $task->id)}}" method="post">
+                    <form action="{{route('editTask', ['kanbanBoard' => $kanbanBoard->id, 'task' => $task->id])}}" method="post">
                         @csrf
                         
                         <div class="row mb-3">

@@ -94,7 +94,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Task $task)
+    public function edit(Kanbanboard $kanbanBoard, Task $task)
     {
         $systems = System::orderBy('name_short', 'asc')->get();
         $subSystems = SubSystem::where('system_id', $task->system_id)->get();
@@ -103,7 +103,7 @@ class TaskController extends Controller
         $statuses = Status::orderBy('order_number', 'asc')->get();
         $types = TaskType::orderBy('name', 'asc')->get();
         $users = User::orderBy('name', 'asc')->get();
-        return view('Tasks.edit', compact(['task', 'systems', 'subSystems', 'applicants', 'priorities', 'statuses', 'types', 'users']));
+        return view('Tasks.edit', compact(['kanbanBoard', 'task', 'systems', 'subSystems', 'applicants', 'priorities', 'statuses', 'types', 'users']));
     }
 
     /**
@@ -113,7 +113,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(Kanbanboard $kanbanBoard, Request $request, Task $task)
     {
         $validatedData = $request->validate([
             'name' => ['required', 'string'],

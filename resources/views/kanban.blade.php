@@ -209,7 +209,7 @@
                 document.querySelector("#modalPriority").value = "";
                 document.querySelector("#modalStatus").value = "";
                 document.querySelector("#modalType").value = "";
-                document.querySelector("#modalEditBtn").setAttribute('href', '/task/edit/' + calledTaskId);
+                document.querySelector("#modalEditBtn").setAttribute('href', '/kanban/' + {{$kanbanBoard->id}} + '/task/edit/' + calledTaskId);
 
                 let usersString = "";
                 response.data.users.forEach((user, index) => {
