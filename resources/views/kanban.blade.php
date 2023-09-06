@@ -114,14 +114,14 @@
                 <div class="border-top">
                     <div class="mb-3 mt-2 row">
                         <label for="modalnewLogEntry" class="col-sm-2 col-form-label">New log entry</label>
-                        <div class="col-sm-8"><textarea class="form-control" id="modalNewLogEntry" maxlength="1000"></textarea></div>
+                        <div class="col-sm-8"><textarea class="form-control" id="modalNewLogEntry" maxlength="1000" rows="4"></textarea></div>
                         <div class="col-sm-2"><button type="button" class="btn btn-primary" onclick="addNewLogEntry()">Add log</button></div>
                     </div>
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Date</th>
+                            <th scope="col" style="width: 5em;">#</th>
+                            <th scope="col" style="width: 10em;">Date</th>
                             <th scope="col">User</th>
                             <th scope="col">Log entry</th>
                             </tr>
@@ -234,6 +234,7 @@
                 document.querySelector("#modalDescription").value = response.data.description;
                 document.querySelector("#modalDeadline").value = response.data.deadline;
                 document.querySelector("#modalUsers").value = usersString;
+                document.querySelector("#modalUsers").title = usersString;
                 document.querySelector("#modalApplicant").value = applicantString;
                 document.querySelector("#modalSystem").value = systemString;
                 document.querySelector("#modalSubSystem").value = subSystemString;
@@ -252,6 +253,9 @@
                         document.querySelector("#modalDeadline").classList.remove("bg-danger");
                         document.querySelector("#modalDeadline").classList.remove("text-light");
                     }
+                } else {
+                    document.querySelector("#modalDeadline").classList.remove("bg-danger");
+                    document.querySelector("#modalDeadline").classList.remove("text-light");
                 }
 
                 let modalLogEntries = document.querySelector("#modalLogEntries");
@@ -263,8 +267,10 @@
                     let userCell = row.insertCell(2);
                     let descriptionCell = row.insertCell(3);
 
+                    let logTimestamp = new Date(log.created_at);
+
                     idCell.innerHTML = log.id;
-                    dateCell.innerHTML = new Date(log.created_at).toLocaleDateString();
+                    dateCell.innerHTML = logTimestamp.toLocaleDateString() + "<br>" + logTimestamp.toLocaleTimeString();
                     userCell.innerHTML = log.user.name;
                     descriptionCell.innerHTML = descriptioneParser(log.description);
                 });

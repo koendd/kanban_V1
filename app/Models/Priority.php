@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Task;
+use App\Models\KanbanBoard;
 
 class Priority extends Model
 {
@@ -15,6 +16,11 @@ class Priority extends Model
     public function Tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function KanbanBoard()
+    {
+        return $this->belongsTo(KanbanBoard::class);
     }
 
     // getters

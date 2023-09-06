@@ -8,6 +8,7 @@ use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\SystemController;
 use App\Http\Controllers\SubSystemController;
+use App\Http\Controllers\StatisticsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +43,6 @@ Route::middleware('auth')->group(function() {
 
     Route::get('/kanban/{kanbanBoard}/subsystem/create', [SubSystemController::class, 'create'])->name('createSubSystem');
     Route::post('/kanban/{kanbanBoard}/subsystem/create', [SubSystemController::class, 'store']);
+
+    Route::get('/kanban/{kanbanBoard}/statistics', [StatisticsController::class, 'getFullStatistics'])->name('statistics');
 });

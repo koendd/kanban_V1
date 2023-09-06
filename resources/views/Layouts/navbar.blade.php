@@ -40,6 +40,11 @@
                             </a>
                         </li>
                         <li>
+                            <a class="dropdown-item" href="{{ route('statistics', $kanbanBoard->id) }}">
+                                Statistics
+                            </a>
+                        </li>
+                        <li>
                             <div class="dropdown-divider"></div>
                         </li>
                         @endisset
