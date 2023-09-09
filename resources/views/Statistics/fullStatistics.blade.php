@@ -35,8 +35,7 @@
             </table>
         </div>
     </div>
-    <div class="col-6">
-        chart
+    <div class="col-6" id="statusVisChart">
     </div>
 </div>
 @else
@@ -74,10 +73,30 @@
             </table>
         </div>
     </div>
-    <div class="col-6">
-        chart
+    <div class="col-6" id="priorityVisChart">
     </div>
 </div>
 @else
 @endif
+
+
+<input type="hidden" value="{{ Auth::user()->api_token }}" id="token" />
+<script>
+window.onload = (event) => {
+        console.log("on load");
+
+        let token = $("#token").val();
+        axios.get("{{route('getStatisticsDataApi', $kanbanBoard->id)}}", {params: { "api_token": token}})
+        .then(function(response){
+            console.log("data loaded");
+            console.info(response.data);
+
+            loadStatistics(response.data.statusStats, "#statusVisChart");
+            loadStatistics(response.data.priorityStats, "#priorityVisChart");
+        }).catch(function (error) {
+            // handle error
+            console.log(error);
+        });
+    }
+</script>
 @endSection

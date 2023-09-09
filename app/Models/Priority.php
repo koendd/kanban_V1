@@ -12,6 +12,13 @@ class Priority extends Model
 {
     use HasFactory;
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['colorHex'];
+
     // relationship functions
     public function Tasks()
     {
@@ -24,6 +31,15 @@ class Priority extends Model
     }
 
     // getters
+    /**
+     * Get the color value in hex.
+     *
+     * @return string
+     */
+    public function getColorHexAttribute() {
+        return dechex($this->color);
+    }
+
     /**
      * Get the red color value.
      *

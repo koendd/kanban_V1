@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\SystemController;
+use App\Http\Controllers\Api\StatisticsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,5 @@ Route::get('/task/{id}', [TaskController::class, 'getTask'])->middleware('auth:a
 Route::post('/task/addLogEntry', [TaskController::class, 'addLogEntryToTask'])->middleware('auth:api')->name('addTaskLogEntryApi');
 
 Route::get('/system/{system}/subsystems', [SystemController::class, 'getSubsytems'])->middleware('auth:api')->name('getSubsystemsApi');
+
+Route::get('/statistics/{kanbanBoard}/data', [StatisticsController::class, 'getStatisticsData'])->name('getStatisticsDataApi');
