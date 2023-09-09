@@ -33,6 +33,16 @@
                         {{ Auth::user()->name }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end overflow-auto" style="max-height: 90vh;" aria-labelledby="navbarDarkDropdownMenuLink">
+                        @if($kanbanBoardCount > 1)
+                        <li>
+                            <a class="dropdown-item" href="{{ route('welcome') }}">
+                                Kanban boards
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider"></div>
+                        </li>
+                        @endif
                         @isset($kanbanBoard)    
                         <li>
                             <a class="dropdown-item" href="{{ route('systems', $kanbanBoard->id) }}">
