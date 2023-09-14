@@ -115,8 +115,11 @@
                 <div class="border-top">
                     <div class="mb-3 mt-2 row">
                         <label for="modalnewLogEntry" class="col-sm-2 col-form-label">New log entry</label>
-                        <div class="col-sm-8"><textarea class="form-control" id="modalNewLogEntry" maxlength="1000" rows="4"></textarea></div>
-                        <div class="col-sm-2"><button type="button" class="btn btn-primary" onclick="addNewLogEntry()">Add log</button></div>
+                        <div class="col-sm-8"><textarea class="form-control" id="modalNewLogEntry" maxlength="1000" rows="4" onkeyup="displayCharCount(this)"></textarea></div>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-primary" onclick="addNewLogEntry()">Add log</button>
+                            <p id="charCount" class="col-form-label font-monospace">0 / 1000</p>
+                        </div>
                     </div>
                     <table class="table table-hover">
                         <thead>
@@ -192,6 +195,11 @@
         }
     }
 
+    function displayCharCount(element) {
+        document.querySelector("#charCount").innerHTML = element.value.length.toString().padEnd(4) + " / 1000";
+        //console.log(element.value.length);
+    }
+
     function showTask(taskId) {
         let token = document.querySelector("#token").value;
         axios.get("/api/task/" + taskId, {params: { "api_token": token}})
@@ -212,6 +220,7 @@
                 document.querySelector("#modalType").value = "";
                 document.querySelector("#modalEditBtn").setAttribute('href', '/kanban/' + {{$kanbanBoard->id}} + '/task/edit/' + calledTaskId);
                 document.querySelector("#modalShowBtn").setAttribute('href', '/kanban/' + {{$kanbanBoard->id}} + '/task/show/' + calledTaskId);
+                document.querySelector("#modalNewLogEntry").value = "";
 
                 let usersString = "";
                 response.data.users.forEach((user, index) => {
@@ -292,6 +301,7 @@
                 document.querySelector("#modalNewLogEntry").value = "";
                 let modalLogEntries = document.querySelector("#modalLogEntries");
                 modalLogEntries.innerHTML = null;
+                document.querySelector("#charCount").innerHTML = "0 / 1000";
                 response.data.forEach((log) => {
                     let row = modalLogEntries.insertRow();
                     let idCell = row.insertCell(0);
