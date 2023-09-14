@@ -7,14 +7,14 @@
     @foreach($statuses as $status)
     <div class="col w-auto h-100">
         <div class="card h-100 bg-transparent">
-            <div class="card-header text-center" style="background-color: rgba({{$status->redColorValue()}}, {{$status->greenColorValue()}}, {{$status->blueColorValue()}}, 0.7 );">
+            <div class="card-header text-center" style="background-color: rgba({{$status->RedColorValue}}, {{$status->GreenColorValue}}, {{$status->BlueColorValue}}, 0.7 );">
                 {{$status->name}}
                 <span id="status{{$status->id}}Count">&#35;{{$status->Tasks->count()}}</span>
             </div>
-            <div class="card-body overflow-auto drop-class" style="background-color: rgba({{$status->redColorValue()}}, {{$status->greenColorValue()}}, {{$status->blueColorValue()}}, 0.5)" ondrop="drop(event)" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" id="status{{$status->id}}">
+            <div class="card-body overflow-auto drop-class" style="background-color: rgba({{$status->RedColorValue}}, {{$status->GreenColorValue}}, {{$status->BlueColorValue}}, 0.5)" ondrop="drop(event)" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" id="status{{$status->id}}">
                 @foreach($status->Tasks as $task)
                 <div class="card mb-2" style="opacity: .9" draggable="true" ondragstart="drag(event)" id="task{{$task->id}}">
-                    <div class="card-header text-center cursor-pointer" style="background-color: rgba({{$task->priority->redColorValue()}}, {{$task->priority->greenColorValue()}}, {{$task->priority->blueColorValue()}}, 0.7 )">
+                    <div class="card-header text-center cursor-pointer" style="background-color: rgba({{$task->priority->RedColorValue}}, {{$task->priority->GreenColorValue}}, {{$task->priority->BlueColorValue}}, 0.7 )">
                         {{$task->name}}
                     </div>
                     <div class="card-body">
@@ -38,7 +38,7 @@
                         @if($task->deadline)
                         <div>
                             <p class="m-0 fw-bold">Deadline:</p>
-                            <p class="m-0 ps-3 @if($task->deadlinePast()) text-danger @endif">{{$task->deadline}}</p>
+                            <p class="m-0 ps-3 @if($task->DeadlinePast) text-danger @endif">{{$task->deadline}}</p>
                         </div>
                         @endif
                         @if($task->Users->count())
@@ -107,6 +107,7 @@
                     <div class="mb-3 row">
                         <div class="col-md-6 offset-md-2">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href="#" class="btn btn-primary" id="modalShowBtn">Show</a>
                             <a href="#" class="btn btn-warning" id="modalEditBtn">Edit</a>
                         </div>
                     </div>
@@ -210,6 +211,7 @@
                 document.querySelector("#modalStatus").value = "";
                 document.querySelector("#modalType").value = "";
                 document.querySelector("#modalEditBtn").setAttribute('href', '/kanban/' + {{$kanbanBoard->id}} + '/task/edit/' + calledTaskId);
+                document.querySelector("#modalShowBtn").setAttribute('href', '/kanban/' + {{$kanbanBoard->id}} + '/task/show/' + calledTaskId);
 
                 let usersString = "";
                 response.data.users.forEach((user, index) => {
@@ -261,16 +263,14 @@
                 let modalLogEntries = document.querySelector("#modalLogEntries");
                 modalLogEntries.innerHTML = null;
                 response.data.task_logs.forEach((log) => {
-                    let row = modalLogEntries.insertRow(0);
+                    let row = modalLogEntries.insertRow();
                     let idCell = row.insertCell(0);
                     let dateCell = row.insertCell(1);
                     let userCell = row.insertCell(2);
                     let descriptionCell = row.insertCell(3);
 
-                    let logTimestamp = new Date(log.created_at);
-
                     idCell.innerHTML = log.id;
-                    dateCell.innerHTML = logTimestamp.toLocaleDateString() + "<br>" + logTimestamp.toLocaleTimeString();
+                    dateCell.innerHTML = log.Timestamp;
                     userCell.innerHTML = log.user.name;
                     descriptionCell.innerHTML = descriptioneParser(log.description);
                 });
@@ -293,7 +293,7 @@
                 let modalLogEntries = document.querySelector("#modalLogEntries");
                 modalLogEntries.innerHTML = null;
                 response.data.forEach((log) => {
-                    let row = modalLogEntries.insertRow(0);
+                    let row = modalLogEntries.insertRow();
                     let idCell = row.insertCell(0);
                     let dateCell = row.insertCell(1);
                     let userCell = row.insertCell(2);
@@ -301,7 +301,7 @@
 
                     idCell.innerHTML = log.id;
                     userCell.innerHTML = log.user.name;
-                    dateCell.innerHTML = new Date(log.created_at).toLocaleDateString();
+                    dateCell.innerHTML = log.Timestamp;
                     descriptionCell.innerHTML = descriptioneParser(log.description);
                 });
             }).catch((err) => {
@@ -311,7 +311,7 @@
 
     function descriptioneParser(string) {
         let username = "{{Auth::user()->name}}";
-        string = string.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        //string = string.replace(/(?:\r\n|\r|\n)/g, '<br>');
         var regex = new RegExp('(\\W|^)@('+username+')(\\W|$)', 'ig');
         return string.replace(regex, '$1<span class="label radius text-danger">@$2</span>$3');
     }

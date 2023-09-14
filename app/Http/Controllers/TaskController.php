@@ -83,9 +83,10 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Task $task)
+    public function show(Kanbanboard $kanbanBoard, Task $task)
     {
-        //
+        //dd($task->TaskLogs->first()->Timestamp);
+        return view('Tasks.show', compact(['kanbanBoard', 'task']));
     }
 
     /**

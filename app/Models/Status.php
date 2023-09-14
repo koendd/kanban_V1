@@ -45,7 +45,7 @@ class Status extends Model
      *
      * @return string
      */
-    public function redColorValue()
+    public function getRedColorValueAttribute()
     {
         return ($this->color & 0xFF0000) >> 16;
     }
@@ -55,7 +55,7 @@ class Status extends Model
      *
      * @return string
      */
-    public function greenColorValue()
+    public function getGreenColorValueAttribute()
     {
         return ($this->color & 0x00FF00) >> 8;
     }
@@ -65,7 +65,7 @@ class Status extends Model
      *
      * @return string
      */
-    public function blueColorValue()
+    public function getBlueColorValueAttribute()
     {
         return $this->color & 0x0000FF;
     }

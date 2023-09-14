@@ -4,10 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class TaskLog extends Model
 {
     use HasFactory;
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['Timestamp'];
 
     /**
      * The attributes that are mass assignable.
@@ -27,5 +36,14 @@ class TaskLog extends Model
     public function User()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getTimestampAttribute() {
+        return Str::replaceFirst(' ', '<br>', Carbon::create($this->created_at)->format('j/n/o g:i:s a'));
+    }
+
+    public function getDescriptionAttribute($value) {
+        //dd($this->description);
+        return nl2br($value);
     }
 }

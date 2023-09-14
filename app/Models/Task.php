@@ -72,7 +72,7 @@ class Task extends Model
 
     public function TaskLogs()
     {
-        return $this->hasMany(TaskLog::class);
+        return $this->hasMany(TaskLog::class)->orderBy('created_at', 'desc');
     }
 
     public function TaskType()
@@ -81,7 +81,18 @@ class Task extends Model
     }
 
     // model functions
-    function deadlinePast() : bool {
+    public function getUsersStringAttribute() {
+        $usersString = "";
+        foreach($this->users as $user) {
+            $usersString .= $user->name;
+            if($this->Users->last() != $user) {
+                $usersString .= ", ";
+            }
+        }
+        return $usersString;
+    }
+
+    function getDeadlinePastAttribute() {
         $dt = new Carbon($this->deadline);
         return $dt->isPast();
     }
