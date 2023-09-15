@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function() {
     Route::get('/kanban/{kanbanBoard}/task/show/{task}', [TaskController::class, 'show'])->name('showTask');
     Route::get('/kanban/{kanbanBoard}/task/edit/{task}', [TaskController::class, 'edit'])->name('editTask');
     Route::post('/kanban/{kanbanBoard}/task/edit/{task}', [TaskController::class, 'update']);
+    Route::get('/kanban/{kanbanBoard}/log/edit/{taskLog}', [TaskController::class, 'editLog'])->name('editLog');
+    Route::post('/kanban/{kanbanBoard}/log/edit/{taskLog}', [TaskController::class, 'updateLog']);
 
     Route::get('/kanban/{kanbanBoard}/systems', [SystemController::class, 'index'])->name('systems');
     Route::get('/kanban/{kanbanBoard}/system/create', [SystemController::class, 'create'])->name('createSystem');

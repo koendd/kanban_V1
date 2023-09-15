@@ -14,6 +14,7 @@ use App\Models\Priority;
 use App\Models\Status;
 use App\Models\TaskType;
 use App\Models\User;
+use App\Models\TaskLog;
 
 class TaskController extends Controller
 {
@@ -172,5 +173,36 @@ class TaskController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Show the form for editing the specified resource task_log.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editLog(Kanbanboard $kanbanBoard, TaskLog $taskLog) {
+        // don't allow this action for the root and system user
+        if($taskLog->user_id != Auth::id()) {
+            abort(403);
+        }
+
+        return view('Tasks.editLog', compact(['kanbanBoard', 'taskLog']));
+    }
+
+    /**
+     * Update the specified task_log resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateLog(Kanbanboard $kanbanBoard, Request $request, TaskLog $taskLog)
+    {
+        $taskLog->description = $request['description'];
+        $taskLog->save();
+        $task = $taskLog->Task;
+        
+        return view('Tasks.show', compact(['kanbanBoard', 'task']));
     }
 }

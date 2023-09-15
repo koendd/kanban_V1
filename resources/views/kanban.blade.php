@@ -196,7 +196,7 @@
     }
 
     function displayCharCount(element) {
-        document.querySelector("#charCount").innerHTML = element.value.length.toString().padEnd(4) + " / 1000";
+        document.querySelector("#charCount").innerHTML = element.value.length.toString() + " / 1000";
         //console.log(element.value.length);
     }
 
@@ -281,7 +281,7 @@
                     idCell.innerHTML = log.id;
                     dateCell.innerHTML = log.Timestamp;
                     userCell.innerHTML = log.user.name;
-                    descriptionCell.innerHTML = descriptioneParser(log.description);
+                    descriptionCell.innerHTML = descriptioneParser(log.DescriptionFormatted);
                 });
             })
             .catch((err) => {
@@ -312,7 +312,7 @@
                     idCell.innerHTML = log.id;
                     userCell.innerHTML = log.user.name;
                     dateCell.innerHTML = log.Timestamp;
-                    descriptionCell.innerHTML = descriptioneParser(log.description);
+                    descriptionCell.innerHTML = descriptioneParser(log.DescriptionFormatted);
                 });
             }).catch((err) => {
                 console.error("update error");

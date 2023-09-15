@@ -67,7 +67,7 @@
                     <div class="row mb-3">
                         <div class="col-md-6 offset-md-2">
                             <a href="{{ url()->previous() }}" class="btn btn-danger">{{ __('Back') }}</a>
-                            <a href="{{route('editTask', [$kanbanBoard->id, $task->id])}}" class="btn btn-warning" id="modalEditBtn">Edit</a>
+                            <a href="{{route('editTask', [$kanbanBoard->id, $task->id])}}" class="btn btn-warning">Edit</a>
                         </div>
                     </div>
 
@@ -112,10 +112,10 @@
                                 <td>{{$log->id}}</td>
                                 <td>{!!$log->Timestamp!!}</td>
                                 <td>{{$log->User->name}}</td>
-                                <td>{!!$log->description!!}</td>
+                                <td>{!!$log->descriptionFormatted!!}</td>
                                 <td>
                                     @if($log->User->id == Auth::id())
-                                        edit
+                                    <a href="{{route('editLog', [$kanbanBoard->id, $log->id])}}" class="btn btn-warning">Edit</a>
                                     @endif
                                 </td>
                             </tr>
