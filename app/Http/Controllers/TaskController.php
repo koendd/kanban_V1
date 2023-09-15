@@ -50,7 +50,7 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(KanbanBoard $kanbanBoard, Request $request)
     {
         $validatedData = $request->validate([
             'name' => ['required', 'string'],
@@ -75,7 +75,7 @@ class TaskController extends Controller
             }
         }
 
-        return redirect()->route('home', Auth::user()->default_kanban_board_id);
+        return redirect()->route('home', $kanbanBoard->id);
     }
 
     /**
@@ -161,7 +161,7 @@ class TaskController extends Controller
             }
         }
 
-        return redirect()->route('home', Auth::user()->default_kanban_board_id);
+        return redirect()->route('home', $kanbanBoard->id);
     }
 
     /**
