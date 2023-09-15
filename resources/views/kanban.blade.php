@@ -12,7 +12,7 @@
                 <span id="status{{$status->id}}Count">&#35;{{$status->Tasks->count()}}</span>
             </div>
             <div class="card-body overflow-auto drop-class" style="background-color: rgba({{$status->RedColorValue}}, {{$status->GreenColorValue}}, {{$status->BlueColorValue}}, 0.5)" ondrop="drop(event)" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" id="status{{$status->id}}">
-                @foreach($status->Tasks as $task)
+                @foreach($status->Tasks->sortBy('Priority.order_number') as $task)
                 <div class="card mb-2" style="opacity: .9" draggable="true" ondragstart="drag(event)" id="task{{$task->id}}">
                     <div class="card-header text-center cursor-pointer" style="background-color: rgba({{$task->priority->RedColorValue}}, {{$task->priority->GreenColorValue}}, {{$task->priority->BlueColorValue}}, 0.7 )">
                         {{$task->name}}
