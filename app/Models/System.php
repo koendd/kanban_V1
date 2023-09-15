@@ -26,7 +26,7 @@ class System extends Model
 
     public function SubSystems()
     {
-        return $this->hasMany(SubSystem::class);
+        return $this->hasMany(SubSystem::class)->orderBy('name_short', 'asc');
     }
 
     public function Tasks()

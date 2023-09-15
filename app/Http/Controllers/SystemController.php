@@ -22,7 +22,7 @@ class SystemController extends Controller
      */
     public function index(KanbanBoard $kanbanBoard)
     {
-        $systems = System::where('kanban_board_id', $kanbanBoard->id)->get();
+        $systems = System::where('kanban_board_id', $kanbanBoard->id)->orderBy("name_short", 'asc')->get();
         return view('Systems.index', compact(['kanbanBoard', 'systems']));
     }
 
