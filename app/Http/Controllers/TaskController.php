@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 
 use App\Models\KanbanBoard;
 use App\Models\Task;
@@ -23,9 +24,27 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(KanbanBoard $kanbanBoard, Request $request)
     {
-        //
+        $searchParameters = [];
+        if($request->has('_token')) {
+            if($request->has('system_id')) {
+                if(System::where('id', $request['system_id'])->exists()); {
+                    $searchParameters = Arr::add($searchParameters, 'system_id', $request['system_id']);
+                }
+
+                if($request->has('sub_system_id')) {
+                    if(SubSystem::where('id', $request['sub_system_id'])->exists()); {
+                        $searchParameters = Arr::add($searchParameters, 'sub_system_id', $request['sub_system_id']);
+                    }
+                }
+            }
+        }
+
+        $tasks = Task::where($searchParameters)->whereRelation('System', 'kanban_board_id', '=', $kanbanBoard->id)->orderBy('id', 'desc')->get();
+        $systems = System::orderBy('name_short', 'asc')->get();
+        //dd($systems->where('id', $searchParameters['system_id'])->first());
+        return view('Tasks.index', compact(['kanbanBoard', 'tasks', 'systems', 'searchParameters']));
     }
 
     /**

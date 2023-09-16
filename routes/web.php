@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/kanban/{kanbanBoard}', [KanbanController::class, 'ActiveKanban'])->name('home');
     Route::get('/kanban/{kanbanBoard}/Finishing', [KanbanController::class, 'FinishingKanban'])->name('FinishKanban');
 
+    Route::get('/kanban/{kanbanBoard}/tasks', [TaskController::class, 'index'])->name('tasks');
     Route::get('/kanban/{kanbanBoard}/task/create', [TaskController::class, 'create'])->name('createTask');
     Route::post('/kanban/{kanbanBoard}/task/create', [TaskController::class, 'store']);
     Route::get('/kanban/{kanbanBoard}/task/show/{task}', [TaskController::class, 'show'])->name('showTask');

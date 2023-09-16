@@ -43,7 +43,12 @@
                             <div class="dropdown-divider"></div>
                         </li>
                         @endif
-                        @isset($kanbanBoard)    
+                        @isset($kanbanBoard)
+                        <li>
+                            <a class="dropdown-item" href="{{ route('tasks', $kanbanBoard->id) }}">
+                                Tasks
+                            </a>
+                        </li>
                         <li>
                             <a class="dropdown-item" href="{{ route('systems', $kanbanBoard->id) }}">
                                 Systems and sub&#45;systems
