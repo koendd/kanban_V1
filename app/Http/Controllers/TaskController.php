@@ -26,25 +26,40 @@ class TaskController extends Controller
      */
     public function index(KanbanBoard $kanbanBoard, Request $request)
     {
+        //dd($request);
         $searchParameters = [];
         if($request->has('_token')) {
             if($request->has('system_id')) {
-                if(System::where('id', $request['system_id'])->exists()); {
+                if(System::where('id', $request['system_id'])->exists()) {
                     $searchParameters = Arr::add($searchParameters, 'system_id', $request['system_id']);
                 }
 
                 if($request->has('sub_system_id')) {
-                    if(SubSystem::where('id', $request['sub_system_id'])->exists()); {
+                    if(SubSystem::where('id', $request['sub_system_id'])->exists()) {
                         $searchParameters = Arr::add($searchParameters, 'sub_system_id', $request['sub_system_id']);
                     }
                 }
             }
+
+            if($request->has('status_id')) {
+                if(Status::where('id', $request['status_id'])->exists()) {
+                    $searchParameters = Arr::add($searchParameters, 'status_id', $request['status_id']);
+                }
+            }
+
+            if($request->has('priority_id')) {
+                if(Priority::where('id', $request['priority_id'])->exists()) {
+                    $searchParameters = Arr::add($searchParameters, 'priority_id', $request['priority_id']);
+                }
+            }
         }
+        //dd($searchParameters);
 
         $tasks = Task::where($searchParameters)->whereRelation('System', 'kanban_board_id', '=', $kanbanBoard->id)->orderBy('id', 'desc')->get();
         $systems = System::orderBy('name_short', 'asc')->get();
-        //dd($systems->where('id', $searchParameters['system_id'])->first());
-        return view('Tasks.index', compact(['kanbanBoard', 'tasks', 'systems', 'searchParameters']));
+        $statuses = Status::orderBy('order_number', 'asc')->get();
+        $priorities = Priority::orderBy('order_number', 'asc')->get();
+        return view('Tasks.index', compact(['kanbanBoard', 'tasks', 'systems', 'statuses', 'priorities', 'searchParameters']));
     }
 
     /**

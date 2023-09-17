@@ -46,7 +46,7 @@
                         @isset($kanbanBoard)
                         <li>
                             <a class="dropdown-item" href="{{ route('tasks', $kanbanBoard->id) }}">
-                                Tasks
+                                Tasks overview
                             </a>
                         </li>
                         <li>
