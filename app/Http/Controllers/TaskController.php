@@ -237,6 +237,6 @@ class TaskController extends Controller
         $taskLog->save();
         $task = $taskLog->Task;
         
-        return view('Tasks.show', compact(['kanbanBoard', 'task']));
+        return redirect()->route('showTask', compact(['kanbanBoard', 'task']));
     }
 }
