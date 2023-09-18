@@ -13,6 +13,22 @@ class Status extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'description',
+        'order_number',
+        'preparetion',
+        'active',
+        'finishing',
+        'color',
+        'kanban_board_id'
+    ];
+
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array

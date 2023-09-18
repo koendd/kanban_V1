@@ -25,6 +25,7 @@ class TaskLog extends Model
      */
     protected $fillable = [
         'description',
+        'task_id',
         'user_id',
     ];
 

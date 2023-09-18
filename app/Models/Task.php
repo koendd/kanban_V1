@@ -26,6 +26,7 @@ class Task extends Model
         'name',
         'description',
         'deadline',
+        'creator_id',
         'system_id',
         'sub_system_id',
         'applicant_id',

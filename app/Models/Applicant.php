@@ -11,6 +11,16 @@ class Applicant extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'kanban_board_id'
+    ];
+
     public function Tasks()
     {
         return $this->hasMany(Task::class);
