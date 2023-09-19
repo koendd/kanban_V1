@@ -56,9 +56,9 @@ class TaskController extends Controller
         //dd($searchParameters);
 
         $tasks = Task::where($searchParameters)->whereRelation('System', 'kanban_board_id', '=', $kanbanBoard->id)->orderBy('id', 'desc')->get();
-        $systems = System::orderBy('name_short', 'asc')->get();
-        $statuses = Status::orderBy('order_number', 'asc')->get();
-        $priorities = Priority::orderBy('order_number', 'asc')->get();
+        $systems = System::where('kanban_board_id', $kanbanBoard->id)->orderBy('name_short', 'asc')->get();
+        $statuses = Status::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
+        $priorities = Priority::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
         return view('Tasks.index', compact(['kanbanBoard', 'tasks', 'systems', 'statuses', 'priorities', 'searchParameters']));
     }
 
@@ -132,11 +132,11 @@ class TaskController extends Controller
      */
     public function edit(Kanbanboard $kanbanBoard, Task $task)
     {
-        $systems = System::orderBy('name_short', 'asc')->get();
+        $systems = System::where('kanban_board_id', $kanbanBoard->id)->orderBy('name_short', 'asc')->get();
         $subSystems = SubSystem::where('system_id', $task->system_id)->get();
-        $applicants = Applicant::orderBy('name', 'asc')->get();
-        $priorities = Priority::orderBy('order_number', 'asc')->get();
-        $statuses = Status::orderBy('order_number', 'asc')->get();
+        $applicants = Applicant::where('kanban_board_id', $kanbanBoard->id)->orderBy('name', 'asc')->get();
+        $priorities = Priority::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
+        $statuses = Status::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
         $types = TaskType::orderBy('name', 'asc')->get();
         $users = User::orderBy('name', 'asc')->get();
         return view('Tasks.edit', compact(['kanbanBoard', 'task', 'systems', 'subSystems', 'applicants', 'priorities', 'statuses', 'types', 'users']));
