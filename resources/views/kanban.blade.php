@@ -321,9 +321,19 @@
 
     function descriptioneParser(string) {
         let username = "{{Auth::user()->name}}";
+        let users = {!! json_encode($users) !!};
+        //console.log(users);
         //string = string.replace(/(?:\r\n|\r|\n)/g, '<br>');
-        var regex = new RegExp('(\\W|^)@('+username+')(\\W|$)', 'ig');
-        return string.replace(regex, '$1<span class="label radius text-danger">@$2</span>$3');
+        let regexCurrentUser = new RegExp('(\\W|^)@('+username+')(\\W|$)', 'ig');
+        string = string.replace(regexCurrentUser, '$1<span class="label radius text-danger fw-bold">@$2</span>$3');
+        users.forEach(user => {
+            if(user != username){
+                let regexUser = new RegExp('(\\W|^)@('+user+')(\\W|$)', 'ig');
+                string = string.replace(regexUser, '$1<span class="label radius text-primary">@$2</span>$3');
+            }
+        });
+
+        return string;
     }
 </script>
 @endsection
