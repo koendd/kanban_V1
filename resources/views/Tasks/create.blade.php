@@ -100,12 +100,17 @@
                         <div class="row mb-3">
                             <label for="inputApplicant" class="col-sm-2 col-form-label">Applicant</label>
                             <div class="col-sm-10">
+                                @if($applicants->count() > 1)
                                 <select class="form-select @error('applicant_id') is-invalid @enderror" id="inputApplicant" name="applicant_id">
                                     <option disabled selected>Choose a applicant</option>
                                     @foreach($applicants as $applicant)
                                     <option value="{{$applicant->id}}">{{$applicant->name}}</option>
                                     @endforeach
                                 </select>
+                                @else
+                                <input type="hidden" name="applicant_id" value="{{$applicants->first()->id}}" />
+                                <input id="applicant_id" type="text" class="form-control disabled @error('applicant_id') is-invalid @enderror" value="{{ $applicants->first()->name }}" required disabled>
+                                @endif
 
                                 @error('applicant_id')
                                 <div class="invalid-feedback">
@@ -117,12 +122,17 @@
                         <div class="row mb-3">
                             <label for="inputPriority" class="col-sm-2 col-form-label">Priority</label>
                             <div class="col-sm-10">
+                                @if($priorities->count() > 1)
                                 <select class="form-select @error('priority_id') is-invalid @enderror" id="inputPriority" name="priority_id" required>
                                     <option disabled selected>Choose a priority</option>
                                     @foreach($priorities as $priority)
                                     <option value="{{$priority->id}}">{{$priority->name}}</option>
                                     @endforeach
                                 </select>
+                                @else
+                                <input type="hidden" name="priority_id" value="{{$priorities->first()->id}}" />
+                                <input id="priority_id" type="text" class="form-control disabled @error('priority_id') is-invalid @enderror" value="{{ $priorities->first()->name }}" required disabled>
+                                @endif
 
                                 @error('priority_id')
                                 <div class="invalid-feedback">
@@ -134,12 +144,17 @@
                         <div class="row mb-3">
                             <label for="inputStatus" class="col-sm-2 col-form-label">Status</label>
                             <div class="col-sm-10">
+                                @if($statuses->count() > 1)
                                 <select class="form-select @error('status_id') is-invalid @enderror" id="inputStatus" name="status_id" required>
                                     <option disabled selected>Choose a status</option>
                                     @foreach($statuses as $status)
                                     <option value="{{$status->id}}">{{$status->name}}</option>
                                     @endforeach
                                 </select>
+                                @else
+                                <input type="hidden" name="status_id" value="{{$statuses->first()->id}}" />
+                                <input id="status_id" type="text" class="form-control disabled @error('status_id') is-invalid @enderror" value="{{ $statuses->first()->name }}" required disabled>
+                                @endif
 
                                 @error('status_id')
                                 <div class="invalid-feedback">
@@ -151,12 +166,17 @@
                         <div class="row mb-3">
                             <label for="inputType" class="col-sm-2 col-form-label">Type</label>
                             <div class="col-sm-10">
+                                @if($types->count() > 1)
                                 <select class="form-select @error('task_type_id') is-invalid @enderror" id="inputType" name="task_type_id" required>
                                     <option disabled selected>Choose a type</option>
                                     @foreach($types as $type)
                                     <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach
                                 </select>
+                                @else
+                                <input type="hidden" name="task_type_id" value="{{$appltypesicants->first()->id}}" />
+                                <input id="task_type_id" type="text" class="form-control disabled @error('task_type_id') is-invalid @enderror" value="{{ $types->first()->name }}" required disabled>
+                                @endif
 
                                 @error('task_type_id')
                                 <div class="invalid-feedback">
