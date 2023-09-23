@@ -34,7 +34,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 offset-md-2">
                             <button type="submit" class="btn btn-primary">Login</button>
                         </div>
                     </form>

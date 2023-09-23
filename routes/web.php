@@ -8,6 +8,7 @@ use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\SystemController;
 use App\Http\Controllers\SubSystemController;
+use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\StatisticsController;
 
 /*
@@ -47,6 +48,12 @@ Route::middleware('auth')->group(function() {
 
     Route::get('/kanban/{kanbanBoard}/subsystem/create', [SubSystemController::class, 'create'])->name('createSubSystem');
     Route::post('/kanban/{kanbanBoard}/subsystem/create', [SubSystemController::class, 'store']);
+
+    Route::get('/kanban/{kanbanBoard}/applicants', [ApplicantController::class, 'index'])->name('applicants');
+    Route::get('/kanban/{kanbanBoard}/applicant/create', [ApplicantController::class, 'create'])->name('createApplicant');
+    Route::post('/kanban/{kanbanBoard}/applicant/create', [ApplicantController::class, 'store']);
+    Route::get('/kanban/{kanbanBoard}/applicant/edit/{applicant}', [ApplicantController::class, 'edit'])->name('editApplicant');
+    Route::post('/kanban/{kanbanBoard}/applicant/edit/{applicant}', [ApplicantController::class, 'update']);
 
     Route::get('/kanban/{kanbanBoard}/statistics', [StatisticsController::class, 'getFullStatistics'])->name('statistics');
 });

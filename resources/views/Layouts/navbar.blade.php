@@ -55,6 +55,11 @@
                             </a>
                         </li>
                         <li>
+                            <a class="dropdown-item" href="{{ route('applicants', $kanbanBoard->id) }}">
+                                Applicants
+                            </a>
+                        </li>
+                        <li>
                             <a class="dropdown-item" href="{{ route('statistics', $kanbanBoard->id) }}">
                                 Statistics
                             </a>
