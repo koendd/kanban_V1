@@ -5,13 +5,13 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-pills">
                 @isset($kanbanBoard)
                 <li class="nav-item">
-                    <a class="nav-link {{Route::currentRouteName() == 'prepKanban' ? 'active' : ''}}" aria-current="page" href="{{route('prepKanban', $kanbanBoard->id)}}">Preparetion</a>
+                    <a class="nav-link {{Route::currentRouteName() == 'prepKanban' ? 'active' : ''}}" aria-current="page" href="{{route('prepKanban', $kanbanBoard->id)}}" title="Get the part of the kanban whose statuses are part of &quot;preparation&quot;.">Preparetion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{Route::currentRouteName() == 'home' ? 'active' : ''}}" aria-current="page" href="{{route('home', $kanbanBoard->id)}}">Active</a>
+                    <a class="nav-link {{Route::currentRouteName() == 'home' ? 'active' : ''}}" aria-current="page" href="{{route('home', $kanbanBoard->id)}}" title="Get the part of the kanban whose statuses are part of &quot;active&quot;.">Active</a>
                 </li> 
                 <li class="nav-item">
-                    <a class="nav-link {{Route::currentRouteName() == 'FinishKanban' ? 'active' : ''}}" aria-current="page" href="{{route('FinishKanban', $kanbanBoard->id)}}">Finishing</a>
+                    <a class="nav-link {{Route::currentRouteName() == 'FinishKanban' ? 'active' : ''}}" aria-current="page" href="{{route('FinishKanban', $kanbanBoard->id)}}" title="Get the part of the kanban whose statuses are part of &quot;finished&quot;.">Finishing</a>
                 </li>
                 @endisset
             </ul>
@@ -20,12 +20,12 @@
             <ul class="navbar-nav">
                 @isset($kanbanBoard)
                 <li class="nav-item me-5">
-                    <a class="btn btn-outline-warning {{Route::currentRouteName() == 'createTask' ? 'active' : ''}}" role="button" aria-current="page" href="{{route('createTask', $kanbanBoard->id)}}">New task</a>
+                    <a class="btn btn-outline-warning {{Route::currentRouteName() == 'createTask' ? 'active' : ''}}" role="button" aria-current="page" href="{{route('createTask', $kanbanBoard->id)}}" title="Create a new task.">New task</a>
                 </li>
                 @endisset
 
                 @if(env('APP_ENV') != 'production' || env('APP_DEBUG'))
-                    <li class="nav-item"><span class="nav-link text-warning fw-bold">TEST environment</span></li>
+                    <li class="nav-item" title="This applicantion is currently not in production mode!"><span class="nav-link text-warning fw-bold">TEST environment</span></li>
                 @endif
 
                 <li class="nav-item dropdown">
@@ -35,7 +35,7 @@
                     <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end overflow-auto" style="max-height: 90vh;" aria-labelledby="navbarDarkDropdownMenuLink">
                         @if($kanbanBoardCount > 1)
                         <li>
-                            <a class="dropdown-item" href="{{ route('welcome') }}">
+                            <a class="dropdown-item" href="{{ route('welcome') }}" title="Change the kanban board you are working in.">
                                 Kanban boards
                             </a>
                         </li>
@@ -45,22 +45,22 @@
                         @endif
                         @isset($kanbanBoard)
                         <li>
-                            <a class="dropdown-item" href="{{ route('tasks', $kanbanBoard->id) }}">
+                            <a class="dropdown-item" href="{{ route('tasks', $kanbanBoard->id) }}" title="Get a list of all task with options to filter in these tasks.">
                                 Tasks overview
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ route('systems', $kanbanBoard->id) }}">
+                            <a class="dropdown-item" href="{{ route('systems', $kanbanBoard->id) }}" title="Manage systems and sub&#45;systems.">
                                 Systems and sub&#45;systems
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ route('applicants', $kanbanBoard->id) }}">
+                            <a class="dropdown-item" href="{{ route('applicants', $kanbanBoard->id) }}" title="Manage applicants">
                                 Applicants
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ route('statistics', $kanbanBoard->id) }}">
+                            <a class="dropdown-item" href="{{ route('statistics', $kanbanBoard->id) }}" title="Get statistics for the current kanban board.">
                                 Statistics
                             </a>
                         </li>
@@ -69,7 +69,7 @@
                         </li>
                         @endisset
                         <li>
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Log out from this application">
                                 {{ __('Logout') }}
                             </a>
 

@@ -8,7 +8,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Edit task: <span class="text-primary">{{$task->name}}</span>
+                    Edit task: <span class="text-primary" id="modalTitle">{{$task->name}}</span>
                 </div>
                 <div class="card-body">
                     <form action="{{route('editTask', ['kanbanBoard' => $kanbanBoard->id, 'task' => $task->id])}}" method="post">
@@ -17,7 +17,7 @@
                         <div class="row mb-3">
                             <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="inputName" name="name" maxlength="255" required value="{{$task->name}}"/>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="inputName" name="name" maxlength="255" required value="{{$task->name}}" onKeyUp="onNameChange(this)"/>
 
                                 @error('name')
                                 <div class="invalid-feedback">
@@ -209,6 +209,10 @@
             .catch((err) => {
                 console.error(err);
             });
+    }
+
+    function onNameChange(taskName) {
+        document.querySelector("#modalTitle").innerHTML = taskName.value;
     }
 </script>
 @endsection
