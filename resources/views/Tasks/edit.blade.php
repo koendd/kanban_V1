@@ -16,7 +16,7 @@
                         
                         <div class="row mb-3">
                             <label for="inputName" class="col-sm-2 col-form-label">Name</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="inputName" name="name" maxlength="255" required value="{{$task->name}}" onKeyUp="onNameChange(this)"/>
 
                                 @error('name')
@@ -29,18 +29,21 @@
                         <div class="row mb-3">
                             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" rows="4">{{$task->description}}</textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" rows="4" onkeyup="displayCharCount(this, 'charCount')">{{$task->description}}</textarea>
 
                                 @error('description')
                                 <div class="invalid-feedback">
                                     Please provide a task description.
                                 </div>
                                 @enderror
+                                <div id="charCount" class="text-end">
+                                    {{Str::length($task->description)}} / 1000
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputUsers" class="col-sm-2 col-form-label">Users</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 <select id="user_ids" class="form-select" name="user_ids[]" multiple>
                                     @foreach ($users as $user)
                                     <option value="{{$user->id}}" {{$task->Users->contains($user->id) ? "selected" : ""}}>{{$user->name}}</option>
@@ -68,11 +71,11 @@
                         </div>
                         <div class="row mb-3">
                             <label for="inputSystem" class="col-sm-2 col-form-label">System</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 <select class="form-select @error('system_id') is-invalid @enderror" id="inputSystem" name="system_id" onchange="getSubSystems(this.value)" required>
                                     <option disabled>Choose a system</option>
                                     @foreach($systems as $system)
-                                    <option value="{{$system->id}}" @if($system->id == $task->system_id) selected @endif>{{$system->name_short}}{{$system->name_full ? ' - ' . $system->name_full : ''}}</option>
+                                    <option value="{{$system->id}}" @if($system->id == $task->system_id) selected class="text-primary"  @endif>{{$system->name_short}}{{$system->name_full ? ' - ' . $system->name_full : ''}}</option>
                                     @endforeach
                                 </select>
 
@@ -89,7 +92,7 @@
                                 <select class="form-select @error('sub_system_id') is-invalid @enderror" id="inputSubSystem" name="sub_system_id">
                                     <option disabled>Choose a system first</option>
                                     @foreach($subSystems as $subSystem)
-                                    <option value="{{$subSystem->id}}" @if($subSystem->id == $task->sub_system_id) selected @endif>{{$subSystem->name_short}}{{$subSystem->name_full ? ' - ' . $subSystem->name_full : ''}}</option>
+                                    <option value="{{$subSystem->id}}" @if($subSystem->id == $task->sub_system_id) selected class="text-primary"  @endif>{{$subSystem->name_short}}{{$subSystem->name_full ? ' - ' . $subSystem->name_full : ''}}</option>
                                     @endforeach
                                 </select>
 
@@ -106,7 +109,7 @@
                                 <select class="form-select @error('applicant_id') is-invalid @enderror" id="inputApplicant" name="applicant_id">
                                     <option disabled>Choose a applicant</option>
                                     @foreach($applicants as $applicant)
-                                    <option value="{{$applicant->id}}" @if($applicant->id == $task->applicant_id) selected @endif>{{$applicant->name}}</option>
+                                    <option value="{{$applicant->id}}" @if($applicant->id == $task->applicant_id) selected class="text-primary" @endif>{{$applicant->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -119,11 +122,11 @@
                         </div>
                         <div class="row mb-3">
                             <label for="inputPriority" class="col-sm-2 col-form-label">Priority</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 <select class="form-select @error('priority_id') is-invalid @enderror" id="inputPriority" name="priority_id" required>
                                     <option disabled>Choose a priority</option>
                                     @foreach($priorities as $priority)
-                                    <option value="{{$priority->id}}" @if($priority->id == $task->priority_id) selected @endif>{{$priority->name}}</option>
+                                    <option value="{{$priority->id}}" @if($priority->id == $task->priority_id) selected class="text-primary"  @endif>{{$priority->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -136,11 +139,11 @@
                         </div>
                         <div class="row mb-3">
                             <label for="inputStatus" class="col-sm-2 col-form-label">Status</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 <select class="form-select @error('status_id') is-invalid @enderror" id="inputStatus" name="status_id" required>
                                     <option disabled>Choose a status</option>
                                     @foreach($statuses as $status)
-                                    <option value="{{$status->id}}" @if($status->id == $task->status_id) selected @endif>{{$status->name}}</option>
+                                    <option value="{{$status->id}}" @if($status->id == $task->status_id) selected class="text-primary"  @endif>{{$status->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -153,11 +156,11 @@
                         </div>
                         <div class="row mb-3">
                             <label for="inputType" class="col-sm-2 col-form-label">Type</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 <select class="form-select @error('task_type_id') is-invalid @enderror" id="inputType" name="task_type_id" required>
                                     <option disabled>Choose a type</option>
                                     @foreach($types as $type)
-                                    <option value="{{$type->id}}" @if($type->id == $task->task_type_id) selected @endif>{{$type->name}}</option>
+                                    <option value="{{$type->id}}" @if($type->id == $task->task_type_id) selected class="text-primary"  @endif>{{$type->name}}</option>
                                     @endforeach
                                 </select>
 

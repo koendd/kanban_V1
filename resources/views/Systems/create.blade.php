@@ -16,7 +16,7 @@
                         
                         <div class="row mb-3">
                             <label for="inputShortName" class="col-sm-2 col-form-label">Short name</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 <input type="text" class="form-control @error('name_short') is-invalid @enderror" id="inputShortName" name="name_short" maxlength="50" required value="{{old('name_short')}}"/>
 
                                 @error('name_short')
@@ -28,8 +28,8 @@
                         </div>
                         <div class="row mb-3">
                             <label for="inputFullName" class="col-sm-2 col-form-label">Full name</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control @error('name_full') is-invalid @enderror" id="inputFullName" name="name_full" maxlength="50" required value="{{old('name_full')}}"/>
+                            <div class="col-sm-10 border-end border-danger border-3">
+                                <input type="text" class="form-control @error('name_full') is-invalid @enderror" id="inputFullName" name="name_full" maxlength="255" required value="{{old('name_full')}}"/>
 
                                 @error('name_full')
                                 <div class="invalid-feedback">
@@ -41,18 +41,21 @@
                         <div class="row mb-3">
                             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" value="{{old('description')}}"></textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="255" value="{{old('description')}}" onkeyup="displayCharCount(this, 'charCount')"></textarea>
 
                                 @error('description')
                                 <div class="invalid-feedback">
                                     Please provide a task description.
                                 </div>
                                 @enderror
+                                <div id="charCount" class="text-end">
+                                    0 / 255
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputKanbanBoard" class="col-sm-2 col-form-label">Kanban Board</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 <input type="text" class="form-control @error('kanban_board_id') is-invalid @enderror" id="inputKanbanBoard" value="{{$kanbanBoard->name}}" readonly/>
                                 <input type="hidden" name="kanban_board_id" value="{{$kanbanBoard->id}}" />
 

@@ -16,7 +16,7 @@
                         
                         <div class="row mb-3">
                             <label for="name" class="col-sm-2 col-form-label">Name</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" maxlength="50" required value="{{$applicant->name}}"/>
 
                                 @error('name')

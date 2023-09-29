@@ -16,7 +16,7 @@
                         
                         <div class="row mb-3">
                             <label for="inputName" class="col-sm-2 col-form-label">Name</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="inputName" name="name" maxlength="255" required value="{{old('name')}}" autocomplete="off"/>
 
                                 @error('name')
@@ -29,18 +29,21 @@
                         <div class="row mb-3">
                             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" rows="4" value="{{old('description')}}" autocomplete="off"></textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" rows="4" value="{{old('description')}}" autocomplete="off" onkeyup="displayCharCount(this, 'charCount')"></textarea>
 
                                 @error('description')
                                 <div class="invalid-feedback">
                                     Please provide a task description.
                                 </div>
                                 @enderror
+                                <div id="charCount" class="text-end">
+                                    0 / 1000
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputUsers" class="col-sm-2 col-form-label">Users</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 <select id="user_ids" class="form-select" name="user_ids[]" multiple>
                                     @foreach ($users as $user)
                                     <option value="{{$user->id}}" {{$user->id == Auth::id() ? "selected" : ""}}>{{$user->name}}</option>
@@ -68,7 +71,7 @@
                         </div>
                         <div class="row mb-3">
                             <label for="inputSystem" class="col-sm-2 col-form-label">System</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 <select class="form-select @error('system_id') is-invalid @enderror" id="inputSystem" name="system_id" onchange="getSubSystems(this.value)" required>
                                     <option disabled selected>Choose a system</option>
                                     @foreach($systems as $system)
@@ -121,7 +124,7 @@
                         </div>
                         <div class="row mb-3">
                             <label for="inputPriority" class="col-sm-2 col-form-label">Priority</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 @if($priorities->count() > 1)
                                 <select class="form-select @error('priority_id') is-invalid @enderror" id="inputPriority" name="priority_id" required>
                                     <option disabled selected>Choose a priority</option>
@@ -143,7 +146,7 @@
                         </div>
                         <div class="row mb-3">
                             <label for="inputStatus" class="col-sm-2 col-form-label">Status</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 @if($statuses->count() > 1)
                                 <select class="form-select @error('status_id') is-invalid @enderror" id="inputStatus" name="status_id" required>
                                     <option disabled selected>Choose a status</option>
@@ -165,7 +168,7 @@
                         </div>
                         <div class="row mb-3">
                             <label for="inputType" class="col-sm-2 col-form-label">Type</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 border-end border-danger border-3">
                                 @if($types->count() > 1)
                                 <select class="form-select @error('task_type_id') is-invalid @enderror" id="inputType" name="task_type_id" required>
                                     <option disabled selected>Choose a type</option>

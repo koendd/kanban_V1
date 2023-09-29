@@ -115,7 +115,7 @@
                 <div class="border-top">
                     <div class="mb-3 mt-2 row">
                         <label for="modalnewLogEntry" class="col-sm-2 col-form-label">New log entry</label>
-                        <div class="col-sm-8"><textarea class="form-control" id="modalNewLogEntry" maxlength="1000" rows="4" onkeyup="displayCharCount(this)"></textarea></div>
+                        <div class="col-sm-8"><textarea class="form-control" id="modalNewLogEntry" maxlength="1000" rows="4" onkeyup="displayCharCount(this, 'charCount')"></textarea></div>
                         <div class="col-sm-2">
                             <button type="button" class="btn btn-primary" onclick="addNewLogEntry()">Add log</button>
                             <p id="charCount" class="col-form-label font-monospace">0 / 1000</p>
