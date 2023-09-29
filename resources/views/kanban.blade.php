@@ -168,6 +168,8 @@
 
 <script>
     let calledTaskId;
+    let currentUser = "{{Auth::user()->name}}";
+    let users = {!! json_encode($users) !!};
 
     function allowDrop(ev) {
         ev.preventDefault();
@@ -217,11 +219,6 @@
                     displayErrorModal("Something went wrong updating the task status!", err);
                 });
         }
-    }
-
-    function displayCharCount(element) {
-        document.querySelector("#charCount").innerHTML = element.value.length.toString() + " / 1000";
-        //console.log(element.value.length);
     }
 
     function showTask(taskId) {
@@ -305,7 +302,7 @@
                     idCell.innerHTML = log.id;
                     dateCell.innerHTML = log.Timestamp;
                     userCell.innerHTML = log.user.name;
-                    descriptionCell.innerHTML = descriptioneParser(log.DescriptionFormatted);
+                    descriptionCell.innerHTML = descriptioneParser(currentUser, users, log.DescriptionFormatted);
                 });
 
                 taskModal.show();
@@ -337,36 +334,11 @@
                     idCell.innerHTML = log.id;
                     userCell.innerHTML = log.user.name;
                     dateCell.innerHTML = log.Timestamp;
-                    descriptionCell.innerHTML = descriptioneParser(log.DescriptionFormatted);
+                    descriptionCell.innerHTML = descriptioneParser(currentUser, users, log.DescriptionFormatted);
                 });
             }).catch((err) => {
                 displayErrorModal("Something went wrong while adding the new log entry!", err);
             });
-    }
-
-    function descriptioneParser(string) {
-        let username = "{{Auth::user()->name}}";
-        let users = {!! json_encode($users) !!};
-        //console.log(users);
-        //string = string.replace(/(?:\r\n|\r|\n)/g, '<br>');
-        let regexCurrentUser = new RegExp('(\\W|^)@('+username+')(\\W|$)', 'ig');
-        string = string.replace(regexCurrentUser, '$1<span class="label radius text-danger fw-bold">@$2</span>$3');
-        users.forEach(user => {
-            if(user != username){
-                let regexUser = new RegExp('(\\W|^)@('+user+')(\\W|$)', 'ig');
-                string = string.replace(regexUser, '$1<span class="label radius text-primary">@$2</span>$3');
-            }
-        });
-
-        return string;
-    }
-
-    function displayErrorModal(errorMessage, stackTrace) {
-        document.querySelector("#errorMessage").innerHTML = errorMessage;
-        document.querySelector("#stackTrace").innerHTML = stackTrace;
-
-        var errorModal = new bootstrap.Modal(document.querySelector('#errorModal'));
-		errorModal.show();
     }
 </script>
 @endsection
