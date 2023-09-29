@@ -66,7 +66,7 @@
     @endforeach
 </div>
 
-<!-- Modal -->
+<!-- task Modal for showing task info -->
 <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
         <div class="modal-content">
@@ -139,6 +139,30 @@
     </div>
 </div>
 
+<!-- error Modal for showing an error has occurred when loading the task -->
+<div class="modal" id="errorModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border border-danger border-5 bg-dark text-warning">
+            <div class="modal-header border-bottom border-danger">
+                <h5 class="modal-title">An error has occurred</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-2">
+                    <p id="errorMessage">Something went wrong loading the resource you requested.</p>
+                </div>
+                <div class="">
+                    <fieldset>
+                        <legend>Stack trace:</legend>
+                        <p id="stackTrace">Something went wrong loading the resource you requested.</p>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <input type="hidden" value="{{ Auth::user()->api_token }}" id="token" />
 
 
@@ -190,7 +214,7 @@
                         document.querySelector("#" + ev.dataTransfer.getData("prevStatusId") + "Count").innerHTML = "#" + prevStatusCount;
                     }
                 }).catch((err) => {
-                    console.error("update error");
+                    displayErrorModal("Something went wrong updating the task status!", err);
                 });
         }
     }
@@ -283,14 +307,15 @@
                     userCell.innerHTML = log.user.name;
                     descriptionCell.innerHTML = descriptioneParser(log.DescriptionFormatted);
                 });
+
+                taskModal.show();
             })
             .catch((err) => {
-                console.error("task info error");
-                console.log(err);
+                displayErrorModal("Something went wrong loading the task information!", err);
             });
 
-        var modal = new bootstrap.Modal(document.querySelector('#taskModal'));
-		modal.show();
+            var taskModal = new bootstrap.Modal(document.querySelector('#taskModal'));
+            taskModal.show();
     }
 
     function addNewLogEntry() {
@@ -315,7 +340,7 @@
                     descriptionCell.innerHTML = descriptioneParser(log.DescriptionFormatted);
                 });
             }).catch((err) => {
-                console.error("update error");
+                displayErrorModal("Something went wrong while adding the new log entry!", err);
             });
     }
 
@@ -334,6 +359,14 @@
         });
 
         return string;
+    }
+
+    function displayErrorModal(errorMessage, stackTrace) {
+        document.querySelector("#errorMessage").innerHTML = errorMessage;
+        document.querySelector("#stackTrace").innerHTML = stackTrace;
+
+        var errorModal = new bootstrap.Modal(document.querySelector('#errorModal'));
+		errorModal.show();
     }
 </script>
 @endsection
