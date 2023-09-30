@@ -17,7 +17,7 @@
             </ul>
 			
 			<!-- right nav section -->
-            <ul class="navbar-nav">
+            <ul class="navbar-nav ms-auto">
                 @isset($kanbanBoard)
                 <li class="nav-item me-5">
                     <a class="btn btn-outline-warning {{Route::currentRouteName() == 'createTask' ? 'active' : ''}}" role="button" aria-current="page" href="{{route('createTask', $kanbanBoard->id)}}" title="Create a new task.">New task</a>
@@ -33,10 +33,10 @@
                         {{ Auth::user()->name }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end overflow-auto" style="max-height: 90vh;" aria-labelledby="navbarDarkDropdownMenuLink">
-                        @if($kanbanBoardCount > 1)
+                        @if($kanbanBoardCount > 1 && Route::currentRouteName() != "welcome")
                         <li>
-                            <a class="dropdown-item" href="{{ route('welcome') }}" title="Change the kanban board you are working in.">
-                                Kanban boards
+                            <a class="dropdown-item" href="{{ route('welcome') }}" title="Go to the home screen, here you can change the kanban board you are working in.">
+                                Home
                             </a>
                         </li>
                         <li>
@@ -50,6 +50,24 @@
                             </a>
                         </li>
                         <li>
+                            <a class="dropdown-item" href="{{ route('statistics', $kanbanBoard->id) }}" title="Get statistics for the current kanban board.">
+                                Statistics
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider"></div>
+                        </li>
+                        @endif
+                        <li>
+                            <h5 class="dropdown-header">Configuration</h5>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('kanbanboards') }}" title="Manage the kanban boards.">
+                                Kanban boards
+                            </a>
+                        </li>
+                        @isset($kanbanBoard)
+                        <li>
                             <a class="dropdown-item" href="{{ route('systems', $kanbanBoard->id) }}" title="Manage systems and sub&#45;systems.">
                                 Systems and sub&#45;systems
                             </a>
@@ -59,15 +77,10 @@
                                 Applicants
                             </a>
                         </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('statistics', $kanbanBoard->id) }}" title="Get statistics for the current kanban board.">
-                                Statistics
-                            </a>
-                        </li>
+                        @endisset
                         <li>
                             <div class="dropdown-divider"></div>
                         </li>
-                        @endisset
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Log out from this application">
                                 {{ __('Logout') }}

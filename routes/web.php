@@ -28,6 +28,12 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function() {
     Route::get('/', [HomeController::class, 'Welcome'])->name('welcome');
+
+    Route::get('/kanbanboards', [KanbanController::class, 'index'])->name('kanbanboards');
+    Route::get('/kanban/create', [KanbanController::class, 'create'])->name('createKanban');
+    Route::post('/kanban/create', [KanbanController:: class, 'store']);
+    Route::get('/kanban/edit/{kanbanBoard}', [KanbanController::class, 'edit'])->name('editKanban');
+    Route::post('/kanban/edit/{kanbanBoard}', [KanbanController:: class, 'update']);
     
     Route::get('/kanban/{kanbanBoard}/preparation', [KanbanController::class, 'PreparetionKanban'])->name('prepKanban');
     Route::get('/kanban/{kanbanBoard}', [KanbanController::class, 'ActiveKanban'])->name('home');
