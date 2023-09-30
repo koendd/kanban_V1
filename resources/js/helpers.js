@@ -16,7 +16,7 @@ window.descriptioneParser = function (currentUser, users, string) {
     return string;
 }
 
-window.displayErrorModal = function(errorMessage, stackTrace) {
+window.displayErrorModal = function (errorMessage, stackTrace) {
     if(document.querySelector("#errorModal")) {
         document.querySelector("#errorMessage").innerHTML = errorMessage;
         document.querySelector("#stackTrace").innerHTML = stackTrace;
@@ -25,5 +25,18 @@ window.displayErrorModal = function(errorMessage, stackTrace) {
         errorModal.show();
     } else {
         console.error(stackTrace);
+    }
+}
+
+window.checkEmailAddress = function (element) {
+    let regexEmail = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$', 'g');
+    let providedEmail = element.value;
+console.log(regexEmail);
+    if(regexEmail.test(providedEmail)) {
+        element.classList.add('is-valid');
+        element.classList.remove('is-invalid');
+    } else {
+        element.classList.add('is-invalid');
+        element.classList.remove('is-valid');
     }
 }
