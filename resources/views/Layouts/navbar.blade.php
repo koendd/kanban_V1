@@ -68,6 +68,11 @@
                         </li>
                         @isset($kanbanBoard)
                         <li>
+                            <a class="dropdown-item" href="{{ route('statuses', $kanbanBoard->id) }}" title="Manage statuses.">
+                                Statuses
+                            </a>
+                        </li>
+                        <li>
                             <a class="dropdown-item" href="{{ route('systems', $kanbanBoard->id) }}" title="Manage systems and sub&#45;systems.">
                                 Systems and sub&#45;systems
                             </a>

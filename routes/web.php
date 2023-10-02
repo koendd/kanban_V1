@@ -10,6 +10,7 @@ use App\Http\Controllers\SystemController;
 use App\Http\Controllers\SubSystemController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\StatisticsController;
+use App\Http\Controllers\StatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,37 +30,59 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function() {
     Route::get('/', [HomeController::class, 'Welcome'])->name('welcome');
 
-    Route::get('/kanbanboards', [KanbanController::class, 'index'])->name('kanbanboards');
-    Route::get('/kanban/create', [KanbanController::class, 'create'])->name('createKanban');
-    Route::post('/kanban/create', [KanbanController:: class, 'store']);
-    Route::get('/kanban/edit/{kanbanBoard}', [KanbanController::class, 'edit'])->name('editKanban');
-    Route::post('/kanban/edit/{kanbanBoard}', [KanbanController:: class, 'update']);
-    
-    Route::get('/kanban/{kanbanBoard}/preparation', [KanbanController::class, 'PreparetionKanban'])->name('prepKanban');
-    Route::get('/kanban/{kanbanBoard}', [KanbanController::class, 'ActiveKanban'])->name('home');
-    Route::get('/kanban/{kanbanBoard}/Finishing', [KanbanController::class, 'FinishingKanban'])->name('FinishKanban');
+    Route::controller(KanbanController::class)->group(function() {
+        Route::get('/kanbanboards', 'index')->name('kanbanboards');
+        Route::get('/kanban/create', 'create')->name('createKanban');
+        Route::post('/kanban/create', 'store');
+        Route::get('/kanban/edit/{kanbanBoard}', 'edit')->name('editKanban');
+        Route::post('/kanban/edit/{kanbanBoard}', 'update');
+    });    
 
-    Route::get('/kanban/{kanbanBoard}/tasks', [TaskController::class, 'index'])->name('tasks');
-    Route::get('/kanban/{kanbanBoard}/task/create', [TaskController::class, 'create'])->name('createTask');
-    Route::post('/kanban/{kanbanBoard}/task/create', [TaskController::class, 'store']);
-    Route::get('/kanban/{kanbanBoard}/task/show/{task}', [TaskController::class, 'show'])->name('showTask');
-    Route::get('/kanban/{kanbanBoard}/task/edit/{task}', [TaskController::class, 'edit'])->name('editTask');
-    Route::post('/kanban/{kanbanBoard}/task/edit/{task}', [TaskController::class, 'update']);
-    Route::get('/kanban/{kanbanBoard}/log/edit/{taskLog}', [TaskController::class, 'editLog'])->name('editLog');
-    Route::post('/kanban/{kanbanBoard}/log/edit/{taskLog}', [TaskController::class, 'updateLog']);
+    Route::prefix('/kanban/{kanbanBoard}')->group(function() {
+        Route::controller(KanbanController::class)->group(function() {
+            Route::get('/preparation', 'PreparetionKanban')->name('prepKanban');
+            Route::get('/', 'ActiveKanban')->name('home');
+            Route::get('/Finishing', 'FinishingKanban')->name('FinishKanban');
+        });
 
-    Route::get('/kanban/{kanbanBoard}/systems', [SystemController::class, 'index'])->name('systems');
-    Route::get('/kanban/{kanbanBoard}/system/create', [SystemController::class, 'create'])->name('createSystem');
-    Route::post('/kanban/{kanbanBoard}/system/create', [SystemController::class, 'store']);
+        Route::controller(TaskController::class)->group(function() {
+            Route::get('/tasks', 'index')->name('tasks');
+            Route::get('/task/create', 'create')->name('createTask');
+            Route::post('/task/create', 'store');
+            Route::get('/task/show/{task}', 'show')->name('showTask');
+            Route::get('/task/edit/{task}', 'edit')->name('editTask');
+            Route::post('/task/edit/{task}', 'update');
+            Route::get('/log/edit/{taskLog}', 'editLog')->name('editLog');
+            Route::post('/log/edit/{taskLog}', 'updateLog');
+        });
 
-    Route::get('/kanban/{kanbanBoard}/subsystem/create', [SubSystemController::class, 'create'])->name('createSubSystem');
-    Route::post('/kanban/{kanbanBoard}/subsystem/create', [SubSystemController::class, 'store']);
+        Route::controller(SystemController::class)->group(function() {
+            Route::get('/systems', 'index')->name('systems');
+            Route::get('/system/create', 'create')->name('createSystem');
+            Route::post('/system/create', 'store');
+        });
 
-    Route::get('/kanban/{kanbanBoard}/applicants', [ApplicantController::class, 'index'])->name('applicants');
-    Route::get('/kanban/{kanbanBoard}/applicant/create', [ApplicantController::class, 'create'])->name('createApplicant');
-    Route::post('/kanban/{kanbanBoard}/applicant/create', [ApplicantController::class, 'store']);
-    Route::get('/kanban/{kanbanBoard}/applicant/edit/{applicant}', [ApplicantController::class, 'edit'])->name('editApplicant');
-    Route::post('/kanban/{kanbanBoard}/applicant/edit/{applicant}', [ApplicantController::class, 'update']);
+        Route::controller(SubSystemController::class)->group(function() {
+            Route::get('/subsystem/create', 'create')->name('createSubSystem');
+            Route::post('/subsystem/create', 'store');
+        });
 
-    Route::get('/kanban/{kanbanBoard}/statistics', [StatisticsController::class, 'getFullStatistics'])->name('statistics');
+        Route::controller(ApplicantController::class)->group(function() {
+            Route::get('applicants', 'index')->name('applicants');
+            Route::get('/applicant/create', 'create')->name('createApplicant');
+            Route::post('/applicant/create', 'store');
+            Route::get('/applicant/edit/{applicant}', 'edit')->name('editApplicant');
+            Route::post('/applicant/edit/{applicant}', 'update');
+        });
+
+        Route::controller(StatusController::class)->group(function() {
+            Route::get('statuses', 'index')->name('statuses');
+            Route::get('/status/create', 'create')->name('createStatus');
+            Route::post('/status/create', 'store');
+            //Route::get('/status/edit/{status}', 'edit')->name('editStatus');
+            //Route::post('/status/edit/{status}', 'update');
+        });
+
+        Route::get('/statistics', [StatisticsController::class, 'getFullStatistics'])->name('statistics');
+    });    
 });
