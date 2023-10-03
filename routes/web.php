@@ -11,6 +11,7 @@ use App\Http\Controllers\SubSystemController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\PriorityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,14 @@ Route::middleware('auth')->group(function() {
             Route::get('/status/create', 'create')->name('createStatus');
             Route::post('/status/create', 'store');
             //Route::get('/status/edit/{status}', 'edit')->name('editStatus');
+            //Route::post('/status/edit/{status}', 'update');
+        });
+
+        Route::controller(PriorityController::class)->group(function() {
+            Route::get('priorities', 'index')->name('priorities');
+            Route::get('/status/create', 'create')->name('createPriority');
+            Route::post('/status/create', 'store');
+            //Route::get('/status/edit/{status}', 'edit')->name('editPriority');
             //Route::post('/status/edit/{status}', 'update');
         });
 
