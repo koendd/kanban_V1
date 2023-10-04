@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/task/updateStatus', [TaskController::class, 'updateStatus'])->middleware('auth:api')->name('updateTaskStatusApi');
 Route::get('/task/{id}', [TaskController::class, 'getTask'])->middleware('auth:api')->name('getTaskApi');
 Route::post('/task/addLogEntry', [TaskController::class, 'addLogEntryToTask'])->middleware('auth:api')->name('addTaskLogEntryApi');
+Route::get('/task/getTransferDestinationData/{id}', [TaskController::class, 'getTransferDestinationData'])->middleware('auth:api')->name('getTransferDestinationDataApi');
 
 Route::get('/system/{system}/subsystems', [SystemController::class, 'getSubsytems'])->middleware('auth:api')->name('getSubsystemsApi');
 

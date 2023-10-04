@@ -24,6 +24,13 @@ class System extends Model
         'kanban_board_id'
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['name'];
+
     public function SubSystems()
     {
         return $this->hasMany(SubSystem::class)->orderBy('name_short', 'asc');
@@ -32,5 +39,20 @@ class System extends Model
     public function Tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    /**
+     * Get the formated name of the system
+     *
+     * @return string
+     */
+    public function getnameAttribute() {
+        $name = $this->name_short;
+
+        if($this->name_full != "") {
+            $name .= " - " . $this->name_full;
+        }
+
+        return $name;
     }
 }

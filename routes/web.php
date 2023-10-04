@@ -53,6 +53,8 @@ Route::middleware('auth')->group(function() {
             Route::get('/task/show/{task}', 'show')->name('showTask');
             Route::get('/task/edit/{task}', 'edit')->name('editTask');
             Route::post('/task/edit/{task}', 'update');
+            Route::get('/task/transfer/{task}', 'transfer')->name('transferTask');
+            Route::post('/task/transfer/{task}', 'move');
             Route::get('/log/edit/{taskLog}', 'editLog')->name('editLog');
             Route::post('/log/edit/{taskLog}', 'updateLog');
         });
@@ -86,10 +88,10 @@ Route::middleware('auth')->group(function() {
 
         Route::controller(PriorityController::class)->group(function() {
             Route::get('priorities', 'index')->name('priorities');
-            Route::get('/status/create', 'create')->name('createPriority');
-            Route::post('/status/create', 'store');
-            //Route::get('/status/edit/{status}', 'edit')->name('editPriority');
-            //Route::post('/status/edit/{status}', 'update');
+            Route::get('/priority/create', 'create')->name('createPriority');
+            Route::post('/priority/create', 'store');
+            //Route::get('/priority/edit/{status}', 'edit')->name('editPriority');
+            //Route::post('/priority/edit/{status}', 'update');
         });
 
         Route::get('/statistics', [StatisticsController::class, 'getFullStatistics'])->name('statistics');

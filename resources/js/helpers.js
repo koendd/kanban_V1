@@ -31,7 +31,7 @@ window.displayErrorModal = function (errorMessage, stackTrace) {
 window.checkEmailAddress = function (element) {
     let regexEmail = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$', 'g');
     let providedEmail = element.value;
-console.log(regexEmail);
+    
     if(regexEmail.test(providedEmail)) {
         element.classList.add('is-valid');
         element.classList.remove('is-invalid');
@@ -39,4 +39,29 @@ console.log(regexEmail);
         element.classList.add('is-invalid');
         element.classList.remove('is-valid');
     }
+}
+
+window.rebuildSelect = function (selectId, data, message = "") {
+    const select = document.querySelector("#" + selectId);
+
+    for (var option in select) {
+        select.remove(option);
+    }
+
+    if(message != "") {
+        let messageOption = document.createElement('option');
+        messageOption.text = message;
+        messageOption.disabled = true;
+        messageOption.selected = true;
+        select.add(messageOption, undefined);
+    }
+
+    data.forEach((element) => {
+        let newOption = document.createElement('option');
+        newOption.value = element.id;
+        newOption.text = element.name;
+        select.add(newOption, undefined);
+    });
+
+    select.disabled = false;
 }

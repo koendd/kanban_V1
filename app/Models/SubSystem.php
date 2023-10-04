@@ -24,6 +24,13 @@ class SubSystem extends Model
         'system_id',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['name'];
+
     public function System()
     {
         return $this->belongsTo(System::class);
@@ -32,5 +39,20 @@ class SubSystem extends Model
     public function Tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    /**
+     * Get the formated name of the system
+     *
+     * @return string
+     */
+    public function getnameAttribute() {
+        $name = $this->name_short;
+
+        if($this->name_full != "") {
+            $name .= " - " . $this->name_full;
+        }
+
+        return $name;
     }
 }

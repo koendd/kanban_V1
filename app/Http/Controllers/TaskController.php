@@ -210,6 +210,53 @@ class TaskController extends Controller
     }
 
     /**
+     * Show the form for transfering the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function transfer(Kanbanboard $kanbanBoard, Task $task)
+    {
+        $kanbanBoards = KanbanBoard::orderBy('name', 'asc')->get();
+        
+        return view('Tasks.transfer', compact(['kanbanBoard', 'task', 'kanbanBoards']));
+    }
+
+    /**
+     * move the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function move(Kanbanboard $kanbanBoard, Request $request, Task $task)
+    {
+        /*$validatedData = $request->validate([
+            'name' => ['required', 'string'],
+            'description' => ['string', 'nullable'],
+            'deadline' => ['date', 'nullable'],
+            'system_id' => ['required', 'exists:systems,id'],
+            'sub_system_id' => ['nullable', 'exists:sub_systems,id'],
+            'applicant_id' => ['nullable', 'exists:applicants,id'],
+            'priority_id' => ['required', 'exists:priorities,id'],
+            'status_id' => ['required', 'exists:statuses,id'],
+            'task_type_id' => ['required', 'exists:task_types,id'],
+            'user_ids' => ['array', 'exists:users,id'],
+        ]);*/
+
+        $task->system_id = $request->system_id;
+        $task->sub_system_id = $request->sub_system_id;
+        $task->applicant_id = $request->applicant_id ?? null;
+        $task->priority_id = $request->priority_id;
+        $task->status_id = $request->status_id;
+        $task->task_type_id = $request->task_type_id;
+        $task->save();
+
+        return redirect()->route('home', $request->kanban_board_id);
+    }
+
+    /**
      * Show the form for editing the specified resource task_log.
      *
      * @param  int  $id
