@@ -13,6 +13,9 @@ window.descriptioneParser = function (currentUser, users, string) {
         }
     });
 
+    let regexLogNumber = new RegExp('(\\W|^)#(\\d+)(\\W|$)', 'ig');
+    string = string.replace(regexLogNumber, '$1<span class="label radius text-success fw-bold">#$2</span>$3');
+
     return string;
 }
 
