@@ -198,10 +198,11 @@
         let token = document.querySelector("#token").value;
         if(ev.target.id.includes("status")) {
             ev.preventDefault();
-            var data = ev.dataTransfer.getData("task");
+            let data = ev.dataTransfer.getData("task");
             ev.target.appendChild(document.getElementById(data));
 
             let newStatusId = ev.target.id.replace(/.*status/g,"");
+            let prevStatusId = ev.dataTransfer.getData("prevStatusId");
             let taskId = data.replace(/.*task/g,"");
 
             axios.post("{{route('updateTaskStatusApi')}}", {api_token: token, task_id: taskId, status_id: newStatusId})
@@ -209,11 +210,11 @@
                     ev.target.classList.remove("drop-space");
                     document.querySelector("#status" + newStatusId + "Count").innerHTML = "#" + response.data.length;
 
-                    if("#status" + newStatusId != "#" + ev.dataTransfer.getData("prevStatusId")){
-                        let prevStatusCount = document.querySelector("#" + ev.dataTransfer.getData("prevStatusId") + "Count").innerHTML;
+                    if("#status" + newStatusId != "#" + prevStatusId){
+                        let prevStatusCount = document.querySelector("#" + prevStatusId + "Count").innerHTML;
                         prevStatusCount = parseInt(prevStatusCount.replace("#", ""));
                         prevStatusCount -= 1;
-                        document.querySelector("#" + ev.dataTransfer.getData("prevStatusId") + "Count").innerHTML = "#" + prevStatusCount;
+                        document.querySelector("#" + prevStatusId + "Count").innerHTML = "#" + prevStatusCount;
                     }
                 }).catch((err) => {
                     displayErrorModal("Something went wrong updating the task status!", err);
