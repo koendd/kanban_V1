@@ -319,27 +319,31 @@
     function addNewLogEntry() {
         let token = document.querySelector("#token").value;
         let entryDescription = document.querySelector("#modalNewLogEntry").value;
-        axios.post("{{route('addTaskLogEntryApi')}}", {api_token: token, task_id: calledTaskId, entry_description: entryDescription})
-            .then((response) => {
-                document.querySelector("#modalNewLogEntry").value = "";
-                let modalLogEntries = document.querySelector("#modalLogEntries");
-                modalLogEntries.innerHTML = null;
-                document.querySelector("#charCount").innerHTML = "0 / 1000";
-                response.data.forEach((log) => {
-                    let row = modalLogEntries.insertRow();
-                    let idCell = row.insertCell(0);
-                    let dateCell = row.insertCell(1);
-                    let userCell = row.insertCell(2);
-                    let descriptionCell = row.insertCell(3);
+        if(entryDescription != ""){
+            axios.post("{{route('addTaskLogEntryApi')}}", {api_token: token, task_id: calledTaskId, entry_description: entryDescription})
+                .then((response) => {
+                    document.querySelector("#modalNewLogEntry").value = "";
+                    let modalLogEntries = document.querySelector("#modalLogEntries");
+                    modalLogEntries.innerHTML = null;
+                    document.querySelector("#charCount").innerHTML = "0 / 1000";
+                    response.data.forEach((log) => {
+                        let row = modalLogEntries.insertRow();
+                        let idCell = row.insertCell(0);
+                        let dateCell = row.insertCell(1);
+                        let userCell = row.insertCell(2);
+                        let descriptionCell = row.insertCell(3);
 
-                    idCell.innerHTML = log.id;
-                    userCell.innerHTML = log.user.name;
-                    dateCell.innerHTML = log.Timestamp;
-                    descriptionCell.innerHTML = descriptioneParser(currentUser, users, log.DescriptionFormatted);
+                        idCell.innerHTML = log.id;
+                        userCell.innerHTML = log.user.name;
+                        dateCell.innerHTML = log.Timestamp;
+                        descriptionCell.innerHTML = descriptioneParser(currentUser, users, log.DescriptionFormatted);
+                    });
+                }).catch((err) => {
+                    displayErrorModal("Something went wrong while adding the new log entry!", err);
                 });
-            }).catch((err) => {
-                displayErrorModal("Something went wrong while adding the new log entry!", err);
-            });
+        } else {
+            displayErrorModal("You can't add an empty log entry", "--");
+        }
     }
 </script>
 @endsection
