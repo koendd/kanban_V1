@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Events\UserLogin;
+
 class LoginController extends Controller
 {
     public function authenticateView()
@@ -27,6 +29,9 @@ class LoginController extends Controller
  
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            UserLogin::dispatch(Auth::user());
+            //dd (request()->getClientIp());
  
             //return redirect()->route('home', Auth::User()->default_kanban_board_id);
             return redirect()->intended();

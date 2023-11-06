@@ -14,7 +14,7 @@ class AlterTaskTypesTableAddKanbanBoard extends Migration
     public function up()
     {
         Schema::table('task_types', function (Blueprint $table) {
-            $table->unsignedBigInteger('kanban_board_id');
+            $table->unsignedBigInteger('kanban_board_id')->default(1);
             $table->foreign('kanban_board_id')->references('id')->on('kanban_boards');
         });
     }
