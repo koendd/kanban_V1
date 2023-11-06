@@ -79,6 +79,44 @@
 @else
 @endif
 
+<div class="d-flex justify-content-between">
+    <div class="ms-5 p-2">
+        <h3>Task types</h3>
+    </div>
+</div>
+@if($taskTypesStats->count() > 0)
+<div class="position-relative row">
+    <div class="col-6">
+        <div class="table-responsive">
+            <table class="table table-striped align-middle table-bordered border-dark">
+                <caption>List of all task types and the amount of tasks for each type</caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center align-middle">Id</th>
+                        <th scope="col" class="text-center align-middle">Name</th>
+                        <th scope="col" class="text-center align-middle d-none d-sm-table-cell">Description</th>
+                        <th scope="col" class="text-center align-middle">tasks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($taskTypesStats as $taskTypeStat)
+                    <tr>
+                        <td>{{$taskTypeStat->id}}</td>
+                        <td>{{$taskTypeStat->name}}</td>
+                        <td>{{$taskTypeStat->description}}</td>
+                        <td>{{$taskTypeStat->tasks_count}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-6" id="taskTypeVisChart">
+    </div>
+</div>
+@else
+@endif
+
 
 <input type="hidden" value="{{ Auth::user()->api_token }}" id="token" />
 <script>
@@ -93,6 +131,7 @@ window.onload = (event) => {
 
             loadStatistics(response.data.statusStats, "#statusVisChart");
             loadStatistics(response.data.priorityStats, "#priorityVisChart");
+            loadStatistics(response.data.taskTypesStats, "#taskTypeVisChart");
         }).catch(function (error) {
             // handle error
             console.log(error);

@@ -41,18 +41,18 @@
                         </div>
                     </div>
 
-<div class="col-auto">
-    <label class="visually-hidden" for="priority">Priority</label>
-    <div class="input-group">
-        <div class="input-group-text">Priority</div>
-        <select class="form-select" id="priority" name="priority_id">
-            <option value="0" @if(!isset($searchParameters['priority_id'])) selected @endif>Select priority</option>
-        @foreach($priorities as $priority)
-            <option value="{{$priority->id}}" @if(isset($searchParameters['priority_id'])) {{$priority->id == $searchParameters['priority_id'] ? "selected" : "" }} @endif>{{$priority->name}}</option>
-        @endforeach
-        </select>
-    </div>
-</div>
+                    <div class="col-auto">
+                        <label class="visually-hidden" for="priority">Priority</label>
+                        <div class="input-group">
+                            <div class="input-group-text">Priority</div>
+                            <select class="form-select" id="priority" name="priority_id">
+                                <option value="0" @if(!isset($searchParameters['priority_id'])) selected @endif>Select priority</option>
+                            @foreach($priorities as $priority)
+                                <option value="{{$priority->id}}" @if(isset($searchParameters['priority_id'])) {{$priority->id == $searchParameters['priority_id'] ? "selected" : "" }} @endif>{{$priority->name}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="col-auto">
                         <label class="visually-hidden" for="status">Status</label>
@@ -62,6 +62,19 @@
                                 <option value="0" @if(!isset($searchParameters['status_id'])) selected @endif>Select status</option>
                             @foreach($statuses as $status)
                                 <option value="{{$status->id}}" @if(isset($searchParameters['status_id'])) {{$status->id == $searchParameters['status_id'] ? "selected" : "" }} @endif>{{$status->name}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <label class="visually-hidden" for="taskType">Task type</label>
+                        <div class="input-group">
+                            <div class="input-group-text">Task type</div>
+                            <select class="form-select" id="taskType" name="task_type_id">
+                                <option value="0" @if(!isset($searchParameters['task_type_id'])) selected @endif>Select task type</option>
+                            @foreach($taskTypes as $taskType)
+                                <option value="{{$taskType->id}}" @if(isset($searchParameters['task_type_id'])) {{$taskType->id == $searchParameters['task_type_id'] ? "selected" : "" }} @endif>{{$taskType->name}}</option>
                             @endforeach
                             </select>
                         </div>

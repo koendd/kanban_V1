@@ -52,6 +52,12 @@ class TaskController extends Controller
                     $searchParameters = Arr::add($searchParameters, 'priority_id', $request['priority_id']);
                 }
             }
+
+            if($request->has('task_type_id')) {
+                if(TaskType::where('id', $request['task_type_id'])->exists()) {
+                    $searchParameters = Arr::add($searchParameters, 'task_type_id', $request['task_type_id']);
+                }
+            }
         }
         //dd($searchParameters);
 
@@ -59,7 +65,9 @@ class TaskController extends Controller
         $systems = System::where('kanban_board_id', $kanbanBoard->id)->orderBy('name_short', 'asc')->get();
         $statuses = Status::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
         $priorities = Priority::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
-        return view('Tasks.index', compact(['kanbanBoard', 'tasks', 'systems', 'statuses', 'priorities', 'searchParameters']));
+        $taskTypes = TaskType::where('kanban_board_id', $kanbanBoard->id)->orderBy('name', 'asc')->get();
+
+        return view('Tasks.index', compact(['kanbanBoard', 'tasks', 'systems', 'statuses', 'priorities', 'taskTypes', 'searchParameters']));
     }
 
     /**
@@ -73,7 +81,7 @@ class TaskController extends Controller
         $applicants = Applicant::where('kanban_board_id', $kanbanBoard->id)->orderBy('name', 'asc')->get();
         $priorities = Priority::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
         $statuses = Status::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
-        $types = TaskType::orderBy('name', 'asc')->get();
+        $types = TaskType::where('kanban_board_id', $kanbanBoard->id)->orderBy('name', 'asc')->get();
         $users = User::orderBy('name', 'asc')->get();
         return view('Tasks.create', compact(['kanbanBoard', 'systems', 'applicants', 'priorities', 'statuses', 'types', 'users']));
     }
@@ -137,7 +145,7 @@ class TaskController extends Controller
         $applicants = Applicant::where('kanban_board_id', $kanbanBoard->id)->orderBy('name', 'asc')->get();
         $priorities = Priority::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
         $statuses = Status::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
-        $types = TaskType::orderBy('name', 'asc')->get();
+        $types = TaskType::where('kanban_board_id', $kanbanBoard->id)->orderBy('name', 'asc')->get();
         $users = User::orderBy('name', 'asc')->get();
         return view('Tasks.edit', compact(['kanbanBoard', 'task', 'systems', 'subSystems', 'applicants', 'priorities', 'statuses', 'types', 'users']));
     }

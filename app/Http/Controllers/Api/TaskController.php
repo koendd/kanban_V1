@@ -45,7 +45,7 @@ class TaskController extends Controller
         $data['applicants'] = Applicant::where('kanban_board_id', $kanban_board_id)->orderBy('name', 'asc')->get();
         $data['priorities'] = Priority::where('kanban_board_id', $kanban_board_id)->orderBy('order_number', 'asc')->get();
         $data['statuses'] = Status::where('kanban_board_id', $kanban_board_id)->orderBy('order_number', 'asc')->get();
-        $data['taskTypes'] = TaskType::orderBy('name', 'asc')->get();
+        $data['taskTypes'] = TaskType::where('kanban_board_id', $kanban_board_id)->orderBy('name', 'asc')->get();
         return $data;
     }
 }

@@ -25,7 +25,8 @@ class StatisticsController extends Controller
     {
         $statusStats = Status::withCount('tasks')->where('kanban_board_id', $kanbanBoard->id)->get();
         $priorityStats = Priority::withCount('tasks')->where('kanban_board_id', $kanbanBoard->id)->get();
-
-        return view('Statistics.fullStatistics', compact(['kanbanBoard', 'statusStats', 'priorityStats']));;
+        $taskTypesStats = TaskType::withCount('tasks')->where('kanban_board_id', $kanbanBoard->id)->get();
+        
+        return view('Statistics.fullStatistics', compact(['kanbanBoard', 'statusStats', 'priorityStats', 'taskTypesStats']));
     }
 }

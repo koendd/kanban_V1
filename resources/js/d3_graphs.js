@@ -47,5 +47,5 @@ window.loadStatistics = function (data, div_id) {
         .attr("y", function(d) { return y(d.tasks_count); })
         .attr("width", x.bandwidth())
         .attr("height", function(d) { return height - y(d.tasks_count); })
-        .attr("fill", function(d) { return "#" + d.colorHex ;});
+        .attr("fill", function(d) { if(d.colorHex) return "#" + d.colorHex; return "#73a610" ;});
 }

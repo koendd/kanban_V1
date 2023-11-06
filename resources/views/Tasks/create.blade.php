@@ -177,7 +177,7 @@
                                     @endforeach
                                 </select>
                                 @else
-                                <input type="hidden" name="task_type_id" value="{{$appltypesicants->first()->id}}" />
+                                <input type="hidden" name="task_type_id" value="{{$types->first()->id}}" />
                                 <input id="task_type_id" type="text" class="form-control disabled @error('task_type_id') is-invalid @enderror" value="{{ $types->first()->name }}" required disabled>
                                 @endif
 

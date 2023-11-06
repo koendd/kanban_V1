@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\KanbanBoard;
 use App\Models\Status;
 use App\Models\Priority;
+use App\Models\TaskType;
 
 class StatisticsController extends Controller
 {
@@ -15,7 +16,8 @@ class StatisticsController extends Controller
     {
         $statusStats = Status::withCount('tasks')->where('kanban_board_id', $kanbanBoard->id)->get();
         $priorityStats = Priority::withCount('tasks')->where('kanban_board_id', $kanbanBoard->id)->get();
+        $taskTypesStats = TaskType::withCount('tasks')->where('kanban_board_id', $kanbanBoard->id)->get();
 
-        return ["statusStats" => $statusStats, "priorityStats" => $priorityStats];
+        return ["statusStats" => $statusStats, "priorityStats" => $priorityStats, "taskTypesStats" => $taskTypesStats];
     }
 }
