@@ -117,7 +117,7 @@
                         <label for="modalnewLogEntry" class="col-sm-2 col-form-label">New log entry</label>
                         <div class="col-sm-8"><textarea class="form-control" id="modalNewLogEntry" maxlength="1000" rows="4" onkeyup="displayCharCount(this, 'charCount')"></textarea></div>
                         <div class="col-sm-2">
-                            <button type="button" class="btn btn-primary" onclick="addNewLogEntry()">Add log</button>
+                            <button id="modalAddLogEntryBtn" type="button" class="btn btn-primary" onclick="addNewLogEntry()">Add log</button>
                             <p id="charCount" class="col-form-label font-monospace">0 / 1000</p>
                         </div>
                     </div>
@@ -320,6 +320,7 @@
         let token = document.querySelector("#token").value;
         let entryDescription = document.querySelector("#modalNewLogEntry").value;
         if(entryDescription != ""){
+            document.querySelector("#modalAddLogEntryBtn").setAttribute("disabled", true);
             axios.post("{{route('addTaskLogEntryApi')}}", {api_token: token, task_id: calledTaskId, entry_description: entryDescription})
                 .then((response) => {
                     document.querySelector("#modalNewLogEntry").value = "";
@@ -338,8 +339,10 @@
                         dateCell.innerHTML = log.Timestamp;
                         descriptionCell.innerHTML = descriptioneParser(currentUser, users, log.DescriptionFormatted);
                     });
+                    document.querySelector("#modalAddLogEntryBtn").removeAttribute("disabled");
                 }).catch((err) => {
                     displayErrorModal("Something went wrong while adding the new log entry!", err);
+                    document.querySelector("#modalAddLogEntryBtn").removeAttribute("disabled");
                 });
         } else {
             displayErrorModal("You can't add an empty log entry", "--");
