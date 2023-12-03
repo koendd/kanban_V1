@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\TaskController;
@@ -97,5 +98,8 @@ Route::middleware('auth')->group(function() {
         });
 
         Route::get('/statistics', [StatisticsController::class, 'getFullStatistics'])->name('statistics');
-    });    
+    });
+
+    Route::get('/password/change', [ChangePasswordController::class, 'change'])->name('password_change');
+    Route::post('/password/change', [ChangePasswordController::class, 'store']);
 });

@@ -92,6 +92,11 @@
                             <div class="dropdown-divider"></div>
                         </li>
                         <li>
+                            <a class="dropdown-item" href="{{ route('password_change') }}" title="Change your password">
+                                Change password
+                            </a>
+                        </li>
+                        <li>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Log out from this application">
                                 {{ __('Logout') }}
                             </a>
