@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Builder;
 
 use App\Models\KanbanBoard;
 use App\Models\Task;
@@ -26,8 +27,9 @@ class TaskController extends Controller
      */
     public function index(KanbanBoard $kanbanBoard, Request $request)
     {
-        //dd($request);
         $searchParameters = [];
+        $searchString = $request['text_search'];
+
         if($request->has('_token')) {
             if($request->has('system_id')) {
                 if(System::where('id', $request['system_id'])->exists()) {
@@ -59,15 +61,29 @@ class TaskController extends Controller
                 }
             }
         }
-        //dd($searchParameters);
+        
+        $taskQuery = Task::Query();
+        $taskQuery->whereRelation('System', 'kanban_board_id', '=', $kanbanBoard->id);
 
-        $tasks = Task::where($searchParameters)->whereRelation('System', 'kanban_board_id', '=', $kanbanBoard->id)->orderBy('id', 'desc')->get();
+        if(!empty($searchParameters)){
+            $taskQuery->where($searchParameters);
+        }
+        if($request->has('text_search')) {
+            $taskQuery->where(function (Builder $query) use ($searchString) {
+                $query->where('name', 'like', '%' . $searchString . '%');
+                $query->orWhere('description', 'like', '%' . $searchString . '%');
+            });
+        }
+
+        $taskQuery->orderBy('id', 'desc');
+        $tasks = $taskQuery->get();
+
         $systems = System::where('kanban_board_id', $kanbanBoard->id)->orderBy('name_short', 'asc')->get();
         $statuses = Status::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
         $priorities = Priority::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
         $taskTypes = TaskType::where('kanban_board_id', $kanbanBoard->id)->orderBy('name', 'asc')->get();
 
-        return view('Tasks.index', compact(['kanbanBoard', 'tasks', 'systems', 'statuses', 'priorities', 'taskTypes', 'searchParameters']));
+        return view('Tasks.index', compact(['kanbanBoard', 'tasks', 'systems', 'statuses', 'priorities', 'taskTypes', 'searchParameters', 'searchString']));
     }
 
     /**
