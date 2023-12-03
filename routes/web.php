@@ -90,8 +90,9 @@ Route::middleware('auth')->group(function() {
             Route::get('priorities', 'index')->name('priorities');
             Route::get('/priority/create', 'create')->name('createPriority');
             Route::post('/priority/create', 'store');
-            //Route::get('/priority/edit/{status}', 'edit')->name('editPriority');
-            //Route::post('/priority/edit/{status}', 'update');
+            Route::get('/priority/show/{priority}', 'show')->name('showPriority');
+            Route::get('/priority/edit/{priority}', 'edit')->name('editPriority');
+            Route::post('/priority/edit/{priority}', 'update');
         });
 
         Route::get('/statistics', [StatisticsController::class, 'getFullStatistics'])->name('statistics');

@@ -57,7 +57,7 @@ class PriorityController extends Controller
      */
     public function show(KanbanBoard $kanbanBoard, Priority $priority)
     {
-        //
+        return view('Priorities.show', compact(['kanbanBoard', 'priority']));
     }
 
     /**
@@ -68,7 +68,7 @@ class PriorityController extends Controller
      */
     public function edit(KanbanBoard $kanbanBoard, Priority $priority)
     {
-        //
+        return view('Priorities.edit', compact(['kanbanBoard', 'priority']));
     }
 
     /**
@@ -78,9 +78,17 @@ class PriorityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Priority $priority)
+    public function update(KanbanBoard $kanbanBoard, Request $request, Priority $priority)
     {
-        //
+        //dd($request);
+        $priority->name = $request["name"];
+        $priority->description = $request["description"];
+        $priority->order_number = $request["order_number"];
+        $priority->color = hexdec($request["color"]);
+        $priority->kanban_board_id = $kanbanBoard->id;
+        $priority->save();
+
+        return redirect()->route('priorities', $kanbanBoard->id);
     }
 
     /**

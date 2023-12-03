@@ -50,7 +50,19 @@ class Priority extends Model
      * @return string
      */
     public function getColorHexAttribute() {
-        return dechex($this->color);
+        $redValue = ($this->color & 0xFF0000) >> 16;
+        $greenValue = ($this->color & 0x00FF00) >> 8;
+        $blueValue = $this->color & 0x0000FF;
+
+        $red = ($redValue <= 15 ? '0' : '') . dechex($redValue);
+        $green = ($greenValue <= 15 ? '0' : '') . dechex($greenValue);
+        $blue = ($blueValue <= 15 ? '0' : '') . dechex($blueValue);
+
+        $hexValue = $red;
+        $hexValue .= $green;
+        $hexValue .= $blue;
+
+        return $hexValue;
     }
 
     /**

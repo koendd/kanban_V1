@@ -1,6 +1,6 @@
 @extends('Layouts.app')
 
-@section('title', 'Create priority')
+@section('title', 'Edit priority')
 
 @section('content')
 <div class="mt-5">
@@ -8,16 +8,16 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Create a priority
+                    Edit priority: <span class="fw-bold fs-5 text-primary font-monospace">{{$priority->name}}</span>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('createPriority', $kanbanBoard->id)}}" method="post">
+                    <form action="{{route('editPriority', [$kanbanBoard->id, $priority->id])}}" method="post">
                         @csrf
                         
                         <div class="row mb-3">
                             <label for="name" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10 border-end border-danger border-3">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" maxlength="50" required value="{{old('name')}}"/>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" maxlength="50" required value="{{$priority->name}}"/>
 
                                 @error('name')
                                 <div class="invalid-feedback">
@@ -29,7 +29,7 @@
                         <div class="row mb-3">
                             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" rows="4" autocomplete="off" onkeyup="displayCharCount(this, 'charCount')">{{old('description')}}</textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" rows="4" autocomplete="off" onkeyup="displayCharCount(this, 'charCount')">{{$priority->description}}</textarea>
 
                                 @error('description')
                                 <div class="invalid-feedback">
@@ -37,14 +37,14 @@
                                 </div>
                                 @enderror
                                 <div id="charCount" class="text-end">
-                                    0 / 1000
+                                    {{Str::length($priority->description)}} / 1000
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputOrderNumber" class="col-sm-2 col-form-label">Order number</label>
                             <div class="col-sm-10 border-end border-danger border-3">
-                                <input type="number" class="form-control @error('deadline') is-invalid @enderror" id="inputOrderNumber" name="order_number" min="0" max="100" value="{{old('order_number')}}" />
+                                <input type="number" class="form-control @error('deadline') is-invalid @enderror" id="inputOrderNumber" name="order_number" min="0" max="100" value="{{$priority->order_number}}" />
 
                                 @error('order_number')
                                 <div class="invalid-feedback">
@@ -56,7 +56,7 @@
                         <div class="row mb-3">
                             <label for="color" class="col-sm-2 col-form-label">Color</label>
                             <div class="col-sm-10 border-end border-danger border-3">
-                                <input id="color" type="color" class="form-control form-control-color" name="color" required>
+                                <input id="color" type="color" class="form-control form-control-color" name="color" required value="#{{$priority->ColorHex}}">
                             </div>
 
                             @error('color')
@@ -68,7 +68,7 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-2">
-                                <button type="submit" class="btn btn-success">Create priority</button>
+                                <button type="submit" class="btn btn-success">Update priority</button>
                                 <a href="{{ url()->previous() }}" class="btn btn-danger">{{ __('Cancel') }}</a>
                             </div>
                         </div>
