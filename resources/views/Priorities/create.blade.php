@@ -44,7 +44,7 @@
                         <div class="row mb-3">
                             <label for="inputOrderNumber" class="col-sm-2 col-form-label">Order number</label>
                             <div class="col-sm-10 border-end border-danger border-3">
-                                <input type="number" class="form-control @error('deadline') is-invalid @enderror" id="inputOrderNumber" name="order_number" min="0" max="100" value="{{old('order_number')}}" />
+                                <input type="number" class="form-control @error('order_number') is-invalid @enderror" id="inputOrderNumber" name="order_number" min="0" max="100" value="{{old('order_number')}}" />
 
                                 @error('order_number')
                                 <div class="invalid-feedback">

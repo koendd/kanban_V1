@@ -1,6 +1,6 @@
 @extends('Layouts.app')
 
-@section('title', 'Create status')
+@section('title', 'Edit status')
 
 @section('content')
 <div class="mt-5">
@@ -8,16 +8,16 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Create a status
+                    Edit status: <span class="fw-bold fs-5 text-primary font-monospace">{{$status->name}}</span>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('createStatus', $kanbanBoard->id)}}" method="post">
+                    <form action="{{route('editStatus', [$kanbanBoard->id, $status->id])}}" method="post">
                         @csrf
                         
                         <div class="row mb-3">
                             <label for="name" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10 border-end border-danger border-3">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" maxlength="50" required value="{{old('name')}}"/>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" maxlength="50" required value="{{$status->name}}"/>
 
                                 @error('name')
                                 <div class="invalid-feedback">
@@ -29,7 +29,7 @@
                         <div class="row mb-3">
                             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" rows="4" autocomplete="off" onkeyup="displayCharCount(this, 'charCount')">{{old('description')}}</textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="1000" rows="4" autocomplete="off" onkeyup="displayCharCount(this, 'charCount')">{{$status->description}}</textarea>
 
                                 @error('description')
                                 <div class="invalid-feedback">
@@ -37,14 +37,14 @@
                                 </div>
                                 @enderror
                                 <div id="charCount" class="text-end">
-                                    0 / 1000
+                                    {{Str::length($status->description)}} / 1000
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputOrderNumber" class="col-sm-2 col-form-label">Order number</label>
                             <div class="col-sm-10 border-end border-danger border-3">
-                                <input type="number" class="form-control @error('order_number') is-invalid @enderror" id="inputOrderNumber" name="order_number" min="0" max="100" value="{{old('order_number')}}" />
+                                <input type="number" class="form-control @error('order_number') is-invalid @enderror" id="inputOrderNumber" name="order_number" min="0" max="100" value="{{$status->order_number}}" />
 
                                 @error('order_number')
                                 <div class="invalid-feedback">
@@ -57,15 +57,15 @@
                             <label for="enabled" class="col-md-2 col-form-label text-md-right">Kanban part</label>
                             <div class="col-sm-10 mt-2 border-end border-danger border-3">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="checkBoxPreparetion" name="preparetion" value="preparetion" @if(old('preparetion')) checked @endif>
+                                    <input class="form-check-input" type="checkbox" id="checkBoxPreparetion" name="preparetion" value="preparetion" @if($status->preparetion) checked @endif>
                                     <label class="form-check-label" for="checkBoxPreparetion">Preparetion</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="checkBoxActive" name="active" value="active" @if(old('active')) checked @endif>
+                                    <input class="form-check-input" type="checkbox" id="checkBoxActive" name="active" value="active" @if($status->active) checked @endif>
                                     <label class="form-check-label" for="checkBoxActive">Active</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="checkBoxFinishing" name="finishing" value="finishing" @if(old('finishing')) checked @endif>
+                                    <input class="form-check-input" type="checkbox" id="checkBoxFinishing" name="finishing" value="finishing" @if($status->finishing) checked @endif>
                                     <label class="form-check-label" for="checkBoxFinishing">Finishing</label>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                         <div class="row mb-3">
                             <label for="color" class="col-sm-2 col-form-label">Color</label>
                             <div class="col-sm-10 border-end border-danger border-3">
-                                <input id="color" type="color" class="form-control form-control-color" name="color" required>
+                                <input id="color" type="color" class="form-control form-control-color" name="color" required value="#{{$status->ColorHex}}">
                             </div>
 
                             @error('color')
@@ -85,7 +85,7 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-2">
-                                <button type="submit" class="btn btn-success">Create status</button>
+                                <button type="submit" class="btn btn-success">Update status</button>
                                 <a href="{{ url()->previous() }}" class="btn btn-danger">{{ __('Cancel') }}</a>
                             </div>
                         </div>

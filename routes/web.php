@@ -82,8 +82,9 @@ Route::middleware('auth')->group(function() {
             Route::get('statuses', 'index')->name('statuses');
             Route::get('/status/create', 'create')->name('createStatus');
             Route::post('/status/create', 'store');
-            //Route::get('/status/edit/{status}', 'edit')->name('editStatus');
-            //Route::post('/status/edit/{status}', 'update');
+            Route::get('/status/show/{status}', 'show')->name('showStatus');
+            Route::get('/status/edit/{status}', 'edit')->name('editStatus');
+            Route::post('/status/edit/{status}', 'update');
         });
 
         Route::controller(PriorityController::class)->group(function() {

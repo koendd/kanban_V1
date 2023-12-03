@@ -60,7 +60,7 @@ class StatusController extends Controller
      */
     public function show(KanbanBoard $kanbanBoard, Status $status)
     {
-        //
+        return View('Statuses.show', compact(['kanbanBoard', 'status']));
     }
 
     /**
@@ -71,7 +71,7 @@ class StatusController extends Controller
      */
     public function edit(KanbanBoard $kanbanBoard, Status $status)
     {
-        //
+        return View('Statuses.edit', compact(['kanbanBoard', 'status']));
     }
 
     /**
@@ -83,7 +83,17 @@ class StatusController extends Controller
      */
     public function update(KanbanBoard $kanbanBoard, Request $request, Status $status)
     {
-        //
+        $status->name = $request["name"];
+        $status->description = $request["description"];
+        $status->order_number = $request["order_number"];
+        $status->preparetion = $request->has('preparetion') ? true : false;
+        $status->active = $request->has('active') ? true : false;
+        $status->finishing = $request->has('finishing') ? true : false;
+        $status->color = hexdec($request["color"]);
+        $status->kanban_board_id = $kanbanBoard->id;
+        $status->save();
+
+        return redirect()->route('statuses', $kanbanBoard->id);
     }
 
     /**

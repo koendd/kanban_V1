@@ -1,6 +1,6 @@
 @extends('Layouts.app')
 
-@section('title', 'Priority info')
+@section('title', 'Show priority info')
 
 @section('content')
 <div class="mt-5">

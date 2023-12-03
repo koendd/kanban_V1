@@ -63,7 +63,17 @@
                 <td class="align-middle text-center">
                     <input type="color" value="#{{$status->colorHex}}" disabled>
                 </td>
-                <td><!-- actions come here --></td>
+                <td>
+                    <div class="dropdown dropstart">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu  dropdown-menu-dark">
+                            <li><a href="{{ route('showStatus', [$kanbanBoard->id, $status->id]) }}" class="dropdown-item text-primary" title="Show the info for this status.">Info</a></li>
+                            <li><a href="{{ route('editStatus', [$kanbanBoard->id, $status->id]) }}" class="dropdown-item text-warning" title="Edit this status.">Edit</a></li>
+                        </ul>
+                    </div>
+                </td>
             </tr>
         @endforeach
         </tbody>
