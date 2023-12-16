@@ -59,7 +59,7 @@
                                 <select class="form-select @error('system_id') is-invalid @enderror" id="inputSystem" name="system_id" required>
                                     <option disabled selected>Choose a system</option>
                                     @foreach($systems as $system)
-                                    <option value="{{$system->id}}">{{$system->name_short}}{{$system->name_full ? ' - ' . $system->name_full : ''}}</option>
+                                    <option value="{{$system->id}}" title="{{$system->description}}">{{$system->name_short}}{{$system->name_full ? ' - ' . $system->name_full : ''}}</option>
                                     @endforeach
                                 </select>
 

@@ -75,7 +75,7 @@
                                 <select class="form-select @error('system_id') is-invalid @enderror" id="inputSystem" name="system_id" onchange="getSubSystems(this.value)" required>
                                     <option disabled>Choose a system</option>
                                     @foreach($systems as $system)
-                                    <option value="{{$system->id}}" @if($system->id == $task->system_id) selected class="text-primary"  @endif>{{$system->name_short}}{{$system->name_full ? ' - ' . $system->name_full : ''}}</option>
+                                    <option value="{{$system->id}}" @if($system->id == $task->system_id) selected class="text-primary"  @endif title="{{$system->description}}">{{$system->name_short}}{{$system->name_full ? ' - ' . $system->name_full : ''}}</option>
                                     @endforeach
                                 </select>
 
@@ -92,7 +92,7 @@
                                 <select class="form-select @error('sub_system_id') is-invalid @enderror" id="inputSubSystem" name="sub_system_id">
                                     <option disabled>Choose a system first</option>
                                     @foreach($subSystems as $subSystem)
-                                    <option value="{{$subSystem->id}}" @if($subSystem->id == $task->sub_system_id) selected class="text-primary"  @endif>{{$subSystem->name_short}}{{$subSystem->name_full ? ' - ' . $subSystem->name_full : ''}}</option>
+                                    <option value="{{$subSystem->id}}" @if($subSystem->id == $task->sub_system_id) selected class="text-primary"  @endif title="{{$subSystem->description}}">{{$subSystem->name_short}}{{$subSystem->name_full ? ' - ' . $subSystem->name_full : ''}}</option>
                                     @endforeach
                                 </select>
 
@@ -126,7 +126,7 @@
                                 <select class="form-select @error('priority_id') is-invalid @enderror" id="inputPriority" name="priority_id" required>
                                     <option disabled>Choose a priority</option>
                                     @foreach($priorities as $priority)
-                                    <option value="{{$priority->id}}" @if($priority->id == $task->priority_id) selected class="text-primary"  @endif>{{$priority->name}}</option>
+                                    <option value="{{$priority->id}}" @if($priority->id == $task->priority_id) selected class="text-primary" @endif title="{{$priority->description}}">{{$priority->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -143,7 +143,7 @@
                                 <select class="form-select @error('status_id') is-invalid @enderror" id="inputStatus" name="status_id" required>
                                     <option disabled>Choose a status</option>
                                     @foreach($statuses as $status)
-                                    <option value="{{$status->id}}" @if($status->id == $task->status_id) selected class="text-primary"  @endif>{{$status->name}}</option>
+                                    <option value="{{$status->id}}" @if($status->id == $task->status_id) selected class="text-primary" @endif title="{{$status->description}}">{{$status->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -160,7 +160,7 @@
                                 <select class="form-select @error('task_type_id') is-invalid @enderror" id="inputType" name="task_type_id" required>
                                     <option disabled>Choose a type</option>
                                     @foreach($types as $type)
-                                    <option value="{{$type->id}}" @if($type->id == $task->task_type_id) selected class="text-primary"  @endif>{{$type->name}}</option>
+                                    <option value="{{$type->id}}" @if($type->id == $task->task_type_id) selected class="text-primary" @endif title="{{$type->description}}">{{$type->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -203,6 +203,9 @@
                     let newOption = document.createElement('option');
                     newOption.value = element.id;
                     newOption.text = element.name_short;
+                    if(element.description) {
+                        newOption.title = element.description;
+                    }
                     if (element.name_full) {
                         newOption.text += " - " + element.name_full;
                     }

@@ -75,7 +75,7 @@
                                 <select class="form-select @error('system_id') is-invalid @enderror" id="inputSystem" name="system_id" onchange="getSubSystems(this.value)" required>
                                     <option disabled selected>Choose a system</option>
                                     @foreach($systems as $system)
-                                    <option value="{{$system->id}}">{{$system->name_short}}{{$system->name_full ? ' - ' . $system->name_full : ''}}</option>
+                                    <option value="{{$system->id}}" title="{{$system->description}}">{{$system->name_short}}{{$system->name_full ? ' - ' . $system->name_full : ''}}</option>
                                     @endforeach
                                 </select>
 
@@ -129,7 +129,7 @@
                                 <select class="form-select @error('priority_id') is-invalid @enderror" id="inputPriority" name="priority_id" required>
                                     <option disabled selected>Choose a priority</option>
                                     @foreach($priorities as $priority)
-                                    <option value="{{$priority->id}}">{{$priority->name}}</option>
+                                    <option value="{{$priority->id}}" title="{{$priority->description}}">{{$priority->name}}</option>
                                     @endforeach
                                 </select>
                                 @else
@@ -151,7 +151,7 @@
                                 <select class="form-select @error('status_id') is-invalid @enderror" id="inputStatus" name="status_id" required>
                                     <option disabled selected>Choose a status</option>
                                     @foreach($statuses as $status)
-                                    <option value="{{$status->id}}">{{$status->name}}</option>
+                                    <option value="{{$status->id}}" title="{{$status->description}}">{{$status->name}}</option>
                                     @endforeach
                                 </select>
                                 @else
@@ -173,7 +173,7 @@
                                 <select class="form-select @error('task_type_id') is-invalid @enderror" id="inputType" name="task_type_id" required>
                                     <option disabled selected>Choose a type</option>
                                     @foreach($types as $type)
-                                    <option value="{{$type->id}}">{{$type->name}}</option>
+                                    <option value="{{$type->id}}" title="{{$type->description}}">{{$type->name}}</option>
                                     @endforeach
                                 </select>
                                 @else
@@ -220,6 +220,9 @@
                     let newOption = document.createElement('option');
                     newOption.value = element.id;
                     newOption.text = element.name_short;
+                    if(element.description) {
+                        newOption.title = element.description;
+                    }
                     if (element.name_full) {
                         newOption.text += " - " + element.name_full;
                     }
