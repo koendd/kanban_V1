@@ -12,7 +12,7 @@
             @csrf
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="input-group">
                         <div class="input-group-text" style="width: 7rem;">System</div>
                         <select class="form-select" id="system" name="system_id" onchange="getSubSystems(this.value)">
@@ -23,7 +23,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="input-group">
                         <div class="input-group-text" style="width: 7rem;">Sub-system</div>
                         <select class="form-select" id="inputSubSystem" name="sub_system_id">
@@ -36,7 +36,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="input-group">
                         <div class="input-group-text" style="width: 7rem;">Text search</div>
                         <input type="text" class="form-control" name="text_search" id="text_search" placeholder="Search task name or description" value="{{$searchString}}">
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-2">
+                <div class="col-3">
                     <div class="input-group">
                         <div class="input-group-text" style="width: 7rem;">Priority</div>
                         <select class="form-select" id="priority" name="priority_id">
@@ -55,7 +55,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <div class="input-group">
                         <div class="input-group-text" style="width: 7rem;">Status</div>
                         <select class="form-select" id="status" name="status_id">
@@ -66,7 +66,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <div class="input-group">
                         <div class="input-group-text" style="width: 7rem;">Task type</div>
                         <select class="form-select" id="taskType" name="task_type_id">
