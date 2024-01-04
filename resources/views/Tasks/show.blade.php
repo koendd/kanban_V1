@@ -96,32 +96,72 @@
                     
                 </div>
                 <div class="card-footer">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="width: 5em;">#</th>
-                                <th scope="col" style="width: 10em;">Date</th>
-                                <th scope="col">User</th>
-                                <th scope="col">Log entry</th>
-                                <th scope="col" style="width: 5em;"></th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            @foreach($task->TaskLogs as $log)
-                            <tr>
-                                <td>{{$log->id}}</td>
-                                <td>{!!$log->Timestamp!!}</td>
-                                <td>{{$log->User->name}}</td>
-                                <td>{!!$log->descriptionFormatted!!}</td>
-                                <td>
-                                    @if($log->User->id == Auth::id())
-                                    <a href="{{route('editLog', [$kanbanBoard->id, $log->id])}}" class="btn btn-warning">Edit</a>
-                                    @endif
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingLogEntries">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLogEntries" aria-expanded="false" aria-controls="collapseLogEntries">Log entries</button>
+                            </h2>
+                            <div id="collapseLogEntries" class="accordion-collapse collapse" aria-labelledby="headingLogEntries" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style="width: 5em;">#</th>
+                                                <th scope="col" style="width: 10em;">Date</th>
+                                                <th scope="col">User</th>
+                                                <th scope="col">Log entry</th>
+                                                <th scope="col" style="width: 5em;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            @foreach($task->TaskLogs as $log)
+                                            <tr>
+                                                <td>{{$log->id}}</td>
+                                                <td>{!!$log->Timestamp!!}</td>
+                                                <td>{{$log->User->name}}</td>
+                                                <td>{!!$log->descriptionFormatted!!}</td>
+                                                <td>
+                                                    @if($log->User->id == Auth::id())
+                                                    <a href="{{route('editLog', [$kanbanBoard->id, $log->id])}}" class="btn btn-warning">Edit</a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingStatusChangeLogs">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStatusChangeLogs" aria-expanded="false" aria-controls="collapseStatusChangeLogs">Status Change logs</button>
+                            </h2>
+                            <div id="collapseStatusChangeLogs" class="accordion-collapse collapse" aria-labelledby="headingStatusChangeLogs" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style="width: 5em;">#</th>
+                                                <th scope="col" style="width: 10em;">Date</th>
+                                                <th scope="col">User</th>
+                                                <th scope="col">Status change</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            @foreach($task->TaskStatusChangeLogs as $changeLog)
+                                            <tr>
+                                                <td>{{$changeLog->id}}</td>
+                                                <td>{!!$changeLog->Timestamp!!}</td>
+                                                <td>{{$changeLog->User->name}}</td>
+                                                <td>{{$changeLog->OldStatus->name}} <p class="d-inline"><i class="bi bi-arrow-right"></i></p> {{$changeLog->NewStatus->name}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
                 </div>
             </div>
         </div>

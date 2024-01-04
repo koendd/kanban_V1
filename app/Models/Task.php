@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 use App\Models\User;
@@ -34,6 +35,22 @@ class Task extends Model
         'status_id',
         'task_type_id'
     ];
+
+    // override functions
+    public function save(array $options = array()) {
+        if($this->exists) {
+            if($this->isDirty('status_id')) {
+                $statusLog = new TaskStatusChangeLog();
+                $statusLog->user_id = Auth::id();
+                $statusLog->task_id = $this->id;
+                $statusLog->old_status_id = $this->getOriginal('status_id');
+                $statusLog->new_status_id = $this->status_id;
+                $statusLog->save();
+            }
+        }
+
+        parent::save($options);
+    }
 
     // relationship functions
     public function Users()
@@ -74,6 +91,10 @@ class Task extends Model
     public function TaskLogs()
     {
         return $this->hasMany(TaskLog::class)->orderBy('created_at', 'desc');
+    }
+
+    public function TaskStatusChangeLogs() {
+        return $this->hasMany(TaskStatusChangeLog::class)->orderBy('created_at', 'desc');
     }
 
     public function TaskType()
