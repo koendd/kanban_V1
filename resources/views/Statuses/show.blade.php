@@ -58,7 +58,9 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-2">
+                                @can('manage_kanban_content')
                                 <a href="{{route('editStatus', [$kanbanBoard->id, $status->id])}}" type="submit" class="btn btn-warning" title="Edit this status">{{ __('Edit') }}</a>
+                                @endcan
                                 <a href="{{ url()->previous() }}" class="btn btn-danger">{{ __('Cancel') }}</a>
                             </div>
                         </div>

@@ -11,7 +11,7 @@
         <div class="col-auto float-right">
             <div class="input-group mb-2">
                 <div class="btn-group" role="group">
-                    <a href="{{route('createKanban')}}" type="button" class="btn btn-primary">Create new kanban boards</a>
+                    <a href="{{route('createKanban')}}" type="button" class="btn btn-primary">Create new kanban board</a>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\KanbanBoard;
 use App\Models\User;
@@ -23,6 +24,12 @@ class KanbanController extends Controller
 
     public function ActiveKanban(KanbanBoard $kanbanBoard)
     {
+        if(!Auth::User()->can_use_multiple_kanban_boards) {
+            if($kanbanBoard->id != Auth::User()->default_kanban_board_id) {
+                abort(403);
+            }
+        }
+
         $statuses = $kanbanBoard->Statuses->where('active', true)->sortBy('order_number');
         $users = User::select('name')->orderBy('name', 'asc')->get()->pluck('name')->toArray();
         return view('kanban', compact(['kanbanBoard', 'statuses', 'users']));

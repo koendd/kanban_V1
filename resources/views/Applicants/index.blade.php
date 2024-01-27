@@ -7,6 +7,7 @@
     <div class="p-2">
         <h1>Applicants</h1>
     </div>
+    @can('manage_kanban_content')
     <div class="p-2">
         <div class="col-auto float-right">
             <div class="input-group mb-2">
@@ -16,6 +17,7 @@
             </div>
         </div>
     </div>
+    @endcan
 </div>
 
 @if($applicants->count() > 0)
@@ -28,7 +30,9 @@
                     <tr>
                         <th scope="col" class="text-center align-middle">Id</th>
                         <th scope="col" class="text-center align-middle">Name</th>
+                        @can('manage_kanban_content')
                         <th scope="col" class="text-center align-middle">Actions</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -36,7 +40,11 @@
                     <tr>
                         <td>{{$applicant->id}}</td>
                         <td>{{$applicant->name}}</td>
-                        <td><a href="{{route('editApplicant', [$kanbanBoard->id, $applicant->id])}}" class="btn btn-warning">Edit</a></td>
+                        @can('manage_kanban_content')
+                        <td>
+                            <a href="{{route('editApplicant', [$kanbanBoard->id, $applicant->id])}}" class="btn btn-warning">Edit</a>
+                        </td>
+                        @endcan
                     </tr>
                     @endforeach
                 </tbody>

@@ -67,7 +67,9 @@
                     <div class="row mb-3">
                         <div class="col-md-6 offset-md-2">
                             <a href="{{ url()->previous() }}" class="btn btn-danger">{{ __('Back') }}</a>
+                            @can('manage_tasks')
                             <a href="{{route('editTask', [$kanbanBoard->id, $task->id])}}" class="btn btn-warning">Edit</a>
+                            @endcan
                         </div>
                     </div>
 
@@ -121,9 +123,11 @@
                                                 <td>{{$log->User->name}}</td>
                                                 <td>{!!$log->descriptionFormatted!!}</td>
                                                 <td>
+                                                    @can('manage_task_logs')
                                                     @if($log->User->id == Auth::id())
                                                     <a href="{{route('editLog', [$kanbanBoard->id, $log->id])}}" class="btn btn-warning">Edit</a>
                                                     @endif
+                                                    @endcan
                                                 </td>
                                             </tr>
                                             @endforeach

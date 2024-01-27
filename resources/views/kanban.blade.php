@@ -11,9 +11,9 @@
                 {{$status->name}}
                 <span id="status{{$status->id}}Count">&#35;{{$status->Tasks->count()}}</span>
             </div>
-            <div class="card-body overflow-auto drop-class" style="background-color: rgba({{$status->RedColorValue}}, {{$status->GreenColorValue}}, {{$status->BlueColorValue}}, 0.5)" ondrop="drop(event)" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" id="status{{$status->id}}">
+            <div class="card-body overflow-auto drop-class" style="background-color: rgba({{$status->RedColorValue}}, {{$status->GreenColorValue}}, {{$status->BlueColorValue}}, 0.5)" @can('manage_tasks') ondrop="drop(event)" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" @endcan id="status{{$status->id}}">
                 @foreach($status->Tasks->sortBy('Priority.order_number') as $task)
-                <div class="card mb-2" style="opacity: .9" draggable="true" ondragstart="drag(event)" id="task{{$task->id}}">
+                <div class="card mb-2" style="opacity: .9" @can('manage_tasks') draggable="true" ondragstart="drag(event)" @endcan id="task{{$task->id}}">
                     <div class="card-header text-center cursor-pointer" style="background-color: rgba({{$task->priority->RedColorValue}}, {{$task->priority->GreenColorValue}}, {{$task->priority->BlueColorValue}}, 0.7 )">
                         {{$task->name}}
                     </div>
@@ -108,11 +108,14 @@
                         <div class="col-md-6 offset-md-2">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <a href="#" class="btn btn-primary" id="modalShowBtn">Show</a>
+                            @can('manage_tasks')
                             <a href="#" class="btn btn-warning" id="modalEditBtn">Edit</a>
+                            @endcan
                         </div>
                     </div>
                 </div>
                 <div class="border-top">
+                    @can('manage_task_logs')
                     <div class="mb-3 mt-2 row">
                         <label for="modalnewLogEntry" class="col-sm-2 col-form-label">New log entry</label>
                         <div class="col-sm-8"><textarea class="form-control" id="modalNewLogEntry" maxlength="1000" rows="4" onkeyup="displayCharCount(this, 'charCount')"></textarea></div>
@@ -121,6 +124,7 @@
                             <p id="charCount" class="col-form-label font-monospace">0 / 1000</p>
                         </div>
                     </div>
+                    @endcan
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -240,9 +244,13 @@
                 document.querySelector("#modalPriority").value = "";
                 document.querySelector("#modalStatus").value = "";
                 document.querySelector("#modalType").value = "";
-                document.querySelector("#modalEditBtn").setAttribute('href', '/kanban/' + {{$kanbanBoard->id}} + '/task/edit/' + calledTaskId);
                 document.querySelector("#modalShowBtn").setAttribute('href', '/kanban/' + {{$kanbanBoard->id}} + '/task/show/' + calledTaskId);
-                document.querySelector("#modalNewLogEntry").value = "";
+                if(document.querySelector("#modalEditBtn") != undefined){
+                    document.querySelector("#modalEditBtn").setAttribute('href', '/kanban/' + {{$kanbanBoard->id}} + '/task/edit/' + calledTaskId);
+                }
+                if(document.querySelector("#modalNewLogEntry") != undefined){
+                    document.querySelector("#modalNewLogEntry").value = "";
+                }
 
                 let usersString = "";
                 response.data.users.forEach((user, index) => {

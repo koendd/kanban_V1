@@ -7,6 +7,7 @@
     <div class="p-2">
         <h1>Statuses</h1>
     </div>
+    @can('manage_kanban_content')
     <div class="p-2">
         <div class="col-auto float-right">
             <div class="input-group mb-2">
@@ -16,6 +17,7 @@
             </div>
         </div>
     </div>
+    @endcan
 </div>
 
 <div class="table-responsive">
@@ -70,7 +72,9 @@
                         </button>
                         <ul class="dropdown-menu  dropdown-menu-dark">
                             <li><a href="{{ route('showStatus', [$kanbanBoard->id, $status->id]) }}" class="dropdown-item text-primary" title="Show the info for this status.">Info</a></li>
+                            @can('manage_kanban_content')
                             <li><a href="{{ route('editStatus', [$kanbanBoard->id, $status->id]) }}" class="dropdown-item text-warning" title="Edit this status.">Edit</a></li>
+                            @endcan
                         </ul>
                     </div>
                 </td>

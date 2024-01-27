@@ -7,6 +7,7 @@
     <div class="p-2">
         <h1>Systems and sub&#45;systems</h1>
     </div>
+    @can('manage_kanban_content')
     <div class="p-2">
         <div class="col-auto float-right">
             <div class="input-group mb-2">
@@ -18,6 +19,7 @@
             </div>
         </div>
     </div>
+    @endcan
 </div>
 
 @if($systems->count() > 0)

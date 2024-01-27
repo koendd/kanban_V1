@@ -19,9 +19,11 @@
 			<!-- right nav section -->
             <ul class="navbar-nav ms-auto">
                 @isset($kanbanBoard)
+                @can('manage_tasks')
                 <li class="nav-item me-5">
                     <a class="btn btn-outline-warning {{Route::currentRouteName() == 'createTask' ? 'active' : ''}}" role="button" aria-current="page" href="{{route('createTask', $kanbanBoard->id)}}" title="Create a new task.">New task</a>
                 </li>
+                @endcan
                 @endisset
 
                 @if(env('APP_ENV') != 'production' || env('APP_DEBUG'))
@@ -33,6 +35,7 @@
                         {{ Auth::user()->name }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end overflow-auto" style="max-height: 90vh;" aria-labelledby="navbarDarkDropdownMenuLink">
+                        @can('use_multiple_kanban_boards')
                         @if($kanbanBoardCount > 1 && Route::currentRouteName() != "welcome")
                         <li>
                             <a class="dropdown-item" href="{{ route('welcome') }}" title="Go to the home screen, here you can change the kanban board you are working in.">
@@ -43,6 +46,7 @@
                             <div class="dropdown-divider"></div>
                         </li>
                         @endif
+                        @endcan
                         @isset($kanbanBoard)
                         <li>
                             <a class="dropdown-item" href="{{ route('tasks', $kanbanBoard->id) }}" title="Get a list of all task with options to filter in these tasks.">
@@ -61,11 +65,13 @@
                         <li>
                             <h5 class="dropdown-header">Configuration</h5>
                         </li>
+                        @canany(['manage_kanban_boards', 'manage_kanban_content'])
                         <li>
                             <a class="dropdown-item" href="{{ route('kanbanboards') }}" title="Manage the kanban boards.">
                                 Kanban boards
                             </a>
                         </li>
+                        @endcanany
                         @isset($kanbanBoard)
                         <li>
                             <a class="dropdown-item" href="{{ route('statuses', $kanbanBoard->id) }}" title="Manage statuses.">
