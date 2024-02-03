@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreApplicantRequest;
 
 use App\Models\KanbanBoard;
 use App\Models\Applicant;
@@ -36,7 +37,7 @@ class ApplicantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(KanbanBoard $kanbanBoard, Request $request)
+    public function store(KanbanBoard $kanbanBoard, StoreApplicantRequest $request)
     {
         $applicant = new Applicant();
         $applicant->name = $request["name"];
