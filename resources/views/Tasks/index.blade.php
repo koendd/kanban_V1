@@ -11,7 +11,7 @@
         <form method='get' action="{{ route('tasks', $kanbanBoard->id) }}" class="row gy-2 gx-3 align-items-center">
             @csrf
 
-            <div class="row">
+            <div class="row mb-1">
                 <div class="col-md-3">
                     <div class="input-group">
                         <div class="input-group-text" style="width: 7rem;">System</div>
@@ -40,6 +40,19 @@
                     <div class="input-group">
                         <div class="input-group-text" style="width: 7rem;">Text search</div>
                         <input type="text" class="form-control" name="text_search" id="text_search" placeholder="Search task name or description" value="{{$searchString}}">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <div class="input-group-text" style="width: 7rem;">Order by</div>
+                        <select class="form-select" id="orderBy" name="orderBy">
+                            <option value="name" @if($orderBy == 'name') selected @endif title="Order by task name">Name</option>
+                            <option value="system" @if($orderBy == 'system') selected @endif title="Order by system full name">System</option>
+                            <option value="priority" @if($orderBy == 'priority') selected @endif title="Order by priority order number">Priority</option>
+                            <option value="status" @if($orderBy == 'status') selected @endif title="Order by status order number">Status</option>
+                            <option value="task_type" @if($orderBy == 'task_type') selected @endif title="Order by task type name">Task type</option>
+                            <option value="applicant" @if($orderBy == 'applicant') selected @endif title="Order by applicant name">Applicant</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -97,6 +110,8 @@
                 <th scope="col" class="text-center align-middle">Sub-system</th>
                 <th scope="col" class="text-center align-middle">Priority</th>
                 <th scope="col" class="text-center align-middle">Status</th>
+                <th scope="col" class="text-center align-middle">Task type</th>
+                <th scope="col" class="text-center align-middle">applicant</th>
                 <th scope="col" class="text-center align-middle">&#35; logs</th>
                 <th scope="col" class="text-center align-middle">Actions</th>
             </tr>
@@ -104,12 +119,14 @@
         <tbody>
         @foreach($tasks as $task)
             <tr>
-                <th scope="row">{{$task->name}}</th>
-                <td class="d-none d-sm-table-cell">{{$task->description}}</td>
-                <td class="align-middle text-center">{{$task->System->name_full}}</td>
-                <td class="align-middle text-center">{{$task->SubSystem->name_full ?? ''}}</td>
-                <td class="align-middle text-center">{{$task->Priority->name}}</td>
-                <td class="align-middle text-center">{{$task->Status->name}}</td>
+                <th scope="row">{{$task->task_name}}</th>
+                <td class="d-none d-sm-table-cell">{{$task->task_description}}</td>
+                <td class="align-middle text-center">{{$task->system_name}}</td>
+                <td class="align-middle text-center">{{$task->sub_system_name ?? ''}}</td>
+                <td class="align-middle text-center">{{$task->priority_name}}</td>
+                <td class="align-middle text-center">{{$task->status_name}}</td>
+                <td class="align-middle text-center">{{$task->task_type_name}}</td>
+                <td class="align-middle text-center">{{$task->applicant_name}}</td>
                 <td class="align-middle text-center">{{$task->TaskLogs->count()}}</td>
                 <td><a href="{{route('showTask', [$kanbanBoard->id, $task->id])}}" class="btn btn-primary">Show</a></td>
             </tr>

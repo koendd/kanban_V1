@@ -29,8 +29,13 @@ class TaskController extends Controller
     {
         $searchParameters = [];
         $searchString = $request['text_search'];
+        $orderBy = "";
 
         if($request->has('_token')) {
+            if($request->has('orderBy')){
+                $orderBy = $request['orderBy'];
+            }
+
             if($request->has('system_id')) {
                 if(System::where('id', $request['system_id'])->exists()) {
                     $searchParameters = Arr::add($searchParameters, 'system_id', $request['system_id']);
@@ -70,12 +75,36 @@ class TaskController extends Controller
         }
         if($request->has('text_search')) {
             $taskQuery->where(function (Builder $query) use ($searchString) {
-                $query->where('name', 'like', '%' . $searchString . '%');
-                $query->orWhere('description', 'like', '%' . $searchString . '%');
+                $query->where('tasks.name', 'like', '%' . $searchString . '%');
+                $query->orWhere('tasks.description', 'like', '%' . $searchString . '%');
             });
         }
 
-        $taskQuery->orderBy('id', 'desc');
+        $taskQuery->join('systems', 'systems.id', '=', 'tasks.system_id');
+        $taskQuery->leftjoin('sub_systems', 'sub_systems.id', '=', 'tasks.sub_system_id');
+        $taskQuery->join('priorities', 'priorities.id', '=', 'tasks.priority_id');
+        $taskQuery->join('statuses', 'statuses.id', '=', 'tasks.status_id');
+        $taskQuery->join('task_types', 'task_types.id', '=', 'tasks.task_type_id');
+        $taskQuery->join('applicants', 'applicants.id', '=', 'tasks.applicant_id');
+            
+        if($orderBy == 'name') {
+            $taskQuery->orderBy('tasks.name', 'asc');
+        } elseif($orderBy == 'system'){
+            $taskQuery->orderBy('systems.name_full', 'asc');
+            $taskQuery->orderBy('sub_systems.name_full', 'asc');
+        } elseif($orderBy == 'priority'){
+            $taskQuery->orderBy('priorities.order_number', 'asc');
+        } elseif($orderBy == 'status'){
+            $taskQuery->orderBy('statuses.order_number', 'asc');
+        } elseif($orderBy == 'task_type'){
+            $taskQuery->orderBy('task_types.name', 'asc');
+        } elseif($orderBy == 'applicant'){
+            $taskQuery->orderBy('applicants.name', 'asc');
+        } else {
+            $taskQuery->orderBy('tasks.id', 'desc');
+        }
+        
+        $taskQuery->select('tasks.id', 'tasks.name as task_name', 'tasks.description as task_description', 'systems.name_full as system_name', 'sub_systems.name_full as sub_system_name', 'priorities.name as priority_name', 'statuses.name as status_name', 'task_types.name as task_type_name', 'applicants.name as applicant_name');
         $tasks = $taskQuery->get();
 
         $systems = System::where('kanban_board_id', $kanbanBoard->id)->orderBy('name_short', 'asc')->get();
@@ -83,7 +112,7 @@ class TaskController extends Controller
         $priorities = Priority::where('kanban_board_id', $kanbanBoard->id)->orderBy('order_number', 'asc')->get();
         $taskTypes = TaskType::where('kanban_board_id', $kanbanBoard->id)->orderBy('name', 'asc')->get();
 
-        return view('Tasks.index', compact(['kanbanBoard', 'tasks', 'systems', 'statuses', 'priorities', 'taskTypes', 'searchParameters', 'searchString']));
+        return view('Tasks.index', compact(['kanbanBoard', 'tasks', 'systems', 'statuses', 'priorities', 'taskTypes', 'searchParameters', 'searchString', 'orderBy']));
     }
 
     /**
