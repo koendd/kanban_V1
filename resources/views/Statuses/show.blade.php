@@ -66,6 +66,39 @@
                         </div>
                     </form>
                 </div>
+                <div class="card-footer">
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTasks">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTasks" aria-expanded="false" aria-controls="collapseTasks">Tasks</button>
+                            </h2>
+                            <div id="collapseTasks" class="accordion-collapse collapse" aria-labelledby="headingTasks" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style="width: 5em;">Id</th>
+                                                <th scope="col" style="width: 10em;">Name</th>
+                                                <th scope="col" style="width: 5em;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            @foreach($status->Tasks as $task)
+                                            <tr>
+                                                <td>{{$task->id}}</td>
+                                                <td>{{$task->name}}</td>
+                                                <td>
+                                                    <a href="{{route('showTask', [$kanbanBoard->id, $task->id])}}" class="btn btn-primary">Show</a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
