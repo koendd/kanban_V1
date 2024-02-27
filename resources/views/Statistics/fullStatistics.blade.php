@@ -25,10 +25,10 @@
                 <tbody>
                     @foreach($statusStats as $statusStat)
                     <tr>
-                        <td>{{$statusStat->id}}</td>
+                        <td class="text-center">{{$statusStat->id}}</td>
                         <td>{{$statusStat->name}}</td>
                         <td class="d-none d-md-table-cell">{{$statusStat->description}}</td>
-                        <td>{{$statusStat->tasks_count}}</td>
+                        <td class="text-center">{{$statusStat->tasks_count}}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -63,10 +63,10 @@
                 <tbody>
                     @foreach($priorityStats as $priorityStat)
                     <tr>
-                        <td>{{$priorityStat->id}}</td>
+                        <td class="text-center">{{$priorityStat->id}}</td>
                         <td>{{$priorityStat->name}}</td>
                         <td>{{$priorityStat->description}}</td>
-                        <td>{{$priorityStat->tasks_count}}</td>
+                        <td class="text-center">{{$priorityStat->tasks_count}}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -101,10 +101,10 @@
                 <tbody>
                     @foreach($taskTypesStats as $taskTypeStat)
                     <tr>
-                        <td>{{$taskTypeStat->id}}</td>
+                        <td class="text-center">{{$taskTypeStat->id}}</td>
                         <td>{{$taskTypeStat->name}}</td>
                         <td>{{$taskTypeStat->description}}</td>
-                        <td>{{$taskTypeStat->tasks_count}}</td>
+                        <td class="text-center">{{$taskTypeStat->tasks_count}}</td>
                     </tr>
                     @endforeach
                 </tbody>

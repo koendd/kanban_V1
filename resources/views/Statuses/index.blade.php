@@ -32,6 +32,7 @@
                 <th scope="col" class="text-center align-middle">Active</th>
                 <th scope="col" class="text-center align-middle">Finishing</th>
                 <th scope="col" class="text-center align-middle">Color</th>
+                <th scope="col" class="text-center align-middle">&#35; tasks</th>
                 <th scope="col" class="text-center align-middle">Actions</th>
             </tr>
         </thead>
@@ -65,6 +66,7 @@
                 <td class="align-middle text-center">
                     <input type="color" value="#{{$status->colorHex}}" disabled>
                 </td>
+                <td class="text-center">{{$status->Tasks->count()}}</td>
                 <td>
                     <div class="dropdown dropstart">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

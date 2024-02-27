@@ -32,23 +32,28 @@
                     <th scope="col" class="text-center align-middle">Id</th>
 					<th scope="col" class="text-center align-middle">Name</th>
                     <th scope="col" class="text-center align-middle d-none d-sm-table-cell">Description</th>
+                    <th scope="col" class="text-center align-middle">&#35; tasks</th>
                     <th scope="col" class="text-center align-middle">sub&#45;system id</th>
 					<th scope="col" class="text-center align-middle">sub&#45;system  name</th>
                     <th scope="col" class="text-center align-middle d-none d-sm-table-cell">sub&#45;system description</th>
+                    <th scope="col" class="text-center align-middle">&#35; tasks</th>
 				</tr>
 			</thead>
             <tbody>
                 @foreach($systems as $system)
                 <tr>
-                    <td @if($system->SubSystems->count() > 0) rowspan="{{$system->SubSystems->count()}}" @endif >{{$system->id}}</td>
+                    <td @if($system->SubSystems->count() > 0) rowspan="{{$system->SubSystems->count()}}" @endif class="text-center">{{$system->id}}</td>
                     <td @if($system->SubSystems->count() > 0) rowspan="{{$system->SubSystems->count()}}" @endif >{{$system->name_short}} &#45; {{$system->name_full}}</td>
                     <td @if($system->SubSystems->count() > 0) rowspan="{{$system->SubSystems->count()}}" @endif >{{$system->description}}</td>
+                    <td @if($system->SubSystems->count() > 0) rowspan="{{$system->SubSystems->count()}}" @endif class="text-center">{{$system->Tasks->count()}}</td>
 
                     @if($system->SubSystems->count() > 0)
-                    <td>{{$system->SubSystems->first()->id}}</td>
+                    <td class="text-center">{{$system->SubSystems->first()->id}}</td>
                     <td>{{$system->SubSystems->first()->name_short}} &#45; {{$system->SubSystems->first()->name_full}}</td>
                     <td>{{$system->SubSystems->first()->description}}</td>
+                    <td class="text-center">{{$system->SubSystems->first()->Tasks->count()}}</td>
                     @else
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -57,9 +62,10 @@
                 @foreach($system->SubSystems as $subSystem)
                 @if (!$loop->first)
                 <tr>
-                    <td>{{$subSystem->id}}</td>
+                    <td class="text-center">{{$subSystem->id}}</td>
                     <td>{{$subSystem->name_short}} &#45; {{$subSystem->name_full}}</td>
                     <td>{{$subSystem->description}}</td>
+                    <td class="text-center">{{$system->SubSystems->first()->Tasks->count()}}</td>
                 </tr>
                 @endif                
                 @endforeach

@@ -30,6 +30,7 @@
                     <tr>
                         <th scope="col" class="text-center align-middle">Id</th>
                         <th scope="col" class="text-center align-middle">Name</th>
+                        <th scope="col" class="text-center align-middle">&#35; tasks</th>
                         @can('manage_kanban_content')
                         <th scope="col" class="text-center align-middle">Actions</th>
                         @endcan
@@ -40,6 +41,7 @@
                     <tr>
                         <td>{{$applicant->id}}</td>
                         <td>{{$applicant->name}}</td>
+                        <td class="text-center">{{$applicant->Tasks->count()}}</td>
                         @can('manage_kanban_content')
                         <td>
                             <a href="{{route('editApplicant', [$kanbanBoard->id, $applicant->id])}}" class="btn btn-warning">Edit</a>
