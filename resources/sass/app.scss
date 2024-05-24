@@ -9,6 +9,10 @@ main {
     padding-top: 4.2rem;
 }
 
+.nav-border {
+    border-bottom: solid #993009 $border-radius;
+}
+
 #kanbanBoard {
     height: calc(100% - 2rem);
 }

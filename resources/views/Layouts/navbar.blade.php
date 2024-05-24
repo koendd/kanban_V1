@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark bg-opacity-75 fixed-top @if(env('APP_ENV') != 'production' || env('APP_DEBUG')) border-bottom border-warning border-5 @endif">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark bg-opacity-75 fixed-top nav-border @if(env('APP_ENV') != 'production' || env('APP_DEBUG')) border-bottom border-warning border-5 @endif">
     <div class="container">
         <div class="collapse navbar-collapse" id="navbarToggler">		
 			<!-- left nav section -->
