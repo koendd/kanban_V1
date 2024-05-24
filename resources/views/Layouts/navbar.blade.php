@@ -98,6 +98,14 @@
                             <div class="dropdown-divider"></div>
                         </li>
                         <li>
+                            <a class="dropdown-item" href="{{ route('customQueries') }}" title="Run custom queries">
+                                Custom queries
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider"></div>
+                        </li>
+                        <li>
                             <a class="dropdown-item" href="{{ route('password_change') }}" title="Change your password">
                                 Change password
                             </a>

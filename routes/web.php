@@ -13,6 +13,7 @@ use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\PriorityController;
+use App\Http\Controllers\CustomQueryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,6 +108,9 @@ Route::middleware('auth')->group(function() {
 
         Route::get('/statistics', [StatisticsController::class, 'getFullStatistics'])->name('statistics');
     });
+
+    Route::get('/customQueries', [CustomQueryController::class, 'index'])->name('customQueries');
+    Route::get('/customQueries/{queryName}', [CustomQueryController::class, 'runQuery'])->name('runCustomQuery');
 
     Route::get('/password/change', [ChangePasswordController::class, 'change'])->name('password_change');
     Route::post('/password/change', [ChangePasswordController::class, 'store']);

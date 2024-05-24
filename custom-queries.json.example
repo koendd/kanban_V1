@@ -1,0 +1,70 @@
+{
+    "usersLastLogin": {
+        "name": "Users last login",
+        "description": "Show users with there last login time and ip-address",
+        "query": "select id, name, last_login_at, last_login_from_ip from users where last_login_at <> \"\"",
+        "tableHeaders": {
+            "id": "Id",
+            "name": "User name",
+            "last_login_at": "Last logged in at",
+            "last_login_from_ip": "Last logged in from ip address"
+        }
+    },
+    "tasksCreatedByUserDbSelect": {
+        "name": "Taken aangemaakt door gebruiker ...",
+        "description": "Taken aangemaakt door gebruiker",
+        "query": "select * from tasks where creator_id = >>user",
+        "parameters": {
+            "user": {
+                "title": "user name",
+                "inputType": "select",
+                "dataType": "query",
+                "query": "select id, name from users"
+            }
+        },
+        "tableHeaders": {
+            "id": "Id",
+            "name": "Name",
+            "description": "Description"
+        }
+    },
+    "tasksCreatedByUserDataSet": {
+        "name": "Taken aangemaakt door gebruiker ...",
+        "description": "Taken aangemaakt door gebruiker",
+        "query": "select * from tasks where creator_id = >>user",
+        "parameters": {
+            "user": {
+                "title": "user name",
+                "inputType": "select",
+                "dataType": "data",
+                "data": {
+                    "1": "Root",
+                    "2": "Koen De Deckers",
+                    "4": "Yannick Verjans"
+                }
+            }
+        },
+        "tableHeaders": {
+            "id": "Id",
+            "name": "Name",
+            "description": "Description"
+        }
+    },
+    "tasksSince": {
+        "name": "Taken sinds ...",
+        "description": "Nieuwe taken aangemaakt sinds",
+        "query": "select tasks.id as task_id, tasks.name as task_name, tasks.description as task_description, statuses.name as status_name from tasks inner join statuses on tasks.status_id = statuses.id where date(tasks.created_at) > \">>date\" order by statuses.order_number asc",
+        "parameters": {
+            "date": {
+                "title": "Date",
+                "inputType": "date"
+            }
+        },
+        "tableHeaders": {
+            "task_id": "Id",
+            "task_name": "Name",
+            "task_description": "Description",
+            "status_name": "Status name"
+        }
+    }
+}

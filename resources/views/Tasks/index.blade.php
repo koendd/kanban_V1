@@ -3,7 +3,7 @@
 @section('title', 'Tasks overview')
 
 @section('content')
-<div >
+<div>
     <div class="p-2">
         <h1>Tasks overview</h1>
     </div>
