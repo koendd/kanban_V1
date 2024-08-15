@@ -115,7 +115,7 @@
                                                 <th scope="col" style="width: 5em;"></th>
                                             </tr>
                                         </thead>
-                                        <tbody class="table-group-divider">
+                                        <tbody class="table-group-divider font-monospace">
                                             @foreach($task->TaskLogs as $log)
                                             <tr>
                                                 <td>{{$log->id}}</td>
