@@ -61,7 +61,7 @@
                                 @can('manage_kanban_content')
                                 <a href="{{route('editStatus', [$kanbanBoard->id, $status->id])}}" type="submit" class="btn btn-warning" title="Edit this status">{{ __('Edit') }}</a>
                                 @endcan
-                                <a href="{{ url()->previous() }}" class="btn btn-danger">{{ __('Cancel') }}</a>
+                                <a href="{{ url()->previous() }}" class="btn btn-danger">{{ __('Back') }}</a>
                             </div>
                         </div>
                     </form>
@@ -70,7 +70,7 @@
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingTasks">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTasks" aria-expanded="false" aria-controls="collapseTasks">Tasks</button>
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTasks" aria-expanded="false" aria-controls="collapseTasks">Tasks &#40;{{$status->Tasks->count()}}&#41;</button>
                             </h2>
                             <div id="collapseTasks" class="accordion-collapse collapse" aria-labelledby="headingTasks" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">

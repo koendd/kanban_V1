@@ -39,7 +39,7 @@
                 <tbody>
                     @foreach($applicants as $applicant)
                     <tr>
-                        <td>{{$applicant->id}}</td>
+                        <td class="text-center">{{$applicant->id}}</td>
                         <td>{{$applicant->name}}</td>
                         <td class="text-center">{{$applicant->Tasks->count()}}</td>
                         @can('manage_kanban_content')

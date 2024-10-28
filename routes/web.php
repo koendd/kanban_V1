@@ -69,12 +69,18 @@ Route::middleware('auth')->group(function() {
             Route::get('/systems', 'index')->name('systems');
             Route::get('/system/create', 'create')->middleware('can:manage_kanban_content')->name('createSystem');
             Route::post('/system/create', 'store')->middleware('can:manage_kanban_content');
+            Route::get('/system/show/{system}', 'show')->middleware('can:manage_kanban_content')->name('showSystem');
+            Route::get('/system/edit/{system}', 'edit')->middleware('can:manage_kanban_content')->name('editSystem');
+            Route::post('/system/edit/{system}', 'update')->middleware('can:manage_kanban_content');
         });
 
         // all routes for creating and editing sub-systems
         Route::controller(SubSystemController::class)->group(function() {
             Route::get('/subsystem/create', 'create')->middleware('can:manage_kanban_content')->name('createSubSystem');
             Route::post('/subsystem/create', 'store')->middleware('can:manage_kanban_content');
+            Route::get('/subsystem/show/{subSystem}', 'show')->middleware('can:manage_kanban_content')->name('showSubSystem');
+            Route::get('/subsystem/edit/{subSystem}', 'edit')->middleware('can:manage_kanban_content')->name('editSubSystem');
+            Route::post('/subsystem/edit/{subSystem}', 'update')->middleware('can:manage_kanban_content');
         });
 
         // all routes for creating and editing applicants

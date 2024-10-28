@@ -33,10 +33,13 @@
 					<th scope="col" class="text-center align-middle">Name</th>
                     <th scope="col" class="text-center align-middle d-none d-sm-table-cell">Description</th>
                     <th scope="col" class="text-center align-middle">&#35; tasks</th>
+                    <th scope="col" class="text-center align-middle">Actions</th>
+                    <th scope="col"></th>
                     <th scope="col" class="text-center align-middle">sub&#45;system id</th>
 					<th scope="col" class="text-center align-middle">sub&#45;system  name</th>
                     <th scope="col" class="text-center align-middle d-none d-sm-table-cell">sub&#45;system description</th>
                     <th scope="col" class="text-center align-middle">&#35; tasks</th>
+                    <th scope="col" class="text-center align-middle">Actions</th>
 				</tr>
 			</thead>
             <tbody>
@@ -46,13 +49,38 @@
                     <td @if($system->SubSystems->count() > 0) rowspan="{{$system->SubSystems->count()}}" @endif >{{$system->name_short}} &#45; {{$system->name_full}}</td>
                     <td @if($system->SubSystems->count() > 0) rowspan="{{$system->SubSystems->count()}}" @endif >{{$system->description}}</td>
                     <td @if($system->SubSystems->count() > 0) rowspan="{{$system->SubSystems->count()}}" @endif class="text-center">{{$system->Tasks->count()}}</td>
+                    <td @if($system->SubSystems->count() > 0) rowspan="{{$system->SubSystems->count()}}" @endif class="text-center">
+                        <div class="dropdown dropstart">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu  dropdown-menu-dark">
+                                <li><a href="{{ route('showSystem', [$kanbanBoard->id, $system->id]) }}" class="dropdown-item text-primary" title="Show the info for this system.">Info</a></li>
+                                <li><a href="{{ route('editSystem', [$kanbanBoard->id, $system->id]) }}" class="dropdown-item text-warning" title="Edit this system.">Edit</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    </td>
+                    <td @if($system->SubSystems->count() > 0) rowspan="{{$system->SubSystems->count()}}" @endif class="text-center"></td>
 
                     @if($system->SubSystems->count() > 0)
                     <td class="text-center">{{$system->SubSystems->first()->id}}</td>
                     <td>{{$system->SubSystems->first()->name_short}} &#45; {{$system->SubSystems->first()->name_full}}</td>
                     <td>{{$system->SubSystems->first()->description}}</td>
                     <td class="text-center">{{$system->SubSystems->first()->Tasks->count()}}</td>
+                    <td>
+                        <div class="dropdown dropstart">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu  dropdown-menu-dark">
+                                <li><a href="{{ route('showSubSystem', [$kanbanBoard->id, $system->SubSystems->first()->id]) }}" class="dropdown-item text-primary" title="Show the info for this system.">Info</a></li>
+                                <li><a href="{{ route('editSubSystem', [$kanbanBoard->id, $system->SubSystems->first()->id]) }}" class="dropdown-item text-warning" title="Edit this system.">Edit</a></li>
+                            </ul>
+                        </div>
+                    </td>
                     @else
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -65,7 +93,18 @@
                     <td class="text-center">{{$subSystem->id}}</td>
                     <td>{{$subSystem->name_short}} &#45; {{$subSystem->name_full}}</td>
                     <td>{{$subSystem->description}}</td>
-                    <td class="text-center">{{$system->SubSystems->first()->Tasks->count()}}</td>
+                    <td class="text-center">{{$subSystem->Tasks->count()}}</td>
+                    <td>
+                        <div class="dropdown dropstart">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu  dropdown-menu-dark">
+                                <li><a href="{{ route('showSubSystem', [$kanbanBoard->id, $subSystem->id]) }}" class="dropdown-item text-primary" title="Show the info for this sub&#45;system.">Info</a></li>
+                                <li><a href="{{ route('editSubSystem', [$kanbanBoard->id, $subSystem->id]) }}" class="dropdown-item text-warning" title="Edit this sub system.">Edit</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
                 @endif                
                 @endforeach

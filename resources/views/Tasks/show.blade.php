@@ -101,7 +101,7 @@
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingLogEntries">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLogEntries" aria-expanded="false" aria-controls="collapseLogEntries">Log entries</button>
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLogEntries" aria-expanded="false" aria-controls="collapseLogEntries">Log entries &#40;{{$task->TaskLogs->count()}}&#41;</button>
                             </h2>
                             <div id="collapseLogEntries" class="accordion-collapse collapse" aria-labelledby="headingLogEntries" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
@@ -138,7 +138,7 @@
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingStatusChangeLogs">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStatusChangeLogs" aria-expanded="false" aria-controls="collapseStatusChangeLogs">Status Change logs</button>
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStatusChangeLogs" aria-expanded="false" aria-controls="collapseStatusChangeLogs">Status Change logs &#40;{{$task->TaskStatusChangeLogs->count()}}&#41;</button>
                             </h2>
                             <div id="collapseStatusChangeLogs" class="accordion-collapse collapse" aria-labelledby="headingStatusChangeLogs" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">

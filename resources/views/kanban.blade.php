@@ -117,10 +117,10 @@
                 <div class="border-top">
                     @can('manage_task_logs')
                     <div class="mb-3 mt-2 row">
-                        <label for="modalnewLogEntry" class="col-sm-2 col-form-label">New log entry</label>
+                        <label for="modalnewLogEntry" class="col-sm-2 col-form-label">Write new log entry</label>
                         <div class="col-sm-8"><textarea class="form-control font-monospace" id="modalNewLogEntry" maxlength="1000" rows="4" onkeyup="displayCharCount(this, 'charCount')"></textarea></div>
                         <div class="col-sm-2">
-                            <button id="modalAddLogEntryBtn" type="button" class="btn btn-primary" onclick="addNewLogEntry()">Add log</button>
+                            <button id="modalAddLogEntryBtn" type="button" class="btn btn-primary" onclick="addNewLogEntry()">Add log entry</button>
                             <p id="charCount" class="col-form-label font-monospace">0 / 1000</p>
                         </div>
                     </div>

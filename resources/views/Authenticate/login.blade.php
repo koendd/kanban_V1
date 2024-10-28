@@ -17,7 +17,7 @@
                         <div class="row mb-3">
                             <label for="inputEmail" class="col-sm-2 offset-sm-2 col-form-label">Email</label>
                             <div class="col-sm-6">
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="inputEmail" name="email" onfocusout="checkEmailAddress(this)" focus required/>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="inputEmail" name="email" onfocusout="checkEmailAddress(this)" autofocus required value="{{old('email')}}"/>
 
                                 @error('email')
                                 <div class="invalid-feedback">

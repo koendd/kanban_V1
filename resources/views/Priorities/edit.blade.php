@@ -68,7 +68,7 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-2">
-                                <button type="submit" class="btn btn-success">Update priority</button>
+                                <button type="submit" class="btn btn-success">Save priority</button>
                                 <a href="{{ url()->previous() }}" class="btn btn-danger">{{ __('Cancel') }}</a>
                             </div>
                         </div>
