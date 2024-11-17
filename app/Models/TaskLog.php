@@ -16,7 +16,7 @@ class TaskLog extends Model
      *
      * @var array
      */
-    protected $appends = ['Timestamp', 'DescriptionFormatted'];
+    protected $appends = ['Timestamp', 'UpdateTimestamp', 'DescriptionFormatted'];
 
     /**
      * The attributes that are mass assignable.
@@ -41,6 +41,10 @@ class TaskLog extends Model
 
     public function getTimestampAttribute() {
         return Str::replaceFirst(' ', '<br>', Carbon::create($this->created_at)->format('j/n/o g:i:s a'));
+    }
+
+    public function getUpdateTimestampAttribute() {
+        return Str::replaceFirst(' ', '<br>', Carbon::create($this->updated_at)->format('j/n/o g:i:s a'));
     }
 
     public function getDescriptionFormattedAttribute() {

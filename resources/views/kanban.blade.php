@@ -308,8 +308,20 @@
                     let userCell = row.insertCell(2);
                     let descriptionCell = row.insertCell(3);
 
+                    const creationDateElement = document.createElement("p");
+                    creationDateElement.classList.add("m-0")
+                    creationDateElement.innerHTML = log.Timestamp;
+                    dateCell.appendChild(creationDateElement);
+                    if(log.Timestamp != log.UpdateTimestamp){
+                        const updateDateElement = document.createElement("p");
+                        updateDateElement.classList.add("text-warning")
+                        updateDateElement.classList.add("m-0")
+                        updateDateElement.innerHTML = log.UpdateTimestamp;
+                        dateCell.appendChild(updateDateElement);
+                    }
+
                     idCell.innerHTML = log.id;
-                    dateCell.innerHTML = log.Timestamp;
+                    //dateCell.innerHTML = log.Timestamp;
                     userCell.innerHTML = log.user.name;
                     descriptionCell.innerHTML = descriptioneParser(currentUser, users, log.DescriptionFormatted);
                 });
