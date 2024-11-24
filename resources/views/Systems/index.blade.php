@@ -35,9 +35,9 @@
                     <th scope="col" class="text-center align-middle">&#35; tasks</th>
                     <th scope="col" class="text-center align-middle">Actions</th>
                     <th scope="col"></th>
-                    <th scope="col" class="text-center align-middle">sub&#45;system id</th>
-					<th scope="col" class="text-center align-middle">sub&#45;system  name</th>
-                    <th scope="col" class="text-center align-middle d-none d-sm-table-cell">sub&#45;system description</th>
+                    <th scope="col" class="text-center align-middle">Sub&#45;system id</th>
+					<th scope="col" class="text-center align-middle">Sub&#45;system  name</th>
+                    <th scope="col" class="text-center align-middle d-none d-sm-table-cell">Sub&#45;system description</th>
                     <th scope="col" class="text-center align-middle">&#35; tasks</th>
                     <th scope="col" class="text-center align-middle">Actions</th>
 				</tr>

@@ -25,7 +25,7 @@
         <caption>List of all priorities, {{$priorities->count()}} in total</caption>
         <thead>
             <tr>
-                <th scope="col" class="text-center align-middle">order number</th>
+                <th scope="col" class="text-center align-middle">Order number</th>
                 <th scope="col" class="text-center align-middle">Status name</th>
                 <th scope="col" class="text-center align-middle d-none d-sm-table-cell">Description</th>
                 <th scope="col" class="text-center align-middle">Color</th>

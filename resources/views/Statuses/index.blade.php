@@ -25,10 +25,10 @@
         <caption>List of all statuses, {{$statuses->count()}} in total</caption>
         <thead>
             <tr>
-                <th scope="col" class="text-center align-middle">order number</th>
+                <th scope="col" class="text-center align-middle">Order number</th>
                 <th scope="col" class="text-center align-middle">Status name</th>
                 <th scope="col" class="text-center align-middle d-none d-sm-table-cell">Description</th>
-                <th scope="col" class="text-center align-middle">preparetion</th>
+                <th scope="col" class="text-center align-middle">Preparetion</th>
                 <th scope="col" class="text-center align-middle">Active</th>
                 <th scope="col" class="text-center align-middle">Finishing</th>
                 <th scope="col" class="text-center align-middle">Color</th>

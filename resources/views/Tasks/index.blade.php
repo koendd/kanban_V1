@@ -111,7 +111,7 @@
                 <th scope="col" class="text-center align-middle">Priority</th>
                 <th scope="col" class="text-center align-middle">Status</th>
                 <th scope="col" class="text-center align-middle">Task type</th>
-                <th scope="col" class="text-center align-middle">applicant</th>
+                <th scope="col" class="text-center align-middle">Applicant</th>
                 <th scope="col" class="text-center align-middle">&#35; logs</th>
                 <th scope="col" class="text-center align-middle">Actions</th>
             </tr>
