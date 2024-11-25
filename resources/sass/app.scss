@@ -1,8 +1,18 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-icons/font/bootstrap-icons.css';
 
-body {
-    background-color: rgba(189, 183, 107, .7);
+$color-mode-type: data;
+
+@include color-mode(light) {
+    body {
+        background-color: rgba(189, 183, 107, .7);
+    }
+}
+
+@include color-mode(dark) {
+    body {
+        background-color: canvas;
+    }
 }
 
 main {

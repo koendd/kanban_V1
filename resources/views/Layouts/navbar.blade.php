@@ -119,6 +119,17 @@
                                 @csrf
                             </form>
                         </li>
+                        <li>
+                            <div class="dropdown-divider"></div>
+                        </li>
+                        <li>
+                            <div class="dropdown-item-text">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="darkModeSwitch" checked aria-label="Switch between light and dark mode" data-bs-toggle="tooltip" data-bs-placement="top" title="Switch between light and dark mode">
+                                    <label class="form-check-label" for="darkModeSwitch">Dark Mode</label>                 
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </li>
             </ul>
