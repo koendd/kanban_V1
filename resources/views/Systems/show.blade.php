@@ -5,7 +5,7 @@
 @section('content')
 <div class="mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-xxl-8 col-sm-12">
             <div class="card">
                 <div class="card-header">
                     Info for system: <span class="fw-bold fs-5 text-primary font-monospace">{{$system->name}}</span>

@@ -17,6 +17,12 @@ class KanbanController extends Controller
 
     public function PreparetionKanban(KanbanBoard $kanbanBoard)
     {
+        if(!Auth::User()->role->can_use_multiple_kanban_boards) {
+            if($kanbanBoard->id != Auth::User()->default_kanban_board_id) {
+                abort(403);
+            }
+        }
+
         $statuses = $kanbanBoard->Statuses->where('preparetion', true)->sortBy('order_number');
         $users = User::select('name')->orderBy('name', 'asc')->get()->pluck('name')->toArray();
         return view('kanban', compact(['kanbanBoard', 'statuses', 'users']));
@@ -24,7 +30,7 @@ class KanbanController extends Controller
 
     public function ActiveKanban(KanbanBoard $kanbanBoard)
     {
-        if(!Auth::User()->can_use_multiple_kanban_boards) {
+        if(!Auth::User()->role->can_use_multiple_kanban_boards) {
             if($kanbanBoard->id != Auth::User()->default_kanban_board_id) {
                 abort(403);
             }
@@ -37,6 +43,12 @@ class KanbanController extends Controller
 
     public function FinishingKanban(KanbanBoard $kanbanBoard)
     {
+        if(!Auth::User()->role->can_use_multiple_kanban_boards) {
+            if($kanbanBoard->id != Auth::User()->default_kanban_board_id) {
+                abort(403);
+            }
+        }
+
         $statuses = $kanbanBoard->Statuses->where('finishing', true)->sortBy('order_number');
         $users = User::select('name')->orderBy('name', 'asc')->get()->pluck('name')->toArray();
         return view('kanban', compact(['kanbanBoard', 'statuses', 'users']));

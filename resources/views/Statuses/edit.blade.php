@@ -5,7 +5,7 @@
 @section('content')
 <div class="mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10 col-lg-8 col-xl-6">
             <div class="card">
                 <div class="card-header">
                     Edit status: <span class="fw-bold fs-5 text-primary font-monospace">{{$status->name}}</span>

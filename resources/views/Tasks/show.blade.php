@@ -5,7 +5,7 @@
 @section('content')
 <div class="mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-xxl-8 col-sm-12">
             <div class="card mb-5">
                 <div class="card-header">
                     Show task: <span class="text-primary">{{$task->name}}</span>
