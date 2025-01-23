@@ -29,7 +29,7 @@
                         <div class="row mb-3">
                             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="255" onkeyup="displayCharCount(this, 'charCount')">{{old('description')}}</textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputDescription" name="description" maxlength="255" onkeyup="displayCharCount(this, 'charCount')" placeholder="max 255 characters are allowed">{{old('description')}}</textarea>
 
                                 @error('description')
                                 <div class="invalid-feedback">

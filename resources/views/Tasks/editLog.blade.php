@@ -17,7 +17,7 @@
                         <div class="row mb-3">
                             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputdescription" name="description" maxlength="1000" rows="10" required onkeyup="displayCharCount(this)">{{$taskLog->description}}</textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="inputdescription" name="description" maxlength="1000" rows="10" required onkeyup="displayCharCount(this)" placeholder="max 1000 characters are allowed">{{$taskLog->description}}</textarea>
 
                                 @error('description')
                                 <div class="invalid-feedback">
