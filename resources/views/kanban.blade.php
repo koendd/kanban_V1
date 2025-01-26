@@ -68,7 +68,7 @@
 
 <!-- task Modal for showing task info -->
 <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+    <div class="modal-dialog modal-fullscreen-xl-down modal-dialog-centered modal-dialog-scrollable modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="modalTitle"></h1>
@@ -118,7 +118,7 @@
                     @can('manage_task_logs')
                     <div class="mb-3 mt-2 row">
                         <label for="modalnewLogEntry" class="col-sm-2 col-form-label">Write new log entry</label>
-                        <div class="col-sm-8"><textarea class="form-control font-monospace" id="modalNewLogEntry" maxlength="1000" rows="4" onkeyup="displayCharCount(this, 'charCount')"></textarea></div>
+                        <div class="col-sm-8"><textarea class="form-control font-monospace" id="modalNewLogEntry" maxlength="1000" rows="4" onkeyup="displayCharCount(this, 'charCount')" placeholder="max 1000 characters are allowed"></textarea></div>
                         <div class="col-sm-2">
                             <button id="modalAddLogEntryBtn" type="button" class="btn btn-primary" onclick="addNewLogEntry()">Add log entry</button>
                             <p id="charCount" class="col-form-label font-monospace">0 / 1000</p>
@@ -370,6 +370,7 @@
                         descriptionCell.innerHTML = descriptioneParser(currentUser, users, log.DescriptionFormatted);
                     });
                     document.querySelector("#modalAddLogEntryBtn").removeAttribute("disabled");
+                    document.querySelector("#modalNewLogEntry").focus();
                 }).catch((err) => {
                     displayErrorModal("Something went wrong while adding the new log entry!", err);
                     document.querySelector("#modalAddLogEntryBtn").removeAttribute("disabled");
