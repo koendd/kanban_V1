@@ -19,7 +19,7 @@ class ChangePasswordController extends Controller
 
     public function store(Request $request) {
         $validatedData = $request->validate([
-            'current_password' => ['required', 'string', 'password'],
+            'current_password' => ['required', 'string', 'current_password'],
             'password' => ['required', 'confirmed', 'different:current_password', Password::min(8)->letters()->mixedCase()->numbers()->symbols()->uncompromised()],
         ]);
         
