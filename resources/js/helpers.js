@@ -1,6 +1,6 @@
 window.displayCharCount = function (element, displayCharCountElement) {
     displayCharCountElement = "#" + displayCharCountElement;
-    document.querySelector(displayCharCountElement).innerHTML = element.value.length.toString() + " / " + element.maxLength;
+    document.querySelector(displayCharCountElement).value = element.value.length.toString() + " / " + element.maxLength;
 }
 
 window.descriptioneParser = function (currentUser, users, string) {

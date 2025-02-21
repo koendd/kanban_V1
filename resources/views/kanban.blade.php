@@ -120,8 +120,8 @@
                         <label for="modalnewLogEntry" class="col-sm-2 col-form-label">Write new log entry</label>
                         <div class="col-sm-8"><textarea class="form-control font-monospace" id="modalNewLogEntry" maxlength="1000" rows="4" onkeyup="displayCharCount(this, 'charCount')" placeholder="max 1000 characters are allowed"></textarea></div>
                         <div class="col-sm-2">
-                            <button id="modalAddLogEntryBtn" type="button" class="btn btn-primary" onclick="addNewLogEntry()">Add log entry</button>
-                            <p id="charCount" class="col-form-label font-monospace">0 / 1000</p>
+                            <button id="modalAddLogEntryBtn" type="button" class="form-control btn btn-primary" onclick="addNewLogEntry()">Add log entry</button>
+                            <input type="text" class="form-control text-end" value="0 / 1000" id="charCount" disabled />
                         </div>
                     </div>
                     @endcan
