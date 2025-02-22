@@ -68,7 +68,7 @@
                                                 <td>{{$task->id}}</td>
                                                 <td>
                                                     <p title="{{$task->System->name_full}} @if(!empty($task->SubSystem->name_full))&#45; {{$task->SubSystem->name_full}}@endif">
-                                                        {{$task->System->name_short}} @if(!empty($task->SubSystem->name_short))&#45;{{$task->SubSystem->name_short}}@endif
+                                                        {{$task->System->name_short}} @if(!empty($task->SubSystem->name_short))&#45; {{$task->SubSystem->name_short}}@endif
                                                     </p>
                                                 </td>
                                                 <td>{{$task->name}}</td>
