@@ -62,10 +62,10 @@ class CustomQueryController extends Controller
         }
 
         if(!Arr::exists($query, 'parameters')) {
-            $results = DB::select(DB::raw($query['query']));
+            $results = DB::select(DB::raw($query['query'])->getValue(DB::connection()->getQueryGrammar()));
         }elseif (Arr::exists($query, 'parameters') && Arr::exists($request, '_token')) {
             //dd($DBquery);
-            $results = DB::select(DB::raw($DBquery));
+            $results = DB::select(DB::raw($DBquery)->getValue(DB::connection()->getQueryGrammar()));
         } else {
             $results = null;
         }
