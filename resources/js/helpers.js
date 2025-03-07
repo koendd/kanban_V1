@@ -4,17 +4,27 @@ window.displayCharCount = function (element, displayCharCountElement) {
 }
 
 window.descriptioneParser = function (currentUser, users, string) {
-    let regexCurrentUser = new RegExp('(\\W|^)@('+currentUser+')(\\W|$)', 'ig');
-    string = string.replace(regexCurrentUser, '$1<span class="label radius text-danger fw-bold">@$2</span>$3');
+    let regexCurrentUser = new RegExp('@('+currentUser+')', 'ig');
+    string = string.replace(regexCurrentUser, '<span class="label radius text-danger fw-bold">@$1</span>');
     users.forEach(user => {
         if(user != currentUser){
-            let regexUser = new RegExp('(\\W|^)@('+user+')(\\W|$)', 'ig');
-            string = string.replace(regexUser, '$1<span class="label radius text-primary">@$2</span>$3');
+            let regexUser = new RegExp('@('+user+')', 'ig');
+            string = string.replace(regexUser, '<span class="label radius text-primary">@$1</span>');
         }
     });
 
-    let regexLogNumber = new RegExp('(\\W|^)#(\\d+)(\\W|$)', 'ig');
-    string = string.replace(regexLogNumber, '$1<span class="label radius text-success fw-bold">#$2</span>$3');
+    let regexLogNumber = new RegExp('#(\\d+)', 'ig');
+    string = string.replace(regexLogNumber, '<span class="label radius text-success fw-bold">#$1</span>');
+
+    // (https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})
+    // https?:\/\/[^\s]+
+    let regexUrlLink = new RegExp(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/, 'gi');
+    const urls = string.match(regexUrlLink);
+    if(urls != null){
+        urls.forEach(url => {
+            string = string.replace(url, '<a href="' + url + '" target="_blank">' + url.substring(0, 30) + '...</a>');
+        });
+    }
 
     return string;
 }
